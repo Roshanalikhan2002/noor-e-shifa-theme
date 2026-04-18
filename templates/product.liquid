@@ -322,27 +322,6 @@
     </nav>
 </div>
 
-<!-- Cart Drawer -->
-<div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
-<div class="cart-drawer" id="cartDrawer">
-    <div class="cart-drawer-header">
-        <h3>Your Cart</h3>
-        <button class="cart-close" onclick="closeCartDrawer()">&times;</button>
-    </div>
-    <div class="cart-drawer-items" id="cartItems">
-        <div class="cart-empty">Your cart is empty.</div>
-    </div>
-    <div class="cart-drawer-footer" id="cartFooter" style="display:none;">
-        <div class="cart-subtotal">
-            <span>Subtotal</span>
-            <span id="cartTotal">Rs. 0.00</span>
-        </div>
-        <a href="/checkout" class="checkout-btn">Checkout</a>
-        <span class="view-cart-link" onclick="window.location='/cart'">View Full Cart</span>
-    </div>
-</div>
-
-<div class="atc-toast" id="atcToast">&#10003; Added to Cart!</div>
 
 <main>
     <section class="product-main">
@@ -358,7 +337,8 @@
             <div class="price-section"><span class="price">{{ product.price | money }}</span></div>
             <div class="add-to-cart-container">
                 <input type="hidden" id="variantId" value="{{ product.variants.first.id }}">
-                <button type="button" class="atc-btn" id="atcBtn" onclick="addToCartAjax()">
+                <button type="button" class="atc-btn" id="atcBtn"
+                    onclick="gAddToCart(document.getElementById('variantId').value, this)">
                     ADD TO CART
                 </button>
                 <div class="accordion">
@@ -518,132 +498,23 @@
 
 <script>
     // === NAV & ACCORDION ===
-    function toggleMenu() { document.getElementById('mobileDrawer').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
-    function toggleAccordion(btn) { btn.parentElement.classList.toggle('active'); btn.querySelector('span').textContent = btn.parentElement.classList.contains('active') ? '-' : '+'; }
-    function toggleFaq(el) { const answer = el.nextElementSibling; const span = el.querySelector('span'); if (answer.style.display === 'block') { answer.style.display = 'none'; span.textContent = '+'; } else { answer.style.display = 'block'; span.textContent = '-'; } }
-
-    // === CART DRAWER ===
-    function openCartDrawer() {
-        document.getElementById('cartDrawer').classList.add('active');
-        document.getElementById('cartOverlay').classList.add('active');
-        document.body.style.overflow = 'hidden';
-        fetchAndRenderCart();
+    function toggleMenu() {
+        document.getElementById('mobileDrawer').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
     }
-
-    function closeCartDrawer() {
-        document.getElementById('cartDrawer').classList.remove('active');
-        document.getElementById('cartOverlay').classList.remove('active');
-        document.body.style.overflow = '';
+    function toggleAccordion(btn) {
+        btn.parentElement.classList.toggle('active');
+        btn.querySelector('span').textContent = btn.parentElement.classList.contains('active') ? '-' : '+';
     }
-
-    function showToast() {
-        const toast = document.getElementById('atcToast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-
-    function updateCartCount(count) {
-        const el = document.getElementById('cartCount');
-        if (el) el.textContent = count;
-    }
-
-    // === AJAX ADD TO CART ===
-    async function addToCartAjax() {
-        const variantId = document.getElementById('variantId').value;
-        const btn = document.getElementById('atcBtn');
-        btn.textContent = 'ADDING...';
-        btn.disabled = true;
-
-        try {
-            const response = await fetch('/cart/add.js', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({ id: parseInt(variantId), quantity: 1 })
-            });
-
-            if (!response.ok) throw new Error('Failed');
-
-            // Update cart count
-            const cartResp = await fetch('/cart.js');
-            const cart = await cartResp.json();
-            updateCartCount(cart.item_count);
-
-            btn.textContent = '✓ ADDED!';
-            setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.disabled = false; }, 2000);
-
-            showToast();
-            openCartDrawer();
-        } catch (err) {
-            btn.textContent = 'ADD TO CART';
-            btn.disabled = false;
-            alert('Could not add to cart. Please try again.');
+    function toggleFaq(el) {
+        const answer = el.nextElementSibling;
+        const span = el.querySelector('span');
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none'; span.textContent = '+';
+        } else {
+            answer.style.display = 'block'; span.textContent = '-';
         }
     }
-
-    // === FETCH & RENDER CART ===
-    async function fetchAndRenderCart() {
-        const resp = await fetch('/cart.js');
-        const cart = await resp.json();
-        renderCart(cart);
-    }
-
-    function formatMoney(cents) {
-        return 'Rs. ' + (cents / 100).toFixed(2);
-    }
-
-    function renderCart(cart) {
-        const container = document.getElementById('cartItems');
-        const footer = document.getElementById('cartFooter');
-        const totalEl = document.getElementById('cartTotal');
-
-        if (cart.item_count === 0) {
-            container.innerHTML = '<div class="cart-empty">🛒 Your cart is empty.<br><a href="/collections/all" style="color:var(--primary); margin-top:15px; display:inline-block; text-decoration:underline;">Start Shopping</a></div>';
-            footer.style.display = 'none';
-            return;
-        }
-
-        footer.style.display = 'block';
-        totalEl.textContent = formatMoney(cart.total_price);
-        updateCartCount(cart.item_count);
-
-        container.innerHTML = cart.items.map(item => `
-            <div class="cart-item">
-                <div class="cart-item-img">
-                    <img src="${item.image}" alt="${item.title}">
-                </div>
-                <div class="cart-item-info">
-                    <div class="cart-item-title">${item.product_title}</div>
-                    <div class="cart-item-price">${formatMoney(item.price)}</div>
-                    <div class="cart-item-qty">
-                        <button class="qty-btn" onclick="updateQty(${item.variant_id}, ${item.quantity - 1})">−</button>
-                        <span class="qty-num">${item.quantity}</span>
-                        <button class="qty-btn" onclick="updateQty(${item.variant_id}, ${item.quantity + 1})">+</button>
-                    </div>
-                </div>
-                <button class="cart-item-remove" onclick="removeItem(${item.variant_id})" title="Remove">×</button>
-            </div>
-        `).join('');
-    }
-
-    async function updateQty(variantId, newQty) {
-        await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: variantId, quantity: newQty })
-        });
-        fetchAndRenderCart();
-    }
-
-    async function removeItem(variantId) {
-        await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: variantId, quantity: 0 })
-        });
-        fetchAndRenderCart();
-    }
-
-    // Load cart count on page load
-    fetch('/cart.js').then(r => r.json()).then(cart => updateCartCount(cart.item_count));
+    // All cart functions (gOpenCart, gAddToCart, gChangeQty, etc.) are global from theme.liquid
 </script>
 
