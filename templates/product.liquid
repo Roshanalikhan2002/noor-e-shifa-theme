@@ -178,14 +178,39 @@
     .newsletter-form button { background: var(--white); color: var(--primary); border: none; padding: 12px 25px; border-radius: 40px; font-weight: 700; cursor: pointer; }
     .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 12px; opacity: 0.5; }
 
+
     @media (max-width: 768px) {
-        .logo { font-size: 20px; }
-        .product-main, .plate-section, .inside-section, .faq-section { flex-direction: column; padding: 40px 5%; }
-        .product-gallery, .plate-image, .inside-image, .faq-image { width: 100%; height: 350px; order: -1; }
-        .footer-container { grid-template-columns: 1fr; text-align: center; }
+        .menu-toggle { display: flex !important; }
+        nav { display: none !important; }
+        header { padding: 12px 5%; }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            white-space: nowrap;
+        }
+        .header-icons { gap: 12px; }
+        .product-main { flex-direction: column; padding: 20px 5%; gap: 20px; }
+        .product-gallery { width: 100%; }
+        .main-image { height: 350px; }
+        .product-details h1 {
+            font-size: 30px;
+            line-height: 1.2;
+            word-break: normal;
+            overflow-wrap: break-word;
+        }
+        .plate-section, .inside-section, .faq-section { flex-direction: column; padding: 40px 5%; }
+        .plate-image, .inside-image, .faq-image { width: 100%; height: 300px; order: -1; }
+        .spotted-grid { grid-template-columns: repeat(2, 1fr); }
+        .review-card { flex-direction: column; gap: 15px; }
+        .reviewer-info { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .footer-container { grid-template-columns: 1fr; gap: 30px; text-align: center; }
         .social-links { justify-content: center; }
+        .newsletter-form { flex-direction: column; }
     }
 </style>
+
 
 <div class="announcement-bar">Free Shipping on Orders Above Rs. 3000</div>
 
