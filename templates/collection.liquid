@@ -1,0 +1,197 @@
+{% comment %}
+  Noor E Shifa - Collection Template
+  Converted from static HTML
+{% endcomment %}
+
+<style>
+    :root {
+        --primary: #1a3b2b;
+        --secondary: #d4a373;
+        --accent: #f4f1de;
+        --text: #2c3e50;
+        --white: #ffffff;
+        --font-serif: 'Playfair Display', serif;
+        --font-sans: 'Inter', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-sans); color: var(--text); background-color: var(--white); }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        background-color: var(--white);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-family: var(--font-serif);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+        letter-spacing: 2px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin: 0 15px;
+    }
+
+    .header-icons { display: flex; gap: 20px; }
+
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .menu-toggle span { display: block; width: 25px; height: 2px; background-color: var(--primary); }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100%;
+        background-color: var(--white);
+        z-index: 2000;
+        transition: 0.4s ease-in-out;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+    }
+    .mobile-drawer.active { left: 0; }
+    .drawer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1999;
+        display: none;
+    }
+    .drawer-overlay.active { display: block; }
+
+    .collection-section { padding: 60px 5% 100px; max-width: 1200px; margin: 0 auto; }
+    .collection-header { text-align: center; margin-bottom: 60px; }
+    .collection-header h1 { font-family: var(--font-serif); font-size: 48px; color: var(--primary); }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 40px;
+    }
+
+    .product-card {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        text-align: center;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 400px;
+        margin-bottom: 20px;
+        border-radius: 40px;
+        overflow: hidden;
+    }
+
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    .cta-button {
+        display: block;
+        background-color: var(--primary);
+        color: #FFFFFF !important;
+        padding: 15px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        border-radius: 40px;
+        text-align: center;
+    }
+
+    /* Footer */
+    footer { background-color: var(--primary); color: var(--white); padding: 80px 5% 40px; }
+    .footer-container { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; }
+
+    @media (max-width: 768px) {
+        header { padding: 15px 5%; justify-content: space-between; position: relative; }
+        .menu-toggle { display: flex; }
+        nav { display: none; }
+        .logo { position: absolute; left: 50%; transform: translateX(-50%); font-size: 20px; }
+        .product-grid { grid-template-columns: 1fr; }
+        .footer-container { grid-template-columns: 1fr; text-align: center; }
+    }
+</style>
+
+<header>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </div>
+    <nav><a href="/">Home</a><a href="/collections/all">Shop</a></nav>
+    <a href="/" class="logo">NOOR E SHIFA</a>
+    <div class="header-icons">
+        <a href="/search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
+        <a href="/cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span>({{ cart.item_count }})</span></a>
+    </div>
+</header>
+
+<div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+    <nav class="drawer-nav">
+        <a href="/">Home</a>
+        <a href="/collections/all">Shop</a>
+    </nav>
+</div>
+
+<main class="collection-section">
+    <div class="collection-header">
+        <h1>{{ collection.title | default: 'Our Collection' }}</h1>
+    </div>
+
+    <div class="product-grid">
+        {% for product in collection.products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}" alt="{{ product.title }}">
+            </div>
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price | money }}</p>
+            <a href="{{ product.url }}" class="cta-button">View Details</a>
+        </div>
+        {% else %}
+        <!-- Placeholder if no products found -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: 'master' }}" alt="Sample Product">
+            </div>
+            <h3>Sample Product</h3>
+            <p>Rs. 890.00</p>
+            <a href="#" class="cta-button">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand"><h2>NOOR E SHIFA</h2></div>
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.getElementById('mobileDrawer').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
+    }
+</script>

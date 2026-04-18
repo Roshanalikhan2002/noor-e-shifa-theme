@@ -1,0 +1,583 @@
+{% comment %}
+  Noor E Shifa - Homepage Template
+  Converted from static HTML
+{% endcomment %}
+
+<style>
+    :root {
+        --primary: #1a3b2b; /* Deep Herbal Green */
+        --secondary: #d4a373; /* Earthy Gold/Sand */
+        --accent: #f4f1de; /* Creamy Paper */
+        --text: #2c3e50;
+        --white: #ffffff;
+        --font-serif: 'Playfair Display', serif;
+        --font-sans: 'Inter', sans-serif;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        color: var(--text);
+        background-color: var(--accent);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* Announcement Bar */
+    .announcement-bar {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    /* Navigation */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        background-color: var(--white);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-family: var(--font-serif);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        text-decoration: none;
+        letter-spacing: 2px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        margin: 0 15px;
+        letter-spacing: 1px;
+    }
+
+    .header-icons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: var(--primary);
+        transition: 0.3s;
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100%;
+        background-color: var(--white);
+        z-index: 2000;
+        transition: 0.4s ease-in-out;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-drawer.active {
+        left: 0;
+    }
+
+    .drawer-header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 40px;
+    }
+
+    .close-drawer {
+        font-size: 32px;
+        cursor: pointer;
+        color: var(--primary);
+    }
+
+    .drawer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .drawer-nav a {
+        text-decoration: none;
+        color: var(--primary);
+        font-size: 20px;
+        font-family: var(--font-serif);
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .drawer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1999;
+        display: none;
+    }
+
+    .drawer-overlay.active {
+        display: block;
+    }
+
+    /* Hero Section */
+    .hero {
+        display: flex;
+        flex-direction: row-reverse; /* Image on the right for desktop */
+        height: 90vh;
+        align-items: center;
+        background-color: var(--accent);
+        overflow: hidden;
+    }
+
+    .hero-content {
+        flex: 1;
+        padding: 0 8%;
+    }
+
+    .hero-content h1 {
+        font-family: var(--font-serif);
+        font-size: 64px;
+        color: var(--primary);
+        line-height: 1.1;
+        margin-bottom: 30px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+        max-width: 450px;
+        margin-bottom: 30px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background-color: var(--primary);
+        color: #FFFFFF !important; /* Force white for visibility */
+        padding: 18px 40px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        border-radius: 40px;
+        transition: opacity 0.3s;
+        letter-spacing: 1px;
+    }
+
+    .cta-button:hover {
+        opacity: 0.9;
+    }
+
+    .hero-image {
+        flex: 1;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .hero-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Featured Product */
+    .featured-product {
+        padding: 100px 5%;
+        text-align: center;
+    }
+
+    .featured-product h2 {
+        font-family: var(--font-serif);
+        font-size: 42px;
+        color: var(--primary);
+        margin-bottom: 50px;
+    }
+
+    .product-card {
+        max-width: 400px;
+        margin: 0 auto;
+        background: var(--white);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 400px; /* Fixed height for consistency */
+        margin-bottom: 20px;
+        border-radius: 40px;
+        overflow: hidden;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .product-title {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .price {
+        font-size: 20px;
+        color: var(--secondary);
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    /* Features Section */
+    .features {
+        display: flex;
+        justify-content: space-around;
+        padding: 100px 5%;
+        background-color: var(--white);
+    }
+
+    .feature-item {
+        text-align: center;
+        max-width: 300px;
+    }
+
+    .feature-item h4 {
+        font-family: var(--font-serif);
+        font-size: 28px;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    /* Modern Footer */
+    footer {
+        background-color: var(--primary);
+        color: var(--white);
+        padding: 80px 5% 40px;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 60px;
+    }
+
+    .footer-brand h2 {
+        font-family: var(--font-serif);
+        margin-bottom: 20px;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .footer-column h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+
+    .footer-column ul {
+        list-style: none;
+    }
+
+    .footer-column ul li {
+        margin-bottom: 12px;
+    }
+
+    .footer-column ul li a {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 14px;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+        opacity: 1;
+    }
+
+    .newsletter-form {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .newsletter-form input {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 12px;
+        border-radius: 40px;
+        color: white;
+        flex: 1;
+        font-size: 14px;
+    }
+
+    .newsletter-form button {
+        background: var(--white);
+        color: var(--primary);
+        border: none;
+        padding: 0 20px;
+        border-radius: 40px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .footer-bottom {
+        margin-top: 60px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        font-size: 12px;
+        opacity: 0.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        header {
+            padding: 15px 5%;
+            justify-content: space-between;
+            position: relative;
+        }
+        .menu-toggle {
+            display: flex;
+        }
+        nav {
+            display: none; /* Hide desktop nav */
+        }
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+        .header-icons {
+            gap: 15px;
+            font-size: 12px;
+        }
+        .hero {
+            flex-direction: column; /* Normal column for mobile: image (first) on top */
+            height: auto;
+        }
+        .hero-image {
+            width: 100%;
+            height: 350px;
+            order: -1;
+        }
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-content {
+            padding: 40px 5%;
+            text-align: center;
+        }
+        .hero-content h1 {
+            font-size: 28px;
+        }
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 30px;
+            text-align: center;
+        }
+        .social-links {
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .features {
+            flex-direction: column;
+            padding: 60px 5%;
+            gap: 50px;
+            text-align: center;
+        }
+        .feature-item {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .feature-item h4 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+<div class="announcement-bar">
+    Free Shipping on Orders Above Rs. 3000
+</div>
+
+<header>
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/collections/all">Shop</a>
+    </nav>
+    
+    <a href="/" class="logo">NOOR E SHIFA</a>
+
+    <div class="header-icons">
+        <a href="/search" style="text-decoration: none; color: var(--primary);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        <a href="/cart" style="text-decoration: none; color: var(--primary);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span style="font-size: 12px; vertical-align: top;">({{ cart.item_count }})</span>
+        </a>
+    </div>
+</header>
+
+<!-- Mobile Drawer -->
+<div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+        <span class="close-drawer" onclick="toggleMenu()">&times;</span>
+    </div>
+    <nav class="drawer-nav">
+        <a href="/" onclick="toggleMenu()">Home</a>
+        <a href="/collections/all" onclick="toggleMenu()">Shop</a>
+        <a href="/pages/about" onclick="toggleMenu()">About</a>
+        <a href="/account" onclick="toggleMenu()">Account</a>
+    </nav>
+</div>
+
+<section class="hero">
+    <div class="hero-image">
+        <img src="{{ 'main_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
+    </div>
+    <div class="hero-content">
+        <h1>Natural Relief, Purely Crafted.</h1>
+        <p>Tradition meets science. Our herbal stomach relief phaki is designed to restore your balance and soothe your digestion, naturally.</p>
+        <a href="/products/natural-stomach-relief-phaki" class="cta-button">Shop Phaki</a>
+    </div>
+</section>
+
+<section class="featured-product">
+    <h2>Our Best Seller</h2>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: 'master' }}" alt="Natural Stomach Relief Phaki">
+        </div>
+        <h3 class="product-title">Natural Stomach Relief Phaki</h3>
+        <p class="price">Rs. 890.00</p>
+        <a href="/products/natural-stomach-relief-phaki" class="cta-button">View Details</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature-item">
+        <h4>Traditional Roots</h4>
+        <p>Crafted using age-old herbal recipes passed down through generations for maximum efficacy.</p>
+    </div>
+    <div class="feature-item">
+        <h4>Pure & Natural</h4>
+        <p>No chemicals, no preservatives. Just pure botanical ingredients sourced directly from nature.</p>
+    </div>
+    <div class="feature-item">
+        <h4>Gentle Relief</h4>
+        <p>Formulated to be gentle on your system while providing fast-acting relief from bloating.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2>NOOR E SHIFA</h2>
+            <p>Bringing traditional herbal wisdom to your modern lifestyle. Our mission is to provide natural, safe, and effective digestive solutions for everyone.</p>
+            <div class="social-links">
+                <a href="#" style="color: white; opacity: 0.8; transition: opacity 0.3s; text-decoration: none;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="#" style="color: white; opacity: 0.8; transition: opacity 0.3s; text-decoration: none;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <ul>
+                <li><a href="/collections/all">All Products</a></li>
+                <li><a href="/products/natural-stomach-relief-phaki">Featured Item</a></li>
+                <li><a href="#">Best Sellers</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Help</h3>
+            <ul>
+                <li><a href="/pages/contact">Contact Us</a></li>
+                <li><a href="#">Shipping Policy</a></li>
+                <li><a href="#">Refund Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Stay Updated</h3>
+            <p style="font-size: 14px; opacity: 0.7; margin-bottom: 20px;">Join our newsletter for gut health tips and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Join</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; {{ 'now' | date: '%Y' }} Noor e Shifa. All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+    function toggleMenu() {
+        const drawer = document.getElementById('mobileDrawer');
+        const overlay = document.getElementById('overlay');
+        drawer.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+</script>
