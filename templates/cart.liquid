@@ -1,0 +1,108 @@
+{% comment %} Noor E Shifa - Cart Page Template {% endcomment %}
+
+<style>
+    :root { --primary: #1a3b2b; --secondary: #7a1c1c; --white: #ffffff; --border: #e0e0e0; --font-serif: 'Playfair Display', serif; --font-sans: 'Inter', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-sans); background: #f5f5f5; color: #333; }
+
+    .announcement-bar { background: #333; color: white; text-align: center; padding: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    header { background: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .logo { font-family: var(--font-serif); font-size: 26px; color: var(--primary); text-decoration: none; position: absolute; left: 50%; transform: translateX(-50%); font-weight: 700; letter-spacing: 2px; white-space: nowrap; }
+    nav a { text-decoration: none; color: var(--primary); font-weight: 600; font-size: 14px; margin-right: 20px; text-transform: uppercase; }
+    .header-icons { display: flex; gap: 18px; align-items: center; }
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .menu-toggle span { display: block; width: 25px; height: 2px; background: var(--primary); }
+
+    .cart-page { max-width: 900px; margin: 60px auto; padding: 0 5%; }
+    .cart-page h1 { font-family: var(--font-serif); font-size: 40px; color: var(--primary); margin-bottom: 40px; }
+
+    .cart-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+    .cart-table th { padding: 20px 25px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #999; border-bottom: 1px solid var(--border); }
+    .cart-table td { padding: 20px 25px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+    .cart-product-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+    .cart-product-title { font-weight: 600; color: var(--primary); font-size: 16px; }
+    .cart-qty-input { width: 60px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; text-align: center; font-size: 15px; }
+    .cart-remove { color: #ccc; text-decoration: none; font-size: 22px; line-height: 1; }
+    .cart-remove:hover { color: #e74c3c; }
+
+    .cart-summary { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); margin-top: 30px; text-align: right; }
+    .cart-summary-total { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 20px; }
+    .checkout-btn { display: inline-block; background: var(--primary); color: white; padding: 16px 40px; border-radius: 40px; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; border: none; cursor: pointer; font-family: var(--font-sans); }
+    .continue-btn { display: inline-block; color: var(--primary); font-size: 14px; text-decoration: underline; margin-right: 20px; cursor: pointer; background: none; border: none; font-family: var(--font-sans); }
+
+    .cart-empty-state { text-align: center; padding: 80px 20px; background: white; border-radius: 12px; }
+    .cart-empty-state p { font-size: 18px; color: #999; margin-bottom: 30px; }
+    .shop-btn { display: inline-block; background: var(--primary); color: white; padding: 16px 40px; border-radius: 40px; font-weight: 700; font-size: 14px; text-transform: uppercase; text-decoration: none; letter-spacing: 1px; }
+
+    @media (max-width: 768px) {
+        .menu-toggle { display: flex !important; }
+        nav { display: none !important; }
+        .logo { font-size: 18px; }
+        .cart-table th:nth-child(3), .cart-table td:nth-child(3) { display: none; }
+    }
+</style>
+
+<div class="announcement-bar">Free Shipping on Orders Above Rs. 3000</div>
+
+<header>
+    <div class="menu-toggle"><span></span><span></span><span></span></div>
+    <nav><a href="/collections/all">Shop</a><a href="#">About</a></nav>
+    <a href="/" class="logo">NOOR E SHIFA</a>
+    <div class="header-icons">
+        <a href="/search" style="color:var(--primary);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        <button onclick="gOpenCart()" style="background:none;border:none;cursor:pointer;color:var(--primary);display:flex;align-items:center;gap:4px;padding:0;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span class="g-cart-count">{{ cart.item_count }}</span>
+        </button>
+    </div>
+</header>
+
+<main class="cart-page">
+    <h1>Your Cart</h1>
+    {% if cart.item_count > 0 %}
+    <form action="/cart" method="post">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart.items %}
+                <tr>
+                    <td>
+                        <div style="display:flex;gap:16px;align-items:center;">
+                            <img class="cart-product-img" src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                            <span class="cart-product-title">{{ item.product_title }}</span>
+                        </div>
+                    </td>
+                    <td>{{ item.price | money }}</td>
+                    <td>
+                        <input class="cart-qty-input" type="number" name="updates[{{ item.variant_id }}]" value="{{ item.quantity }}" min="1">
+                    </td>
+                    <td><strong>{{ item.line_price | money }}</strong></td>
+                    <td><a class="cart-remove" href="/cart/change?line={{ forloop.index }}&quantity=0">×</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="cart-summary-total">Subtotal: {{ cart.total_price | money }}</div>
+            <button class="continue-btn" type="button" onclick="history.back()">Continue Shopping</button>
+            <button type="submit" name="checkout" class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </form>
+    {% else %}
+    <div class="cart-empty-state">
+        <p>Your cart is currently empty.</p>
+        <a href="/collections/all" class="shop-btn">Start Shopping</a>
+    </div>
+    {% endif %}
+</main>
