@@ -206,9 +206,9 @@
                     <div class="gcd-item-title">${item.product_title}</div>
                     <div class="gcd-item-price">${gFormatMoney(item.price)}</div>
                     <div class="gcd-item-qty">
-                        <button class="gcd-qty-btn" onclick="gChangeQty(${item.variant_id}, ${item.quantity - 1})">−</button>
-                        <span class="gcd-qty-num">${item.quantity}</span>
-                        <button class="gcd-qty-btn" onclick="gChangeQty(${item.variant_id}, ${item.quantity + 1})">+</button>
+                        <button class="gcd-qty-btn" onclick="gQtyClick(this, ${item.variant_id}, ${item.quantity - 1})">−</button>
+                        <span class="gcd-qty-num" id="qty-${item.variant_id}">${item.quantity}</span>
+                        <button class="gcd-qty-btn" onclick="gQtyClick(this, ${item.variant_id}, ${item.quantity + 1})">+</button>
                     </div>
                 </div>
                 <button class="gcd-item-remove" onclick="gChangeQty(${item.variant_id}, 0)" title="Remove">×</button>
@@ -216,13 +216,33 @@
         `).join('');
     }
 
+    function gQtyClick(btn, variantId, newQty) {
+        if (newQty < 0) newQty = 0;
+        // Optimistic UI: update number immediately
+        const qtyEl = document.getElementById('qty-' + variantId);
+        if (qtyEl && newQty > 0) qtyEl.textContent = newQty;
+        gChangeQty(variantId, newQty);
+    }
+
     async function gChangeQty(variantId, qty) {
-        await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: variantId, quantity: qty })
-        });
-        gFetchCart();
+        // Disable all qty buttons during update to prevent double-clicks
+        document.querySelectorAll('.gcd-qty-btn').forEach(b => b.disabled = true);
+
+        try {
+            const resp = await fetch('/cart/change.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: variantId, quantity: qty < 0 ? 0 : qty })
+            });
+
+            if (!resp.ok) throw new Error('Cart update failed');
+
+            // Immediately fetch and re-render
+            await gFetchCart();
+        } catch(e) {
+            console.error('Cart update error:', e);
+            await gFetchCart(); // Re-render even on error to sync state
+        }
     }
 
     async function gAddToCart(variantId, btn) {
