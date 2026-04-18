@@ -209,6 +209,73 @@
         .social-links { justify-content: center; }
         .newsletter-form { flex-direction: column; }
     }
+    /* Cart Drawer */
+    .cart-drawer-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 3000; display: none; opacity: 0;
+        transition: opacity 0.3s;
+    }
+    .cart-drawer-overlay.active { display: block; opacity: 1; }
+
+    .cart-drawer {
+        position: fixed; top: 0; right: -420px; width: 420px; max-width: 95vw; height: 100%;
+        background: var(--white); z-index: 3001;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+        display: flex; flex-direction: column;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cart-drawer.active { right: 0; }
+
+    .cart-drawer-header {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 25px 30px; border-bottom: 1px solid var(--border);
+    }
+    .cart-drawer-header h3 { font-family: var(--font-serif); font-size: 22px; color: var(--primary); }
+    .cart-close { font-size: 28px; cursor: pointer; color: var(--primary); line-height: 1; background: none; border: none; }
+
+    .cart-drawer-items { flex: 1; overflow-y: auto; padding: 20px 30px; }
+    .cart-empty { text-align: center; padding: 60px 0; color: #999; font-size: 15px; }
+    .cart-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
+    .cart-item-img { width: 80px; height: 80px; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+    .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-item-info { flex: 1; }
+    .cart-item-title { font-weight: 600; font-size: 15px; color: var(--primary); margin-bottom: 4px; }
+    .cart-item-price { font-size: 14px; color: #666; margin-bottom: 8px; }
+    .cart-item-qty { display: flex; align-items: center; gap: 10px; }
+    .qty-btn { width: 28px; height: 28px; border: 1px solid var(--border); border-radius: 50%; background: none; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
+    .qty-num { font-weight: 600; font-size: 14px; min-width: 20px; text-align: center; }
+    .cart-item-remove { color: #ccc; cursor: pointer; font-size: 20px; background: none; border: none; padding: 4px; }
+    .cart-item-remove:hover { color: #999; }
+
+    .cart-drawer-footer { padding: 20px 30px; border-top: 1px solid var(--border); }
+    .cart-subtotal { display: flex; justify-content: space-between; font-size: 16px; margin-bottom: 20px; }
+    .cart-subtotal span:last-child { font-weight: 700; color: var(--primary); font-size: 18px; }
+    .checkout-btn {
+        display: block; width: 100%; background: var(--primary); color: white;
+        padding: 18px; border: none; border-radius: 40px; font-size: 15px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; text-align: center;
+        text-decoration: none; transition: background 0.2s;
+    }
+    .checkout-btn:hover { background: #244d38; }
+    .view-cart-link { display: block; text-align: center; margin-top: 12px; color: #999; font-size: 13px; text-decoration: underline; cursor: pointer; }
+
+    /* Cart success toast */
+    .atc-toast {
+        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
+        background: var(--primary); color: white; padding: 14px 28px; border-radius: 40px;
+        font-weight: 600; font-size: 14px; z-index: 9999; transition: transform 0.4s ease;
+        white-space: nowrap; box-shadow: 0 4px 20px rgba(26,59,43,0.3);
+    }
+    .atc-toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Cart count badge */
+    .cart-count {
+        background: var(--secondary); color: white;
+        border-radius: 50%; width: 18px; height: 18px;
+        font-size: 11px; font-weight: 700; display: inline-flex;
+        align-items: center; justify-content: center;
+        vertical-align: super; margin-left: 2px;
+    }
 </style>
 
 
@@ -219,8 +286,13 @@
     <nav><a href="/collections/all">Shop</a><a href="#">About</a></nav>
     <a href="/" class="logo">NOOR E SHIFA</a>
     <div class="header-icons">
-        <a href="/search" style="color: var(--primary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></a>
-        <a href="/cart" style="color: var(--primary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg><span>({{ cart.item_count }})</span></a>
+        <a href="/search" style="color: var(--primary);" aria-label="Search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        <button onclick="openCartDrawer()" style="background:none;border:none;cursor:pointer;color:var(--primary);display:flex;align-items:center;gap:4px;padding:0;" aria-label="Cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            <span class="cart-count" id="cartCount">{{ cart.item_count }}</span>
+        </button>
     </div>
 </header>
 
@@ -231,6 +303,28 @@
         <a href="/collections/all">Shop</a>
     </nav>
 </div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer-overlay" id="cartOverlay" onclick="closeCartDrawer()"></div>
+<div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+        <h3>Your Cart</h3>
+        <button class="cart-close" onclick="closeCartDrawer()">&times;</button>
+    </div>
+    <div class="cart-drawer-items" id="cartItems">
+        <div class="cart-empty">Your cart is empty.</div>
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter" style="display:none;">
+        <div class="cart-subtotal">
+            <span>Subtotal</span>
+            <span id="cartTotal">Rs. 0.00</span>
+        </div>
+        <a href="/checkout" class="checkout-btn">Checkout</a>
+        <span class="view-cart-link" onclick="window.location='/cart'">View Full Cart</span>
+    </div>
+</div>
+
+<div class="atc-toast" id="atcToast">&#10003; Added to Cart!</div>
 
 <main>
     <section class="product-main">
@@ -245,10 +339,10 @@
             <div class="description">{{ product.description }}</div>
             <div class="price-section"><span class="price">{{ product.price | money }}</span></div>
             <div class="add-to-cart-container">
-                <form action="/cart/add" method="post">
-                    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                    <button type="submit" class="atc-btn">Add to Cart</button>
-                </form>
+                <input type="hidden" id="variantId" value="{{ product.variants.first.id }}">
+                <button type="button" class="atc-btn" id="atcBtn" onclick="addToCartAjax()">
+                    ADD TO CART
+                </button>
                 <div class="accordion">
                     <div class="accordion-item">
                         <button class="accordion-header" onclick="toggleAccordion(this)">Benefits <span>+</span></button>
@@ -405,7 +499,133 @@
 </main>
 
 <script>
+    // === NAV & ACCORDION ===
     function toggleMenu() { document.getElementById('mobileDrawer').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); }
     function toggleAccordion(btn) { btn.parentElement.classList.toggle('active'); btn.querySelector('span').textContent = btn.parentElement.classList.contains('active') ? '-' : '+'; }
     function toggleFaq(el) { const answer = el.nextElementSibling; const span = el.querySelector('span'); if (answer.style.display === 'block') { answer.style.display = 'none'; span.textContent = '+'; } else { answer.style.display = 'block'; span.textContent = '-'; } }
+
+    // === CART DRAWER ===
+    function openCartDrawer() {
+        document.getElementById('cartDrawer').classList.add('active');
+        document.getElementById('cartOverlay').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        fetchAndRenderCart();
+    }
+
+    function closeCartDrawer() {
+        document.getElementById('cartDrawer').classList.remove('active');
+        document.getElementById('cartOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function showToast() {
+        const toast = document.getElementById('atcToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function updateCartCount(count) {
+        const el = document.getElementById('cartCount');
+        if (el) el.textContent = count;
+    }
+
+    // === AJAX ADD TO CART ===
+    async function addToCartAjax() {
+        const variantId = document.getElementById('variantId').value;
+        const btn = document.getElementById('atcBtn');
+        btn.textContent = 'ADDING...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ id: parseInt(variantId), quantity: 1 })
+            });
+
+            if (!response.ok) throw new Error('Failed');
+
+            // Update cart count
+            const cartResp = await fetch('/cart.js');
+            const cart = await cartResp.json();
+            updateCartCount(cart.item_count);
+
+            btn.textContent = '✓ ADDED!';
+            setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.disabled = false; }, 2000);
+
+            showToast();
+            openCartDrawer();
+        } catch (err) {
+            btn.textContent = 'ADD TO CART';
+            btn.disabled = false;
+            alert('Could not add to cart. Please try again.');
+        }
+    }
+
+    // === FETCH & RENDER CART ===
+    async function fetchAndRenderCart() {
+        const resp = await fetch('/cart.js');
+        const cart = await resp.json();
+        renderCart(cart);
+    }
+
+    function formatMoney(cents) {
+        return 'Rs. ' + (cents / 100).toFixed(2);
+    }
+
+    function renderCart(cart) {
+        const container = document.getElementById('cartItems');
+        const footer = document.getElementById('cartFooter');
+        const totalEl = document.getElementById('cartTotal');
+
+        if (cart.item_count === 0) {
+            container.innerHTML = '<div class="cart-empty">🛒 Your cart is empty.<br><a href="/collections/all" style="color:var(--primary); margin-top:15px; display:inline-block; text-decoration:underline;">Start Shopping</a></div>';
+            footer.style.display = 'none';
+            return;
+        }
+
+        footer.style.display = 'block';
+        totalEl.textContent = formatMoney(cart.total_price);
+        updateCartCount(cart.item_count);
+
+        container.innerHTML = cart.items.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-img">
+                    <img src="${item.image}" alt="${item.title}">
+                </div>
+                <div class="cart-item-info">
+                    <div class="cart-item-title">${item.product_title}</div>
+                    <div class="cart-item-price">${formatMoney(item.price)}</div>
+                    <div class="cart-item-qty">
+                        <button class="qty-btn" onclick="updateQty(${item.variant_id}, ${item.quantity - 1})">−</button>
+                        <span class="qty-num">${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateQty(${item.variant_id}, ${item.quantity + 1})">+</button>
+                    </div>
+                </div>
+                <button class="cart-item-remove" onclick="removeItem(${item.variant_id})" title="Remove">×</button>
+            </div>
+        `).join('');
+    }
+
+    async function updateQty(variantId, newQty) {
+        await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: variantId, quantity: newQty })
+        });
+        fetchAndRenderCart();
+    }
+
+    async function removeItem(variantId) {
+        await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: variantId, quantity: 0 })
+        });
+        fetchAndRenderCart();
+    }
+
+    // Load cart count on page load
+    fetch('/cart.js').then(r => r.json()).then(cart => updateCartCount(cart.item_count));
 </script>
+
