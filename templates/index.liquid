@@ -648,7 +648,10 @@
 
 <section class="hero">
     <div class="hero-image">
-        <img src="{{ 'main_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
+        <picture>
+            <source media="(max-width: 768px)" srcset="{{ 'mobile_banner.jpg' | asset_img_url: 'master' }}">
+            <img src="{{ 'web_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
+        </picture>
     </div>
     <div class="hero-content">
         <h1>Natural Relief, Purely Crafted.</h1>
