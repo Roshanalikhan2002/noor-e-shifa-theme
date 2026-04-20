@@ -311,17 +311,14 @@
 
     /* Hero Section */
     .hero {
-        display: flex;
-        flex-direction: row-reverse; /* Image on the right for desktop */
-        height: 90vh;
-        align-items: center;
+        width: 100%;
+        height: auto;
         background-color: var(--accent);
         overflow: hidden;
     }
 
     .hero-content {
-        flex: 1;
-        padding: 0 8%;
+        display: none; /* Hidden as per request to show full banner */
     }
 
     .hero-content h1 {
@@ -357,15 +354,14 @@
     }
 
     .hero-image {
-        flex: 1;
-        height: 100%;
+        width: 100%;
+        height: auto;
         overflow: hidden;
     }
 
     .hero-image img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
+        height: auto;
         display: block;
     }
 
@@ -556,25 +552,18 @@
             font-size: 12px;
         }
         .hero {
-            flex-direction: column; /* Normal column for mobile: image (first) on top */
             height: auto;
         }
         .hero-image {
             width: 100%;
-            height: 350px;
-            order: -1;
+            height: auto;
         }
         .hero-image img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
         }
         .hero-content {
-            padding: 40px 5%;
-            text-align: center;
-        }
-        .hero-content h1 {
-            font-size: 28px;
+            display: none;
         }
         .footer-container {
             grid-template-columns: 1fr;
