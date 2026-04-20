@@ -109,7 +109,6 @@
     .product-gallery { flex: 1.2; }
     .main-image { width: 100%; height: 600px; background-color: var(--white); border-radius: 8px; overflow: hidden; }
     .main-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .mobile-slider { display: none; }
 
     .product-details { flex: 1; }
     .product-details h1 { font-family: var(--font-serif); font-size: 48px; color: var(--primary); line-height: 1.2; margin-bottom: 10px; }
@@ -208,23 +207,7 @@
         .header-icons { gap: 12px; }
         .product-main { flex-direction: column; padding: 20px 5%; gap: 20px; }
         .product-gallery { width: 100%; }
-        .main-image { display: none !important; }
-        .mobile-slider { 
-            display: block !important; 
-            width: 100%; 
-            height: 450px; 
-            overflow: hidden; 
-            position: relative; 
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-        .slider-wrapper { 
-            display: flex; 
-            height: 100%; 
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-        .slide { min-width: 100%; height: 100%; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        .main-image { height: 350px; }
         .product-details h1 {
             font-size: 30px;
             line-height: 1.2;
@@ -359,15 +342,6 @@
         <div class="product-gallery">
             <div class="main-image">
                 <img src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title }}">
-            </div>
-            <!-- Mobile Hero Slider -->
-            <div class="mobile-slider">
-                <div class="slider-wrapper" id="mobileHeroSlider">
-                    <div class="slide"><img src="{{ 'spotted_5.jpg' | asset_img_url: '800x' }}" alt="Slide 1"></div>
-                    <div class="slide"><img src="{{ 'spotted_6.jpg' | asset_img_url: '800x' }}" alt="Slide 2"></div>
-                    <div class="slide"><img src="{{ 'spotted_4.jpg' | asset_img_url: '800x' }}" alt="Slide 3"></div>
-                    <div class="slide"><img src="{{ 'spotted_3.jpg' | asset_img_url: '800x' }}" alt="Slide 4"></div>
-                </div>
             </div>
         </div>
         <div class="product-details">
@@ -556,17 +530,5 @@
         }
     }
     // All cart functions (gOpenCart, gAddToCart, gChangeQty, etc.) are global from theme.liquid
-    // === MOBILE HERO SLIDER ===
-    let currentHeroSlide = 0;
-    const heroSlides = document.querySelectorAll('#mobileHeroSlider .slide');
-    if (heroSlides.length > 0) {
-        setInterval(() => {
-            currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
-            const wrapper = document.getElementById('mobileHeroSlider');
-            if (wrapper) {
-                wrapper.style.transform = `translateX(-${currentHeroSlide * 100}%)`;
-            }
-        }, 3000); // 3 seconds interval
-    }
 </script>
 

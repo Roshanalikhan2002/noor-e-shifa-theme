@@ -365,6 +365,8 @@
         display: block;
     }
 
+    .mobile-slider { display: none; }
+
     /* Featured Product */
     .featured-product {
         padding: 100px 5%;
@@ -555,13 +557,22 @@
             height: auto;
         }
         .hero-image {
-            width: 100%;
-            height: auto;
+            display: none !important;
         }
-        .hero-image img {
-            width: 100%;
-            height: auto;
+        .mobile-slider { 
+            display: block !important; 
+            width: 100%; 
+            height: auto; 
+            overflow: hidden; 
+            position: relative; 
         }
+        .slider-wrapper { 
+            display: flex; 
+            height: 100%; 
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        .slide { min-width: 100%; height: auto; }
+        .slide img { width: 100%; height: auto; display: block; }
         .hero-content {
             display: none;
         }
@@ -637,10 +648,16 @@
 
 <section class="hero">
     <div class="hero-image">
-        <picture>
-            <source media="(max-width: 768px)" srcset="{{ 'mobile_banner.jpg' | asset_img_url: 'master' }}">
-            <img src="{{ 'web_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
-        </picture>
+        <img src="{{ 'web_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
+    </div>
+    <!-- Mobile Hero Slider -->
+    <div class="mobile-slider">
+        <div class="slider-wrapper" id="homeMobileSlider">
+            <div class="slide"><img src="{{ 'spotted_5.jpg' | asset_img_url: 'master' }}" alt="Slide 1"></div>
+            <div class="slide"><img src="{{ 'spotted_6.jpg' | asset_img_url: 'master' }}" alt="Slide 2"></div>
+            <div class="slide"><img src="{{ 'spotted_4.jpg' | asset_img_url: 'master' }}" alt="Slide 3"></div>
+            <div class="slide"><img src="{{ 'spotted_3.jpg' | asset_img_url: 'master' }}" alt="Slide 4"></div>
+        </div>
     </div>
     <div class="hero-content">
         <h1>Natural Relief, Purely Crafted.</h1>
@@ -851,5 +868,18 @@
         const overlay = document.getElementById('overlay');
         drawer.classList.toggle('active');
         overlay.classList.toggle('active');
+    }
+
+    // === HOME MOBILE SLIDER ===
+    let currentHomeSlide = 0;
+    const homeSlides = document.querySelectorAll('#homeMobileSlider .slide');
+    if (homeSlides.length > 0) {
+        setInterval(() => {
+            currentHomeSlide = (currentHomeSlide + 1) % homeSlides.length;
+            const wrapper = document.getElementById('homeMobileSlider');
+            if (wrapper) {
+                wrapper.style.transform = `translateX(-${currentHomeSlide * 100}%)`;
+            }
+        }, 3000);
     }
 </script>
