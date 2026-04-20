@@ -14,7 +14,159 @@
         --white: #ffffff;
         --font-serif: 'Playfair Display', serif;
         --font-sans: 'Inter', sans-serif;
+        --blume-bg: #FAF5EF;
+        --blume-navy: #12314E;
     }
+
+    .hollow-heading {
+        font-family: var(--font-serif);
+        font-size: clamp(40px, 8vw, 80px);
+        color: transparent;
+        -webkit-text-stroke: 1px var(--blume-navy);
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+        letter-spacing: 2px;
+    }
+
+    .section-container {
+        padding: 80px 5%;
+        background-color: var(--blume-bg);
+    }
+
+    /* Shop by Concern Styles */
+    .concern-slider {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        padding-bottom: 20px;
+        scroll-snap-type: x mandatory;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .concern-slider::-webkit-scrollbar { display: none; }
+
+    .concern-card {
+        flex: 0 0 300px;
+        aspect-ratio: 4/5;
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        scroll-snap-align: start;
+        cursor: pointer;
+    }
+    .concern-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    .concern-card:hover img { transform: scale(1.05); }
+    .concern-card-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.4));
+        color: white;
+    }
+    .concern-card-title {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    /* Best Sellers Slider Styles */
+    .best-sellers-section {
+        background-color: var(--blume-bg);
+        padding: 100px 5%;
+    }
+    .product-slider {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+    .product-slider::-webkit-scrollbar { display: none; }
+    
+    .product-item {
+        flex: 0 0 calc(25% - 18px);
+        scroll-snap-align: start;
+        text-decoration: none;
+        color: var(--blume-navy);
+    }
+    @media (max-width: 1024px) { .product-item { flex: 0 0 calc(50% - 12px); } }
+    @media (max-width: 600px) { .product-item { flex: 0 0 80%; } }
+
+    .product-item-img {
+        width: 100%;
+        aspect-ratio: 1;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .product-item-info { text-align: left; }
+    .product-item-title { font-weight: 700; font-size: 16px; margin-bottom: 5px; }
+    .product-item-rating { color: var(--blume-navy); font-size: 14px; margin-bottom: 5px; }
+
+    /* Expert Section Styles */
+    .expert-section {
+        display: flex;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 100px 8%;
+        gap: 60px;
+    }
+    @media (max-width: 768px) {
+        .expert-section { flex-direction: column; text-align: center; padding: 60px 5%; }
+    }
+    .expert-content { flex: 1; }
+    .expert-quote {
+        font-family: var(--font-serif);
+        font-size: clamp(24px, 4vw, 36px);
+        color: var(--blume-navy);
+        line-height: 1.2;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+    .expert-name { font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blume-navy); }
+    .expert-title { font-size: 14px; color: #666; }
+    .expert-image { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 20px 20px 0 var(--blume-bg); }
+    .expert-image img { width: 100%; display: block; }
+
+    /* Review Styles */
+    .reviews-section {
+        background-color: var(--blume-bg);
+        padding: 100px 5%;
+        text-align: center;
+    }
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+    .review-card {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        text-align: left;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+    .review-stars { color: var(--blume-navy); margin-bottom: 20px; font-size: 20px; }
+    .review-text { font-size: 15px; color: #444; line-height: 1.8; margin-bottom: 25px; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-author-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .review-author-name { font-weight: 700; font-size: 14px; }
+    .review-ba-img { width: 100%; border-radius: 12px; margin-bottom: 20px; }
 
     * {
         margin: 0;
@@ -529,6 +681,131 @@
     <div class="feature-item">
         <h4>Gentle Relief</h4>
         <p>Formulated to be gentle on your system while providing fast-acting relief from bloating.</p>
+    </div>
+</section>
+
+<!-- SHOP BY CONCERN -->
+<section class="section-container">
+    <h2 class="hollow-heading">Shop by Concern</h2>
+    <div class="concern-slider">
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_4.png' | asset_img_url: '600x' }}" alt="Gas Relief">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Gas Relief</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_2.png' | asset_img_url: '600x' }}" alt="Acidity">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Acidity</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_3.png' | asset_img_url: '600x' }}" alt="Bloating">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Bloating</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_1.png' | asset_img_url: '600x' }}" alt="Indigestion">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Indigestion</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="best-sellers-section">
+    <h2 class="hollow-heading">Best Sellers</h2>
+    <div class="product-slider">
+        <a href="/products/natural-stomach-relief-phaki" class="product-item">
+            <div class="product-item-img">
+                <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '600x' }}" alt="Phaki Main">
+            </div>
+            <div class="product-item-info">
+                <div class="product-item-rating">★★★★★ (4.9)</div>
+                <div class="product-item-title">Natural Stomach Relief Phaki</div>
+                <div class="price">Rs. 890.00</div>
+            </div>
+        </a>
+        <a href="/products/natural-stomach-relief-phaki" class="product-item">
+            <div class="product-item-img">
+                <img src="{{ 'phaki_close_up.png' | asset_img_url: '600x' }}" alt="Phaki Usage">
+            </div>
+            <div class="product-item-info">
+                <div class="product-item-rating">★★★★★ (4.8)</div>
+                <div class="product-item-title">Herbal Digestives Pack</div>
+                <div class="price">Rs. 890.00</div>
+            </div>
+        </a>
+        <a href="/products/natural-stomach-relief-phaki" class="product-item">
+            <div class="product-item-img">
+                <img src="{{ 'phaki_lifestyle_2.png' | asset_img_url: '600x' }}" alt="Phaki Lifestyle">
+            </div>
+            <div class="product-item-info">
+                <div class="product-item-rating">★★★★★ (5.0)</div>
+                <div class="product-item-title">Tradition & Purity Jar</div>
+                <div class="price">Rs. 890.00</div>
+            </div>
+        </a>
+        <a href="/products/natural-stomach-relief-phaki" class="product-item">
+            <div class="product-item-img">
+                <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '600x' }}" alt="Phaki Bundle">
+            </div>
+            <div class="product-item-info">
+                <div class="product-item-rating">★★★★★ (4.9)</div>
+                <div class="product-item-title">Stomach Balance Phaki</div>
+                <div class="price">Rs. 890.00</div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- EXPERT RECOMMENDATION -->
+<section class="expert-section">
+    <div class="expert-content">
+        <div class="expert-quote">
+            "Noor e Shifa phaki focus on natural hydration and digestive balance. It uses traditional botanical active ingredients that work gently with your system. You get the most out of every dose without any harsh chemicals."
+        </div>
+        <div class="expert-name">Hakim Noor Ahmed</div>
+        <div class="expert-title">Board Certified Herbalist & Researcher</div>
+    </div>
+    <div class="expert-image">
+        <img src="{{ 'expert_recommendation.png' | asset_img_url: '800x' }}" alt="Hakim Recommendation">
+    </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+    <h2 class="hollow-heading">Real Results</h2>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"I've been using this Phaki for about a month now and I absolutely adore it. I've always had problems with bloating after meals, but this has changed everything for me."</div>
+            <div class="review-author">
+                <img src="{{ 'lifestyle_herbal_1.png' | asset_img_url: '100x' }}" class="review-author-img">
+                <div>
+                    <div class="review-author-name">Ayesha K.</div>
+                    <div style="font-size: 12px; opacity: 0.6;">Verified Buyer</div>
+                </div>
+            </div>
+        </div>
+        <div class="review-card">
+            <img src="{{ 'review_before_after.png' | asset_img_url: '600x' }}" class="review-ba-img">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"The best herbal remedy in the business! It's pure, natural, and actually works. I recommend this to everyone looking for a chemical-free digestive solution."</div>
+            <div class="review-author">
+                <div class="review-author-name">Zain M.</div>
+            </div>
+        </div>
+        <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-text">"Finally a product that stays true to its traditional roots. It's gentle on the stomach and very effective. Never stopping this!"</div>
+            <div class="review-author">
+                <div class="review-author-name">Fatima R.</div>
+            </div>
+        </div>
     </div>
 </section>
 
