@@ -199,18 +199,18 @@
         footer.style.display = 'block';
         total.textContent = gFormatMoney(cart.total_price);
         items.innerHTML = cart.items.map((item, idx) => `
-            <div class="gcd-item" data-key="${item.key}">
+            <div class="gcd-item" data-line="${idx + 1}">
                 <div class="gcd-item-img"><img src="${item.image}" alt="${item.title}"></div>
                 <div class="gcd-item-info">
                     <div class="gcd-item-title">${item.product_title}</div>
                     <div class="gcd-item-price">${gFormatMoney(item.price)}</div>
                     <div class="gcd-item-qty">
-                        <button class="gcd-qty-btn" onclick="gQtyClick('${item.key}', ${item.variant_id}, -1)">−</button>
+                        <button class="gcd-qty-btn" onclick="gQtyClick(${idx + 1}, ${item.variant_id}, -1)">−</button>
                         <span class="gcd-qty-num" id="qty-${item.variant_id}">${item.quantity}</span>
-                        <button class="gcd-qty-btn" onclick="gQtyClick('${item.key}', ${item.variant_id}, +1)">+</button>
+                        <button class="gcd-qty-btn" onclick="gQtyClick(${idx + 1}, ${item.variant_id}, +1)">+</button>
                     </div>
                 </div>
-                <button class="gcd-item-remove" onclick="gChangeQty('${item.key}', 0)" title="Remove">×</button>
+                <button class="gcd-item-remove" onclick="gChangeQty(${idx + 1}, 0)" title="Remove">×</button>
             </div>
         `).join('');
     }
@@ -218,7 +218,7 @@
     // Timer for debouncing
     let gQtyTimer = null;
 
-    function gQtyClick(lineKey, variantId, delta) {
+    function gQtyClick(lineIndex, variantId, delta) {
         const qtyEl = document.getElementById('qty-' + variantId);
         if (!qtyEl) return;
         
@@ -232,27 +232,29 @@
         // Debounce the actual API call
         if (gQtyTimer) clearTimeout(gQtyTimer);
         gQtyTimer = setTimeout(() => {
-            gChangeQty(lineKey, newQty);
-        }, 500); // Wait 500ms after last click to sync with server
+            gChangeQty(lineIndex, newQty);
+        }, 500); 
     }
 
-    async function gChangeQty(lineKey, qty) {
-        // Find the item container and show a loading state if needed
-        const itemEl = document.querySelector(`.gcd-item[data-key="${lineKey}"]`);
+    async function gChangeQty(lineIndex, qty) {
+        // Find the item container
+        const itemEl = document.querySelector(`.gcd-item[data-line="${lineIndex}"]`);
         if (itemEl) itemEl.style.opacity = '0.5';
 
         try {
             const resp = await fetch('/cart/change.js', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: lineKey, quantity: qty })
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ line: lineIndex, quantity: qty })
             });
-            if (!resp.ok) throw new Error('Failed to update cart');
+            if (!resp.ok) {
+                const errData = await resp.json();
+                throw new Error(errData.description || 'Failed');
+            }
             const updatedCart = await resp.json();
             gRenderCart(updatedCart);
         } catch(e) {
             console.error('Cart error:', e);
-            // On error, revert by re-fetching the real state
             await gFetchCart();
         }
     }
