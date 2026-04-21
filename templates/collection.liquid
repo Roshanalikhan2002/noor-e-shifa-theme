@@ -250,9 +250,9 @@
     </nav>
     <a href="/" class="logo">NOOR E SHIFA</a>
     <div class="header-icons">
-        <a href="/search" style="color: var(--primary); text-decoration: none;">
+        <button onclick="gOpenSearch()" style="background:none;border:none;cursor:pointer;color:var(--primary);padding:0;" aria-label="Search">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        </a>
+        </button>
         <button onclick="gOpenCart()" style="background:none;border:none;cursor:pointer;color:var(--primary);display:flex;align-items:center;gap:4px;padding:0;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
             <span class="g-cart-count">{{ cart.item_count }}</span>
