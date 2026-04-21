@@ -261,13 +261,13 @@
 
 
 
-    async function gAddToCart(variantId, btn) {
+    async function gAddToCart(variantId, btn, qty = 1) {
         if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
         try {
             await fetch('/cart/add.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify({ id: parseInt(variantId), quantity: 1 })
+                body: JSON.stringify({ id: parseInt(variantId), quantity: parseInt(qty) })
             });
             if (btn) {
                 btn.textContent = '✓ ADDED!';
@@ -282,6 +282,16 @@
 
     // Init: load cart count on every page
     fetch('/cart.js').then(r => r.json()).then(c => gUpdateCount(c.item_count));
+    function selectBundle(card, qty, price) {
+        // Remove selection from all cards
+        document.querySelectorAll('.bundle-card').forEach(c => c.classList.remove('selected'));
+        // Select clicked card
+        card.classList.add('selected');
+        // Update hidden quantity input
+        document.getElementById('bundleQty').value = qty;
+        // Update main price display
+        document.getElementById('displayPrice').textContent = gFormatMoney(price);
+    }
 </script>
 
 </body>

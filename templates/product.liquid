@@ -178,6 +178,96 @@
         box-shadow: 0 4px 15px rgba(26, 59, 43, 0.2);
     }
 
+    /* Bundle Selector Styles */
+    .bundle-selector {
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .bundle-card {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 16px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+    }
+    .bundle-card:hover {
+        border-color: var(--primary);
+        background: #f9fbf9;
+    }
+    .bundle-card.selected {
+        border-color: var(--primary);
+        background: #f1f7f1;
+        box-shadow: 0 4px 15px rgba(26, 59, 43, 0.1);
+    }
+    .bundle-card.selected::after {
+        content: '✓';
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: var(--primary);
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .bundle-info h4 {
+        font-size: 16px;
+        color: var(--primary);
+        margin-bottom: 4px;
+        font-weight: 700;
+    }
+    .bundle-info p {
+        font-size: 13px;
+        color: #666;
+        margin: 0;
+    }
+    .bundle-pricing {
+        text-align: right;
+    }
+    .bundle-price {
+        display: block;
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--primary);
+    }
+    .bundle-compare-price {
+        display: block;
+        font-size: 12px;
+        color: #999;
+        text-decoration: line-through;
+    }
+    .popular-badge {
+        position: absolute;
+        top: -12px;
+        left: 20px;
+        background: var(--secondary);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .savings-tag {
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
     /* Accordion Style */
     .accordion { border-top: 1px solid var(--border); }
     .accordion-item { border-bottom: 1px solid var(--border); }
@@ -420,11 +510,50 @@
             <h1>{{ product.title }}</h1>
             <p class="subtitle">Complete Digestive Balance</p>
             <div class="description">{{ product.description }}</div>
-            <div class="price-section"><span class="price">{{ product.price | money }}</span></div>
+            <div class="price-section"><span class="price" id="displayPrice">{{ product.price | money }}</span></div>
+            
+            <div class="bundle-selector">
+                <div class="bundle-card selected" onclick="selectBundle(this, 1, {{ product.price }})">
+                    <div class="bundle-info">
+                        <h4>Starter Pack</h4>
+                        <p>1 Jar - Standard Relief</p>
+                    </div>
+                    <div class="bundle-pricing">
+                        <span class="bundle-price">Rs. 890</span>
+                    </div>
+                </div>
+
+                <div class="bundle-card" onclick="selectBundle(this, 3, 178000)">
+                    <div class="popular-badge">Best Value Deal</div>
+                    <div class="bundle-info">
+                        <h4>Buy 2 Get 1 FREE</h4>
+                        <p>Total 3 Jars + Free COD</p>
+                        <div class="savings-tag">SAVE 33% (Rs. 890 OFF)</div>
+                    </div>
+                    <div class="bundle-pricing">
+                        <span class="bundle-price">Rs. 1,780</span>
+                        <span class="bundle-compare-price">Rs. 2,670</span>
+                    </div>
+                </div>
+
+                <div class="bundle-card" onclick="selectBundle(this, 6, 356000)">
+                    <div class="bundle-info">
+                        <h4>Family Value Deal</h4>
+                        <p>Total 6 Jars + Free COD</p>
+                        <div class="savings-tag">SAVE 50% (Rs. 1,780 OFF)</div>
+                    </div>
+                    <div class="bundle-pricing">
+                        <span class="bundle-price">Rs. 3,560</span>
+                        <span class="bundle-compare-price">Rs. 5,340</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="add-to-cart-container">
+                <input type="hidden" id="bundleQty" value="1">
                 <input type="hidden" id="variantId" value="{{ product.variants.first.id }}">
                 <button type="button" class="atc-btn" id="atcBtn"
-                    onclick="gAddToCart(document.getElementById('variantId').value, this)">
+                    onclick="gAddToCart(document.getElementById('variantId').value, this, document.getElementById('bundleQty').value)">
                     ADD TO CART
                 </button>
                 <div class="accordion">

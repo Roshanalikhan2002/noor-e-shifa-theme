@@ -143,6 +143,110 @@
     .expert-image img { width: 100%; display: block; }
 
     /* Founder Home Section */
+    .founder-home-section a.cta-button:hover {
+        background-color: var(--secondary);
+    }
+
+    /* Homepage Bundle Deals */
+    .value-deals-section {
+        padding: 80px 5%;
+        background-color: #f9fbf9;
+        text-align: center;
+    }
+    .value-deals-section h2 {
+        font-family: var(--font-serif);
+        font-size: 36px;
+        color: var(--primary);
+        margin-bottom: 40px;
+    }
+    .deals-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .deal-card {
+        background: white;
+        border-radius: 16px;
+        padding: 40px 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.3s;
+        position: relative;
+        border: 1px solid #eee;
+    }
+    .deal-card:hover {
+        transform: translateY(-10px);
+    }
+    .deal-card.popular {
+        border: 2px solid var(--primary);
+    }
+    .deal-card .deal-badge {
+        position: absolute;
+        top: -15px;
+        background: var(--secondary);
+        color: white;
+        padding: 6px 15px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .deal-card .product-img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 25px;
+        object-fit: contain;
+    }
+    .deal-card h3 {
+        font-size: 22px;
+        color: var(--primary);
+        margin-bottom: 10px;
+    }
+    .deal-card .deal-desc {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 20px;
+        height: 40px;
+    }
+    .deal-card .deal-price {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 5px;
+    }
+    .deal-card .deal-compare {
+        font-size: 14px;
+        color: #999;
+        text-decoration: line-through;
+        margin-bottom: 25px;
+    }
+    .deal-card .deal-atc {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 30px;
+        background: var(--primary);
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .deal-card .deal-atc:hover {
+        background: #244d38;
+    }
+
+    @media (max-width: 992px) {
+        .deals-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+    }
+
     .founder-home-section {
         background-color: #ffffff;
         padding: 100px 5%;
@@ -805,6 +909,43 @@
     <div class="feature-item">
         <h4>Gentle Relief</h4>
         <p>Formulated to be gentle on your system while providing fast-acting relief from bloating.</p>
+    </div>
+</section>
+
+<!-- EXCLUSIVE VALUE DEALS -->
+<section class="value-deals-section">
+    <h2>Exclusive Value Deals</h2>
+    <div class="deals-grid">
+        <!-- Deal 1 -->
+        <div class="deal-card">
+            <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '400x' }}" alt="1 Jar" class="product-img">
+            <h3>Starter Pack</h3>
+            <p class="deal-desc">1 Jar - Perfect for trying out</p>
+            <div class="deal-price">Rs. 890</div>
+            <div class="deal-compare">&nbsp;</div>
+            <button class="deal-atc" onclick="gAddToCart(63481336267121, this, 1)">Add to Cart</button>
+        </div>
+
+        <!-- Deal 2 -->
+        <div class="deal-card popular">
+            <div class="deal-badge">Best Value</div>
+            <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '400x' }}" alt="3 Jars" class="product-img">
+            <h3>Buy 2 Get 1 FREE</h3>
+            <p class="deal-desc">Total 3 Jars + Free Delivery</p>
+            <div class="deal-price">Rs. 1,780</div>
+            <div class="deal-compare">Rs. 2,670</div>
+            <button class="deal-atc" onclick="gAddToCart(63481336267121, this, 3)">Add to Cart</button>
+        </div>
+
+        <!-- Deal 3 -->
+        <div class="deal-card">
+            <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '400x' }}" alt="6 Jars" class="product-img">
+            <h3>Family Value Deal</h3>
+            <p class="deal-desc">Total 6 Jars + Free Delivery</p>
+            <div class="deal-price">Rs. 3,560</div>
+            <div class="deal-compare">Rs. 5,340</div>
+            <button class="deal-atc" onclick="gAddToCart(63481336267121, this, 6)">Add to Cart</button>
+        </div>
     </div>
 </section>
 
