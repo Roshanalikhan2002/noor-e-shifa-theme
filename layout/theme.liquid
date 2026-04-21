@@ -196,8 +196,34 @@
             return;
         }
 
+        // CALCULATE BUNDLE DISCOUNTS (Buy 2 Get 1 Free Logic)
+        let totalDiscount = 0;
+        cart.items.forEach(item => {
+            // Check if it's the Phaki product
+            if (item.handle.includes('phaki')) {
+                // For every 3 items, 1 is free
+                const freeCount = Math.floor(item.quantity / 3);
+                totalDiscount += (freeCount * item.price);
+            }
+        });
+
+        const finalTotal = cart.total_price - totalDiscount;
+
         footer.style.display = 'block';
-        total.textContent = gFormatMoney(cart.total_price);
+        
+        // Update subtotal display
+        if (totalDiscount > 0) {
+            total.innerHTML = `
+                <div style="text-align:right;">
+                    <span style="font-size:14px; text-decoration:line-through; color:#999; font-weight:400; margin-right:8px;">${gFormatMoney(cart.total_price)}</span>
+                    <span style="color:var(--cart-primary);">${gFormatMoney(finalTotal)}</span>
+                    <div style="color:var(--cart-secondary); font-size:12px; font-weight:600; margin-top:4px;">Deal Discount Applied!</div>
+                </div>
+            `;
+        } else {
+            total.textContent = gFormatMoney(cart.total_price);
+        }
+
         items.innerHTML = cart.items.map((item, idx) => `
             <div class="gcd-item" data-line="${idx + 1}">
                 <div class="gcd-item-img"><img src="${item.image}" alt="${item.title}"></div>
