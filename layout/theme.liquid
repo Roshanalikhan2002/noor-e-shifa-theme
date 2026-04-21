@@ -199,7 +199,7 @@
         footer.style.display = 'block';
         total.textContent = gFormatMoney(cart.total_price);
         items.innerHTML = cart.items.map((item, idx) => `
-            <div class="gcd-item">
+            <div class="gcd-item" data-key="${item.key}">
                 <div class="gcd-item-img"><img src="${item.image}" alt="${item.title}"></div>
                 <div class="gcd-item-info">
                     <div class="gcd-item-title">${item.product_title}</div>
@@ -215,30 +215,44 @@
         `).join('');
     }
 
-    // delta = +1 or -1; reads live qty from DOM
+    // Timer for debouncing
+    let gQtyTimer = null;
+
     function gQtyClick(lineKey, variantId, delta) {
         const qtyEl = document.getElementById('qty-' + variantId);
-        const currentQty = qtyEl ? parseInt(qtyEl.textContent) : 1;
-        const newQty = currentQty + delta;
-        if (newQty < 0) return;
-        // Optimistic instant update
-        if (qtyEl) qtyEl.textContent = Math.max(0, newQty);
-        gChangeQty(lineKey, newQty);
+        if (!qtyEl) return;
+        
+        let currentQty = parseInt(qtyEl.textContent);
+        let newQty = currentQty + delta;
+        if (newQty < 0) newQty = 0;
+        
+        // Optimistic Update
+        qtyEl.textContent = newQty;
+        
+        // Debounce the actual API call
+        if (gQtyTimer) clearTimeout(gQtyTimer);
+        gQtyTimer = setTimeout(() => {
+            gChangeQty(lineKey, newQty);
+        }, 500); // Wait 500ms after last click to sync with server
     }
 
     async function gChangeQty(lineKey, qty) {
-        document.querySelectorAll('.gcd-qty-btn').forEach(b => b.disabled = true);
+        // Find the item container and show a loading state if needed
+        const itemEl = document.querySelector(`.gcd-item[data-key="${lineKey}"]`);
+        if (itemEl) itemEl.style.opacity = '0.5';
+
         try {
             const resp = await fetch('/cart/change.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: lineKey, quantity: qty < 0 ? 0 : qty })
+                body: JSON.stringify({ id: lineKey, quantity: qty })
             });
-            if (!resp.ok) throw new Error('Failed');
+            if (!resp.ok) throw new Error('Failed to update cart');
             const updatedCart = await resp.json();
             gRenderCart(updatedCart);
         } catch(e) {
             console.error('Cart error:', e);
+            // On error, revert by re-fetching the real state
             await gFetchCart();
         }
     }
