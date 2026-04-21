@@ -119,6 +119,110 @@
         .image-content { height: 350px; }
         .footer-container { grid-template-columns: 1fr; }
     }
+
+    /* CEO Story Section */
+    .ceo-story-container {
+        padding: 120px 5%;
+        background-color: #FAF5EF;
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 80px;
+        align-items: start;
+        max-width: 1300px;
+        margin: 0 auto;
+    }
+
+    .ceo-image-sticky {
+        position: sticky;
+        top: 120px;
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 4/5;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    }
+
+    .ceo-image-sticky img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .ceo-text-content {
+        color: var(--primary);
+    }
+
+    .ceo-text-content .label {
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: 700;
+        font-size: 14px;
+        opacity: 0.6;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .ceo-text-content h2 {
+        font-family: var(--font-serif);
+        font-size: clamp(36px, 5vw, 54px);
+        line-height: 1.1;
+        margin-bottom: 40px;
+        color: var(--primary);
+    }
+
+    .story-body {
+        font-size: 19px;
+        line-height: 1.8;
+        color: #3e5a4d;
+    }
+
+    .story-body p {
+        margin-bottom: 25px;
+    }
+
+    .story-body .highlight {
+        font-family: var(--font-serif);
+        font-size: 26px;
+        line-height: 1.4;
+        color: var(--primary);
+        margin: 40px 0;
+        padding-left: 30px;
+        border-left: 3px solid var(--secondary);
+        font-style: italic;
+    }
+
+    .ceo-signature {
+        margin-top: 60px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(26,59,43,0.1);
+    }
+
+    .ceo-signature h3 {
+        font-family: var(--font-serif);
+        font-size: 28px;
+        margin-bottom: 5px;
+    }
+
+    .ceo-signature p {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 992px) {
+        .ceo-story-container {
+            grid-template-columns: 1fr;
+            gap: 60px;
+            padding: 80px 5%;
+        }
+        .ceo-image-sticky {
+            position: relative;
+            top: 0;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+    }
 </style>
 
 <div class="announcement-bar">Free Shipping on Orders Above Rs. 3000</div>
@@ -179,6 +283,54 @@
             </div>
             <div class="image-content">
                 <img src="{{ 'wake_up_reality.jpg' | asset_img_url: '800x' }}" alt="Crafting">
+            </div>
+        </section>
+
+        <!-- CEO STORY SECTION -->
+        <section class="ceo-story-container" id="my-story">
+            <div class="ceo-image-sticky">
+                <img src="{{ 'founder_noor.png' | asset_img_url: 'master' }}" alt="Noor Bukhari - Founder of Noor e Shifa">
+            </div>
+            <div class="ceo-text-content">
+                <span class="label">The Founder's Journey</span>
+                <h2>My Story — Noor Bukhari</h2>
+                
+                <div class="story-body">
+                    <p>There was a phase in my life that I don’t think I’ll ever forget… because no matter where I was, who I was with, or what I was doing — I never felt at ease. Not even for a second.</p>
+                    
+                    <p>It started with my gut. Constant bloating. Heaviness. Discomfort after every meal. But slowly… it became something much bigger.</p>
+                    
+                    <div class="highlight">
+                        "My heart would suddenly start racing for no reason. I would feel this strange anxiety in my chest. A constant uneasiness… like something was wrong with me."
+                    </div>
+                    
+                    <p>And the worst part? I couldn’t explain it to anyone. On the outside, I looked completely fine. But inside, I was struggling every single day.</p>
+                    
+                    <p>There were moments I genuinely thought, “Why do I feel like this? What is happening to me?” It wasn’t just physical anymore. My gut issues were affecting my mind. I stopped feeling confident. I stopped feeling like myself. Even sitting with people, I felt uncomfortable in my own body.</p>
+                    
+                    <p>And no one talks about this. No one tells you how deeply your gut can affect your mental health — how it can trigger anxiety, panic, and a constant feeling of being unwell.</p>
+                    
+                    <p>It’s exhausting. It makes you feel alone. And at one point… I really thought this is just how my life is going to be. But I refused to accept that.</p>
+                    
+                    <p>Instead of relying on temporary fixes, I went back to something simple… something natural… something that has been trusted for generations. That’s when I discovered herbal phakki.</p>
+                    
+                    <p>A traditional blend — used for ages to heal the gut, improve digestion, and bring the body back into balance. No chemicals. No harsh side effects. Just pure, natural healing.</p>
+                    
+                    <div class="highlight">
+                        "And slowly… things started changing. The heaviness started going away. The bloating reduced. That constant uneasy feeling… started fading."
+                    </div>
+                    
+                    <p>For the first time in so long — I felt calm. I felt light. I felt like myself again. That’s exactly why I created Noor e Shifa.</p>
+                    
+                    <p>This is not just a product for me. This is something that helped me come out of one of the most difficult phases of my life. Because I know there are so many people out there… silently struggling, feeling uncomfortable in their own bodies, not understanding why they feel anxious all the time.</p>
+                    
+                    <p>If you’re one of them — I see you. And I want you to know… you’re not alone, and this can get better. Sometimes, healing doesn’t come from complicated solutions. Sometimes, it comes from going back to what’s natural. And that’s what Noor e Shifa is all about.</p>
+                </div>
+                
+                <div class="ceo-signature">
+                    <h3>Noor Bukhari</h3>
+                    <p>Founder, Noor e Shifa</p>
+                </div>
             </div>
         </section>
     </div>

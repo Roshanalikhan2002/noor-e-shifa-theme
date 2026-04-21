@@ -142,6 +142,85 @@
     .expert-image { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 20px 20px 0 var(--blume-bg); }
     .expert-image img { width: 100%; display: block; }
 
+    /* Founder Home Section */
+    .founder-home-section {
+        background-color: #ffffff;
+        padding: 100px 5%;
+        display: flex;
+        align-items: center;
+        gap: 80px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .founder-home-image {
+        flex: 1;
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 1;
+        box-shadow: 20px 20px 0 var(--blume-bg);
+    }
+
+    .founder-home-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .founder-home-content {
+        flex: 1.2;
+    }
+
+    .founder-home-content .label {
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        font-size: 12px;
+        color: var(--secondary);
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .founder-home-content h2 {
+        font-family: var(--font-serif);
+        font-size: 42px;
+        line-height: 1.2;
+        margin-bottom: 30px;
+        color: var(--primary);
+    }
+
+    .founder-home-content p {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 30px;
+        line-height: 1.7;
+    }
+
+    .founder-home-content .quote {
+        font-style: italic;
+        border-left: 3px solid var(--secondary);
+        padding-left: 20px;
+        margin-bottom: 30px;
+        font-size: 20px;
+        color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+        .founder-home-section {
+            flex-direction: column;
+            padding: 60px 5%;
+            gap: 40px;
+            text-align: center;
+        }
+        .founder-home-image {
+            width: 100%;
+            max-width: 400px;
+        }
+        .founder-home-content .quote {
+            text-align: left;
+        }
+    }
+
     /* Review Styles */
     .reviews-section {
         background-color: var(--blume-bg);
@@ -714,7 +793,6 @@
         <a href="/products/natural-stomach-relief-phaki" class="cta-button">View Details</a>
     </div>
 </section>
-
 <section class="features">
     <div class="feature-item">
         <h4>Traditional Roots</h4>
@@ -727,6 +805,22 @@
     <div class="feature-item">
         <h4>Gentle Relief</h4>
         <p>Formulated to be gentle on your system while providing fast-acting relief from bloating.</p>
+    </div>
+</section>
+
+<!-- MEET THE FOUNDER HOME -->
+<section class="founder-home-section">
+    <div class="founder-home-image">
+        <img src="{{ 'founder_noor.png' | asset_img_url: '800x' }}" alt="Noor Bukhari">
+    </div>
+    <div class="founder-home-content">
+        <span class="label">A Message from our Founder</span>
+        <h2>Why I Created Noor e Shifa</h2>
+        <div class="quote">
+            "There was a phase in my life that I don’t think I’ll ever forget… because no matter where I was, I never felt at ease."
+        </div>
+        <p>I struggled silently with gut issues that affected my confidence and my mind. I created Noor e Shifa to share the natural, traditional healing that brought me back to myself.</p>
+        <a href="/pages/about#my-story" class="cta-button">Read My Full Story</a>
     </div>
 </section>
 
