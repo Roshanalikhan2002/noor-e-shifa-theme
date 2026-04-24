@@ -310,6 +310,19 @@
             gRenderCart(updatedCart);
         } catch(e) {
             console.error('Cart error:', e);
+            // Show error message to user
+            const t = document.getElementById('gAtcToast');
+            const originalText = t.textContent;
+            t.textContent = '⚠ ' + (e.message.includes('sold out') ? 'Not enough stock available' : e.message);
+            t.style.background = 'var(--cart-secondary)';
+            t.classList.add('show');
+            setTimeout(() => { 
+                t.classList.remove('show');
+                setTimeout(() => { 
+                    t.textContent = originalText; 
+                    t.style.background = '';
+                }, 400);
+            }, 3000);
             await gFetchCart();
         }
     }
