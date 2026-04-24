@@ -236,6 +236,7 @@
     }
 
     function gRenderCart(cart) {
+        console.log('Rendering Cart:', cart);
         const items = document.getElementById('gcdItems');
         const footer = document.getElementById('gcdFooter');
         const total = document.getElementById('gcdTotal');
@@ -250,6 +251,7 @@
 
         footer.style.display = 'block';
         total.textContent = gFormatMoney(cart.total_price);
+        console.log('Updated Total:', total.textContent);
 
         items.innerHTML = cart.items.map((item, idx) => `
             <div class="gcd-item" data-key="${item.key}">
