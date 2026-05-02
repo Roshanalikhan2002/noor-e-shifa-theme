@@ -965,7 +965,102 @@
             line-height: 1.2;
         }
     }
+    /* Nutrition Chart Styles */
+    .nutrition-chart-section {
+        background-color: #FAF5EF; /* Matching var(--blume-bg) */
+        padding: 100px 5%;
+        text-align: center;
+    }
+    .nutrition-chart-header {
+        margin-bottom: 60px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .nutrition-chart-header h2 {
+        font-family: var(--font-serif);
+        font-size: clamp(32px, 5vw, 48px);
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+    .nutrition-chart-header p {
+        font-size: 18px;
+        color: #555;
+    }
+    .nutrition-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .nutrition-item {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .nutrition-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+    .ingredient-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--accent);
+        border-radius: 50%;
+        margin: 0 auto 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: var(--primary);
+    }
+    .nutrition-item h3 {
+        font-family: var(--font-serif);
+        font-size: 24px;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+    .nutrition-item .benefits-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .nutrition-item .benefits-list li {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .nutrition-item .benefits-list li::before {
+        content: "•";
+        color: var(--secondary);
+        font-weight: bold;
+    }
+    .nutrition-footer {
+        margin-top: 50px;
+        font-size: 14px;
+        color: #999;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .nutrition-chart-section {
+            padding: 60px 5%;
+        }
+        .nutrition-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
+
 
 <div class="announcement-bar">
     Buy 2 Get 1 FREE + Free Delivery
@@ -1134,7 +1229,66 @@
     </div>
 </section>
 
+
+<!-- NUTRITION CHART SECTION -->
+<section class="nutrition-chart-section">
+    <div class="nutrition-chart-header">
+        <h2>Nutritional Profile</h2>
+        <p>A scientific blend of nature's finest digestive aids, carefully balanced for your gut health.</p>
+    </div>
+    <div class="nutrition-grid">
+        <!-- Ajwain -->
+        <div class="nutrition-item">
+            <div class="ingredient-icon">🌱</div>
+            <h3>Ajwain</h3>
+            <ul class="benefits-list">
+                <li>Rich in Fiber & Minerals</li>
+                <li>Relieves Instant Acidity</li>
+                <li>Reduces Bloating & Gas</li>
+                <li>Improves Gut Motility</li>
+            </ul>
+        </div>
+        <!-- Saunf -->
+        <div class="nutrition-item">
+            <div class="ingredient-icon">🌿</div>
+            <h3>Saunf</h3>
+            <ul class="benefits-list">
+                <li>High in Vitamin C & Manganese</li>
+                <li>Cools Digestive System</li>
+                <li>Reduces Inflammation</li>
+                <li>Natural Mouth Freshener</li>
+            </ul>
+        </div>
+        <!-- Zeera -->
+        <div class="nutrition-item">
+            <div class="ingredient-icon">🌾</div>
+            <h3>Zeera</h3>
+            <ul class="benefits-list">
+                <li>Packed with Iron & Vitamin A</li>
+                <li>Boosts Digestive Enzymes</li>
+                <li>Speeds Up Metabolism</li>
+                <li>Antioxidant Properties</li>
+            </ul>
+        </div>
+        <!-- Black Salt -->
+        <div class="nutrition-item">
+            <div class="ingredient-icon">🧂</div>
+            <h3>Black Salt</h3>
+            <ul class="benefits-list">
+                <li>Essential Minerals & Iron</li>
+                <li>Eliminates Trapped Gas</li>
+                <li>Balances Stomach pH</li>
+                <li>Supports Electrolytes</li>
+            </ul>
+        </div>
+    </div>
+    <div class="nutrition-footer">
+        * Based on standard herbal nutritional profiles.
+    </div>
+</section>
+
 <!-- MEET THE FOUNDER HOME -->
+
 <section class="founder-home-section">
     <div class="founder-home-image">
         <img src="{{ 'ceo_home.jpg' | asset_img_url: '800x' }}" alt="Noor Bukhari">
