@@ -892,6 +892,49 @@
             margin-bottom: 20px !important;
         }
     }
+    /* Trust Badges Bar */
+    .trust-badges-bar {
+        background-color: #ffffff;
+        padding: 25px 5%;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .badges-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 30px;
+    }
+    .trust-badge-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .trust-badge-item svg {
+        color: var(--primary);
+        flex-shrink: 0;
+    }
+    .trust-badge-item span {
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--primary);
+    }
+    @media (max-width: 768px) {
+        .trust-badges-bar { padding: 20px 5%; }
+        .badges-container {
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        .trust-badge-item {
+            justify-content: center;
+            width: 100%;
+        }
+        .trust-badge-item span { font-size: 11px; letter-spacing: 1px; }
+    }
 </style>
 
 <div class="announcement-bar">
@@ -976,6 +1019,23 @@
         <h1>Say Goodbye to Bloating, Acidity & Heavy Stomach — Naturally</h1>
         <p>A 100% Organic Herbal Phakki designed to improve digestion, reduce bloating, and make you feel light after every meal.</p>
         <a href="/collections/all" class="cta-button">Shop Now</a>
+    </div>
+</section>
+
+<section class="trust-badges-bar">
+    <div class="badges-container">
+        <div class="trust-badge-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span>Cash on Delivery</span>
+        </div>
+        <div class="trust-badge-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            <span>100% Natural</span>
+        </div>
+        <div class="trust-badge-item">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>No Harsh Chemicals</span>
+        </div>
     </div>
 </section>
 
