@@ -196,10 +196,30 @@
         text-transform: uppercase;
     }
     .deal-card .product-img {
-        width: 150px;
-        height: 150px;
+        width: 220px;
+        height: 220px;
         margin-bottom: 25px;
         object-fit: contain;
+    }
+    .deal-card.starter {
+        transform: scale(0.9);
+        opacity: 0.85;
+    }
+    .deal-card.starter .product-img {
+        width: 160px;
+        height: 160px;
+    }
+    .deal-savings {
+        background: #e8f5e9;
+        color: #2e7d32;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        display: inline-block;
+        letter-spacing: 0.5px;
     }
     .deal-card h3 {
         font-size: 22px;
@@ -1080,13 +1100,13 @@
     <h2>Exclusive Value Deals</h2>
     <div class="deals-grid">
         <!-- Deal 1 -->
-        <div class="deal-card">
+        <div class="deal-card starter">
             <img src="{{ 'starter_pack_v2.jpg' | asset_img_url: '400x' }}" alt="1 Jar" class="product-img">
             <h3>Starter Pack</h3>
             <p class="deal-desc">1 Jar - Perfect for trying out</p>
             <div class="deal-price">Rs. 890</div>
             <div class="deal-compare">&nbsp;</div>
-            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 1)">Add to Cart</button>
+            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 1)">BUY NOW</button>
         </div>
 
         <!-- Deal 2 -->
@@ -1094,20 +1114,22 @@
             <div class="deal-badge">Best Value</div>
             <img src="{{ '3_bundles_deal.jpg' | asset_img_url: '400x' }}" alt="3 Jars" class="product-img">
             <h3>Buy 2 Get 1 FREE</h3>
+            <div class="deal-savings">Save Rs. 890</div>
             <p class="deal-desc">Total 3 Jars + Free Delivery</p>
             <div class="deal-price">Rs. 1,780</div>
             <div class="deal-compare">Rs. 2,670</div>
-            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 3)">Add to Cart</button>
+            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 3)">BUY NOW</button>
         </div>
 
         <!-- Deal 3 -->
         <div class="deal-card">
             <img src="{{ '6_bundles_deal_v2.jpg' | asset_img_url: '400x' }}" alt="6 Jars" class="product-img">
             <h3>Family Value Deal</h3>
+            <div class="deal-savings">Save Rs. 1,780</div>
             <p class="deal-desc">Total 6 Jars + Free Delivery</p>
             <div class="deal-price">Rs. 3,560</div>
             <div class="deal-compare">Rs. 5,340</div>
-            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 6)">Add to Cart</button>
+            <button class="deal-atc" onclick="gAddToCart(63302317998449, this, 6)">BUY NOW</button>
         </div>
     </div>
 </section>
