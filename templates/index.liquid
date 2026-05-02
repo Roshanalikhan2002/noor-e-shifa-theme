@@ -1059,7 +1059,97 @@
             grid-template-columns: 1fr;
         }
     }
+    /* FAQ Section Styles */
+    .faq-section {
+        background-color: #ffffff;
+        padding: 100px 5%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .faq-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .faq-header h2 {
+        font-family: var(--font-serif);
+        font-size: 36px;
+        color: var(--primary);
+    }
+    .faq-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .faq-item {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    .faq-question {
+        padding: 20px 25px;
+        background: #fff;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        color: var(--primary);
+        font-size: 18px;
+    }
+    .faq-question:hover {
+        background: #f9f9f9;
+    }
+    .faq-answer {
+        padding: 0 25px;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0, 1, 0, 1);
+        color: #666;
+        line-height: 1.7;
+        font-size: 16px;
+    }
+    .faq-item.active .faq-answer {
+        max-height: 1000px;
+        padding: 0 25px 25px;
+        transition: all 0.3s cubic-bezier(1, 0, 1, 0);
+    }
+    .faq-icon {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        transition: transform 0.3s;
+    }
+    .faq-icon::before, .faq-icon::after {
+        content: '';
+        position: absolute;
+        background: var(--primary);
+        transition: all 0.3s;
+    }
+    .faq-icon::before {
+        width: 100%;
+        height: 2px;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    .faq-icon::after {
+        width: 2px;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+    }
+    .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+    }
+
+    @media (max-width: 768px) {
+        .faq-section { padding: 60px 5%; }
+        .faq-question { font-size: 16px; padding: 15px 20px; }
+    }
 </style>
+
 
 
 <div class="announcement-bar">
@@ -1286,6 +1376,65 @@
     </div>
     <div class="nutrition-footer">
         * Based on standard herbal nutritional profiles.
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+    <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-container">
+        <!-- Q1 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                How do I use it?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                For best results, take 1 small teaspoon right after your meals or whenever you feel bloated. It is best taken with a glass of water.
+            </div>
+        </div>
+        <!-- Q2 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                Is it natural?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Yes, Noor e Shifa is a 100% natural herbal digestive blend. It contains pure ingredients like Ajwain (Carom Seeds), Saunf (Fennel Seeds), Zeera (Cumin Seeds), and Black Salt (Kala Namak) with no artificial fillers.
+            </div>
+        </div>
+        <!-- Q3 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                Does it cure acidity or stomach problems?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Noor e Shifa supports healthy digestion and is designed to provide relief from everyday bloating, gas, and stomach heaviness. It helps your system process food naturally and comfortably.
+            </div>
+        </div>
+        <!-- Q4 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                Is Cash on Delivery (COD) available?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Yes! We offer Cash on Delivery (COD) across Pakistan. You can pay conveniently when the product arrives at your doorstep.
+            </div>
+        </div>
+        <!-- Q5 -->
+        <div class="faq-item">
+            <div class="faq-question">
+                How long does delivery take?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                We deliver all across Pakistan within 3 to 5 working days. Once your order is placed, you will receive a confirmation message and tracking details.
+            </div>
+        </div>
     </div>
 </section>
 
@@ -1530,4 +1679,19 @@
             }
         }, 3000);
     }
+
+    // === FAQ ACCORDION ===
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            item.classList.toggle('active');
+            
+            // Optional: Close other open items
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+        });
+    });
 </script>
