@@ -79,7 +79,12 @@
                     <td>
                         <div style="display:flex;gap:16px;align-items:center;">
                             <img class="cart-product-img" src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
-                            <span class="cart-product-title">{{ item.product_title }}</span>
+                            <div>
+                                <span class="cart-product-title">{{ item.product_title }}</span>
+                                {% if item.properties.Gift %}
+                                    <div style="color: var(--secondary); font-weight: 700; font-size: 13px; text-transform: uppercase; margin-top: 4px;">{{ item.properties.Gift }}</div>
+                                {% endif %}
+                            </div>
                         </div>
                     </td>
                     <td>{{ item.price | money }}</td>

@@ -253,11 +253,18 @@
         total.textContent = gFormatMoney(cart.total_price);
         console.log('Updated Total:', total.textContent);
 
-        items.innerHTML = cart.items.map((item, idx) => `
+        items.innerHTML = cart.items.map((item, idx) => {
+            let propertiesHtml = '';
+            if (item.properties && item.properties.Gift) {
+                propertiesHtml = `<div style="color:var(--cart-secondary); font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:4px;">${item.properties.Gift}</div>`;
+            }
+
+            return `
             <div class="gcd-item" data-key="${item.key}">
                 <div class="gcd-item-img"><img src="${item.image}" alt="${item.title}"></div>
                 <div class="gcd-item-info">
                     <div class="gcd-item-title">${item.product_title}</div>
+                    ${propertiesHtml}
                     <div class="gcd-item-price">${gFormatMoney(item.price)}</div>
                     <div class="gcd-item-qty">
                         <button class="gcd-qty-btn" onclick="gQtyClick('${item.key}', -1)">−</button>
@@ -267,7 +274,7 @@
                 </div>
                 <button class="gcd-item-remove" onclick="gChangeQty('${item.key}', 0)" title="Remove">×</button>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // Timer for debouncing
@@ -345,6 +352,30 @@
             gOpenCart();
         } catch(e) {
             if (btn) { btn.textContent = 'ADD TO CART'; btn.disabled = false; }
+        }
+    }
+
+    async function gAddToCartBundle(variantId, btn, paidQty, freeQty) {
+        if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
+        try {
+            await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    items: [
+                        { id: parseInt(variantId), quantity: parseInt(paidQty) },
+                        { id: parseInt(variantId), quantity: parseInt(freeQty), properties: { 'Gift': 'Free Gift' } }
+                    ]
+                })
+            });
+            if (btn) {
+                btn.textContent = '✓ ADDED!';
+                setTimeout(() => { btn.textContent = 'BUY NOW'; btn.disabled = false; }, 2000);
+            }
+            gShowToast();
+            gOpenCart();
+        } catch(e) {
+            if (btn) { btn.textContent = 'BUY NOW'; btn.disabled = false; }
         }
     }
 
