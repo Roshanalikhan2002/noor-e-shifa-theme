@@ -412,8 +412,10 @@
         card.classList.add('selected');
         // Update hidden quantity input
         document.getElementById('bundleQty').value = qty;
-        // Update main price display
-        document.getElementById('displayPrice').textContent = gFormatMoney(price);
+        const displayPrice = document.getElementById('displayPrice');
+        if (displayPrice) {
+            displayPrice.textContent = gFormatMoney(price);
+        }
     }
 </script>
 

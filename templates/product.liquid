@@ -514,7 +514,7 @@
             </div>
             
             <div class="bundle-selector">
-                <div class="bundle-card selected" onclick="selectBundle(this, 1, {{ product.price }})">
+                <div class="bundle-card" onclick="selectBundle(this, 1, {{ product.price }})">
                     <div class="bundle-info">
                         <h4>Starter Pack</h4>
                         <p>1 Jar - Standard Relief</p>
@@ -524,7 +524,7 @@
                     </div>
                 </div>
 
-                <div class="bundle-card" onclick="selectBundle(this, 3, 178000)">
+                <div class="bundle-card selected" onclick="selectBundle(this, 3, 178000)">
                     <div class="popular-badge">Best Value Deal</div>
                     <div class="bundle-info">
                         <h4>Buy 2 Get 1 FREE</h4>
@@ -551,7 +551,7 @@
             </div>
 
             <div class="add-to-cart-container">
-                <input type="hidden" id="bundleQty" value="1">
+                <input type="hidden" id="bundleQty" value="3">
                 <input type="hidden" id="variantId" value="{{ product.variants.first.id }}">
                 <button type="button" class="atc-btn" id="atcBtn"
                     onclick="gAddToCart(document.getElementById('variantId').value, this, document.getElementById('bundleQty').value)">
