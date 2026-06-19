@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Nutritionist Approved">
+  <circle cx="60" cy="60" r="58" fill="#fff" stroke="#1a3b2b" stroke-width="3"/>
+  <circle cx="60" cy="60" r="48" fill="#e8f5e9" stroke="#1a3b2b" stroke-width="2"/>
+  <path d="M42 62 L54 74 L78 48" fill="none" stroke="#2e7d32" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="60" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" font-weight="700" fill="#1a3b2b">APPROVED</text>
+</svg>

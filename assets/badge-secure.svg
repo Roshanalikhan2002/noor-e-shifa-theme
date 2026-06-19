@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Secure Checkout">
+  <circle cx="60" cy="60" r="58" fill="#fff" stroke="#1565c0" stroke-width="3"/>
+  <circle cx="60" cy="60" r="48" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <rect x="44" y="52" width="32" height="26" rx="4" fill="#1565c0"/>
+  <path d="M50 52 V46 C50 38 70 38 70 46 V52" fill="none" stroke="#1565c0" stroke-width="4"/>
+  <circle cx="60" cy="64" r="4" fill="#fff"/>
+  <text x="60" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" font-weight="700" fill="#1565c0">SECURE</text>
+</svg>
