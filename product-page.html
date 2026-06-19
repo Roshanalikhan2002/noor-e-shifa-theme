@@ -218,14 +218,19 @@
             max-width: 500px;
         }
 
-        .price-section {
-            margin-bottom: 30px;
-        }
-
-        .price {
-            font-size: 28px;
+        .product-review-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .product-review-count .review-stars {
+            color: #e6a817;
+            letter-spacing: 1px;
         }
 
         .add-to-cart-container {
@@ -753,15 +758,12 @@
 
             <div class="product-details">
                 <h1>Natural Stomach Relief Phaki</h1>
+                <p class="product-review-count"><span class="review-stars">★★★★★</span> 1000+ Reviews</p>
                 <p class="subtitle">Complete Digestive Balance</p>
                 <p class="description">
                     Struggling with bloating, gas, or acidity? <br>
                     This natural herbal phakki helps improve digestion and keeps your stomach light and comfortable.
                 </p>
-
-                <div class="price-section">
-                    <span class="price">Rs. 890.00</span>
-                </div>
 
                 <div class="add-to-cart-container">
                     <button class="atc-btn">Add to Cart - Rs. 890.00</button>

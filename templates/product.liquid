@@ -163,10 +163,18 @@
 
     .product-details { flex: 1; }
     .product-details h1 { font-family: var(--font-serif); font-size: 48px; color: var(--primary); line-height: 1.2; margin-bottom: 10px; }
+    .product-review-count {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 12px;
+    }
+    .product-review-count .review-stars { color: #e6a817; letter-spacing: 1px; }
     .subtitle { font-size: 18px; color: #666; margin-bottom: 20px; }
     .description { font-size: 16px; color: #444; margin-bottom: 30px; max-width: 500px; }
-    .price-section { margin-bottom: 30px; }
-    .price { font-size: 28px; font-weight: 600; color: var(--primary); }
 
     .add-to-cart-container { margin-bottom: 40px; }
     .atc-btn {
@@ -498,12 +506,12 @@
         </div>
         <div class="product-details">
             <h1>{{ product.title }}</h1>
+            <p class="product-review-count"><span class="review-stars">★★★★★</span> 1000+ Reviews</p>
             <p class="subtitle">Complete Digestive Balance</p>
             <div class="description">
                 Struggling with bloating, gas, or acidity? <br>
                 This natural herbal phakki helps improve digestion and keeps your stomach light and comfortable.
             </div>
-            <div class="price-section"><span class="price" id="displayPrice">{{ product.price | money }}</span></div>
             
             <div class="bundle-selector">
                 <div class="bundle-card selected" onclick="selectBundle(this, 1, {{ product.price }})">
