@@ -153,6 +153,80 @@
             text-decoration: none; color: #666; font-size: 13px; transition: all 0.3s;
         }
         .trending-tag:hover { background: var(--cart-primary); color: white; border-color: var(--cart-primary); }
+
+        /* ===== GLOBAL STICKY ADD TO CART ===== */
+        .global-sticky-atc-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1500;
+            background: #fff;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+            padding: 12px 5%;
+            transform: translateY(110%);
+            transition: transform 0.3s ease;
+            pointer-events: none;
+        }
+        .global-sticky-atc-bar.visible {
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .global-sticky-atc-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .global-sticky-atc-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+        .global-sticky-atc-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--cart-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .global-sticky-atc-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--cart-primary);
+        }
+        .global-sticky-atc-btn {
+            flex-shrink: 0;
+            background: var(--cart-primary);
+            color: #fff !important;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 32px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1.2px;
+            box-shadow: 0 4px 15px rgba(26, 59, 43, 0.2);
+            font-family: 'Inter', sans-serif;
+        }
+        .global-sticky-atc-btn:hover { opacity: 0.92; }
+        @media (max-width: 768px) {
+            .global-sticky-atc-info { display: none; }
+            .global-sticky-atc-inner { justify-content: center; }
+            .global-sticky-atc-btn {
+                width: 100%;
+                padding: 16px 24px;
+                font-size: 15px;
+            }
+            .global-sticky-atc-bar { padding: 10px 4%; }
+        }
     </style>
 </head>
 <body>
@@ -181,6 +255,19 @@
 
 <div class="g-atc-toast" id="gAtcToast">&#10003; Added to Cart!</div>
 
+<!-- ===== GLOBAL STICKY ADD TO CART (all pages) ===== -->
+<div class="global-sticky-atc-bar" id="globalStickyAtc" aria-hidden="true">
+    <div class="global-sticky-atc-inner">
+        <div class="global-sticky-atc-info">
+            <span class="global-sticky-atc-title">Buy 2 Get 1 FREE</span>
+            <span class="global-sticky-atc-price">Rs. 1,780</span>
+        </div>
+        <button type="button" class="global-sticky-atc-btn" data-reset-label="ADD TO CART" onclick="gStickyAddToCart(this)">
+            ADD TO CART
+        </button>
+    </div>
+</div>
+
 <!-- ===== GLOBAL SEARCH OVERLAY ===== -->
 <div class="search-overlay" id="gSearchOverlay">
     <div class="search-header">
@@ -201,6 +288,8 @@
 </div>
 
 <script>
+    const G_DEFAULT_VARIANT_ID = 63302317998449;
+
     // ===== GLOBAL CART FUNCTIONS =====
     function gOpenCart() {
         document.getElementById('gCartDrawer').classList.add('active');
@@ -356,6 +445,7 @@
     }
 
     async function gAddToCartBundle(variantId, btn, paidQty, freeQty) {
+        const resetLabel = btn && (btn.dataset.resetLabel || btn.dataset.resetText) ? (btn.dataset.resetLabel || btn.dataset.resetText) : 'BUY NOW';
         if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
         try {
             await fetch('/cart/add.js', {
@@ -370,13 +460,17 @@
             });
             if (btn) {
                 btn.textContent = '✓ ADDED!';
-                setTimeout(() => { btn.textContent = 'BUY NOW'; btn.disabled = false; }, 2000);
+                setTimeout(() => { btn.textContent = resetLabel; btn.disabled = false; }, 2000);
             }
             gShowToast();
             gOpenCart();
         } catch(e) {
-            if (btn) { btn.textContent = 'BUY NOW'; btn.disabled = false; }
+            if (btn) { btn.textContent = resetLabel; btn.disabled = false; }
         }
+    }
+
+    function gStickyAddToCart(btn) {
+        gAddToCartBundle(G_DEFAULT_VARIANT_ID, btn, 2, 1);
     }
 
     // ===== GLOBAL SEARCH FUNCTIONS =====
@@ -417,6 +511,27 @@
             displayPrice.textContent = gFormatMoney(price);
         }
     }
+
+    (function initGlobalStickyAtc() {
+        const stickyBar = document.getElementById('globalStickyAtc');
+        const atcBtn = document.getElementById('atcBtn');
+        if (!stickyBar) return;
+
+        const path = window.location.pathname;
+        if (path.includes('/cart') || path.includes('/checkout')) return;
+
+        if (atcBtn) {
+            const observer = new IntersectionObserver(([entry]) => {
+                const showSticky = !entry.isIntersecting;
+                stickyBar.classList.toggle('visible', showSticky);
+                stickyBar.setAttribute('aria-hidden', showSticky ? 'false' : 'true');
+            }, { threshold: 0, rootMargin: '0px' });
+            observer.observe(atcBtn);
+        } else {
+            stickyBar.classList.add('visible');
+            stickyBar.setAttribute('aria-hidden', 'false');
+        }
+    })();
 </script>
 
 </body>
