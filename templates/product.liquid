@@ -504,54 +504,6 @@
             height: 44px;
         }
     }
-    
-    /* Product Trust Badges */
-    .product-trust-badges {
-        padding: 50px 5%;
-        background-color: #f9fbf9;
-        border-top: 1px solid rgba(0,0,0,0.05);
-    }
-    .product-badges-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 30px;
-    }
-    .product-badge-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        flex: 1;
-        min-width: 140px;
-        text-align: center;
-    }
-    .product-badge-item img {
-        width: 72px;
-        height: 72px;
-        object-fit: contain;
-        display: block;
-    }
-    .product-badge-item span {
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: var(--primary);
-        line-height: 1.4;
-    }
-    @media (max-width: 768px) {
-        .product-badges-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-        .product-badge-item:last-child {
-            grid-column: span 2;
-        }
-    }
 
     .cart-count {
         background: var(--secondary); color: white;
@@ -776,31 +728,6 @@
             <div class="spotted-item"><img src="{{ 'spotted_5.jpg' | asset_img_url: '600x' }}" alt="S2"></div>
             <div class="spotted-item"><img src="{{ 'spotted_4.jpg' | asset_img_url: '600x' }}" alt="S3"></div>
             <div class="spotted-item"><img src="{{ 'spotted_3.jpg' | asset_img_url: '600x' }}" alt="S4"></div>
-        </div>
-    </section>
-
-    <section class="product-trust-badges">
-        <div class="product-badges-container">
-            <div class="product-badge-item">
-                <img src="{{ 'badge-iso.svg' | asset_url }}" alt="ISO Certified">
-                <span>ISO Certified</span>
-            </div>
-            <div class="product-badge-item">
-                <img src="{{ 'badge-gmp.svg' | asset_url }}" alt="GMP Quality">
-                <span>GMP Quality</span>
-            </div>
-            <div class="product-badge-item">
-                <img src="{{ 'badge-nutritionist.svg' | asset_url }}" alt="Nutritionist Approved">
-                <span>Nutritionist Approved</span>
-            </div>
-            <div class="product-badge-item">
-                <img src="{{ 'badge-natural.svg' | asset_url }}" alt="Natural Ingredients">
-                <span>Natural Ingredients</span>
-            </div>
-            <div class="product-badge-item">
-                <img src="{{ 'badge-secure.svg' | asset_url }}" alt="Secure Checkout">
-                <span>Secure Checkout</span>
-            </div>
         </div>
     </section>
 
