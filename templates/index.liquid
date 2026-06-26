@@ -909,30 +909,57 @@
             margin-bottom: 20px !important;
         }
     }
-    /* Trust Badges Bar */
+    /* Trust Badges Marquee */
     .trust-badges-bar {
         background-color: #ffffff;
-        padding: 25px 5%;
+        padding: 22px 0;
         border-bottom: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
     }
-    .badges-container {
-        max-width: 1200px;
-        margin: 0 auto;
+    .badges-marquee {
+        width: 100%;
+        overflow: hidden;
+        mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+    .badges-marquee:hover .badges-marquee-track {
+        animation-play-state: paused;
+    }
+    .badges-marquee-track {
         display: flex;
-        justify-content: space-around;
+        width: max-content;
+        animation: badges-marquee-scroll 35s linear infinite;
+    }
+    @keyframes badges-marquee-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+    .badges-marquee-content {
+        display: flex;
         align-items: center;
-        gap: 30px;
+        gap: 56px;
+        padding-right: 56px;
+        flex-shrink: 0;
     }
     .trust-badge-item {
         display: flex;
         align-items: center;
         gap: 12px;
+        flex-shrink: 0;
+        white-space: nowrap;
     }
     .trust-badge-item svg {
         color: var(--primary);
         flex-shrink: 0;
+        width: 24px;
+        height: 24px;
     }
-    .trust-badge-item span {
+    .trust-badge-item .ingredient-emoji {
+        font-size: 22px;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+    .trust-badge-item span.badge-label {
         font-size: 13px;
         font-weight: 700;
         text-transform: uppercase;
@@ -940,27 +967,15 @@
         color: var(--primary);
     }
     @media (max-width: 768px) {
-        .trust-badges-bar { padding: 15px 5%; }
-        .badges-container {
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 10px;
+        .trust-badges-bar { padding: 14px 0; }
+        .badges-marquee-content { gap: 36px; padding-right: 36px; }
+        .trust-badge-item svg { width: 20px; height: 20px; }
+        .trust-badge-item .ingredient-emoji { font-size: 18px; }
+        .trust-badge-item span.badge-label {
+            font-size: 10px;
+            letter-spacing: 0.8px;
         }
-        .trust-badge-item {
-            flex-direction: column;
-            gap: 5px;
-            text-align: center;
-            flex: 1;
-        }
-        .trust-badge-item svg {
-            width: 20px;
-            height: 20px;
-        }
-        .trust-badge-item span { 
-            font-size: 8px; 
-            letter-spacing: 0.5px;
-            line-height: 1.2;
-        }
+        .badges-marquee-track { animation-duration: 28s; }
     }
     /* Nutrition Chart Styles */
     .nutrition-chart-section {
@@ -1359,18 +1374,48 @@
 </section>
 
 <section class="trust-badges-bar">
-    <div class="badges-container">
+    {% capture marquee_badges %}
         <div class="trust-badge-item">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-            <span>Cash on Delivery</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span class="badge-label">Cash on Delivery</span>
         </div>
         <div class="trust-badge-item">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-            <span>100% Natural</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            <span class="badge-label">100% Natural</span>
         </div>
         <div class="trust-badge-item">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            <span>No Harsh Chemicals</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span class="badge-label">No Harsh Chemicals</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🌱</span>
+            <span class="badge-label">Ajwain</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🌿</span>
+            <span class="badge-label">Saunf</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🌾</span>
+            <span class="badge-label">Zeera</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🧂</span>
+            <span class="badge-label">Kala Namak</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🍃</span>
+            <span class="badge-label">Podina</span>
+        </div>
+        <div class="trust-badge-item">
+            <span class="ingredient-emoji">🫚</span>
+            <span class="badge-label">Sonth</span>
+        </div>
+    {% endcapture %}
+    <div class="badges-marquee">
+        <div class="badges-marquee-track">
+            <div class="badges-marquee-content">{{ marquee_badges }}</div>
+            <div class="badges-marquee-content" aria-hidden="true">{{ marquee_badges }}</div>
         </div>
     </div>
 </section>
