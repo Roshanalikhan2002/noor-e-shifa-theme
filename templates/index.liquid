@@ -649,10 +649,20 @@
         border-radius: 8px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         transition: transform 0.3s;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
     }
 
     .product-card:hover {
         transform: translateY(-10px);
+    }
+
+    .product-card .cta-button {
+        display: block;
+        text-align: center;
+        width: 100%;
     }
 
     .product-image {
@@ -1473,15 +1483,15 @@
 
 <section class="featured-product">
     <h2>Our Best Seller</h2>
-    <div class="product-card">
+    <a href="/products/natural-stomach-relief-phaki" class="product-card">
         <div class="product-image">
             <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: 'master' }}" alt="Natural Stomach Relief Phaki">
         </div>
         <h3 class="product-title">Natural Stomach Relief Phaki</h3>
         <p class="price">Rs. 890.00</p>
-        <a href="/products/natural-stomach-relief-phaki" class="cta-button">BUY NOW</a>
+        <span class="cta-button">BUY NOW</span>
         <div class="cod-text">Cash on Delivery Available</div>
-    </div>
+    </a>
 </section>
 <!-- PROBLEM & SOLUTION SECTION -->
 <section class="problem-solution-section">
