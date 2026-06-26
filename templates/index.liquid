@@ -1019,11 +1019,14 @@
         background: var(--accent);
         border-radius: 50%;
         margin: 0 auto 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
-        color: var(--primary);
+        overflow: hidden;
+        border: 2px solid rgba(26, 59, 43, 0.08);
+    }
+    .ingredient-icon img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
     .nutrition-item h3 {
         font-family: var(--font-serif);
@@ -1526,7 +1529,9 @@
     <div class="nutrition-grid">
         <!-- Ajwain -->
         <div class="nutrition-item">
-            <div class="ingredient-icon">🌱</div>
+            <div class="ingredient-icon">
+                <img src="{{ 'ajwain.jpg' | asset_url }}" alt="Ajwain (Carom seeds)">
+            </div>
             <h3>Ajwain</h3>
             <ul class="benefits-list">
                 <li>Rich in Fiber & Minerals</li>
@@ -1537,7 +1542,9 @@
         </div>
         <!-- Saunf -->
         <div class="nutrition-item">
-            <div class="ingredient-icon">🌿</div>
+            <div class="ingredient-icon">
+                <img src="{{ 'saunf.jpg' | asset_url }}" alt="Saunf (Fennel seeds)">
+            </div>
             <h3>Saunf</h3>
             <ul class="benefits-list">
                 <li>High in Vitamin C & Manganese</li>
@@ -1548,7 +1555,9 @@
         </div>
         <!-- Zeera -->
         <div class="nutrition-item">
-            <div class="ingredient-icon">🌾</div>
+            <div class="ingredient-icon">
+                <img src="{{ 'zeera.jpg' | asset_url }}" alt="Zeera (Cumin seeds)">
+            </div>
             <h3>Zeera</h3>
             <ul class="benefits-list">
                 <li>Packed with Iron & Vitamin A</li>
@@ -1559,7 +1568,9 @@
         </div>
         <!-- Black Salt -->
         <div class="nutrition-item">
-            <div class="ingredient-icon">🧂</div>
+            <div class="ingredient-icon">
+                <img src="{{ 'black-salt.jpg' | asset_url }}" alt="Black Salt (Kala Namak)">
+            </div>
             <h3>Black Salt</h3>
             <ul class="benefits-list">
                 <li>Essential Minerals & Iron</li>
