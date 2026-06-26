@@ -114,31 +114,6 @@
     .product-item-title { font-weight: 700; font-size: 16px; margin-bottom: 5px; }
     .product-item-rating { color: var(--blume-navy); font-size: 14px; margin-bottom: 5px; }
 
-    /* Expert Section Styles */
-    .expert-section {
-        display: flex;
-        align-items: center;
-        background-color: #ffffff;
-        padding: 100px 8%;
-        gap: 60px;
-    }
-    @media (max-width: 768px) {
-        .expert-section { flex-direction: column; text-align: center; padding: 60px 5%; }
-    }
-    .expert-content { flex: 1; }
-    .expert-quote {
-        font-family: var(--font-serif);
-        font-size: clamp(24px, 4vw, 36px);
-        color: var(--blume-navy);
-        line-height: 1.2;
-        margin-bottom: 30px;
-        font-style: italic;
-    }
-    .expert-name { font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blume-navy); }
-    .expert-title { font-size: 14px; color: #666; }
-    .expert-image { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 20px 20px 0 var(--blume-bg); }
-    .expert-image img { width: 100%; display: block; }
-
     /* Founder Home Section */
     .founder-home-section a.cta-button:hover {
         background-color: var(--secondary);
@@ -894,7 +869,6 @@
     @media (max-width: 768px) {
         .section-container,
         .best-sellers-section,
-        .expert-section,
         .value-deals-section,
         .founder-home-section,
         .reviews-section,
@@ -1026,10 +1000,8 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
         display: block;
-    }
-    .ingredient-icon--black-salt img {
-        object-position: 72% center;
     }
     .nutrition-item h3 {
         font-family: var(--font-serif);
@@ -1571,7 +1543,7 @@
         </div>
         <!-- Black Salt -->
         <div class="nutrition-item">
-            <div class="ingredient-icon ingredient-icon--black-salt">
+            <div class="ingredient-icon">
                 <img src="{{ 'black-salt.jpg' | asset_url }}" alt="Black Salt (Kala Namak)">
             </div>
             <h3>Black Salt</h3>
@@ -1727,17 +1699,6 @@
         </ul>
         <a href="/collections/all" class="cta-button">Shop the Remedy</a>
         <div class="cod-text">Cash on Delivery Available</div>
-    </div>
-</section>
-
-<!-- EXPERT RECOMMENDATION -->
-<section class="expert-section">
-    <div class="expert-content">
-        <div class="expert-quote">
-            "Noor e Shifa phaki focus on natural hydration and digestive balance. It uses traditional botanical active ingredients that work gently with your system. You get the most out of every dose without any harsh chemicals."
-        </div>
-        <div class="expert-name">Hakim Noor Ahmed</div>
-        <div class="expert-title">Board Certified Herbalist & Researcher</div>
     </div>
 </section>
 
