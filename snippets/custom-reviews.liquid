@@ -1,0 +1,35 @@
+{% assign reviews_layout = layout | default: 'grid' %}
+{% assign reviews_heading = heading | default: 'Customer Reviews' %}
+{% assign reviews_root_id = 'custom-reviews-' | append: reviews_layout %}
+
+<section class="reviews-section custom-reviews-root" id="{{ reviews_root_id }}" data-reviews-root data-layout="{{ reviews_layout }}">
+  {% if show_heading %}
+    <h2 class="custom-reviews-heading">{{ reviews_heading }}</h2>
+  {% endif %}
+  <p class="reviews-count-badge"><span class="review-stars">★★★★★</span> 100+ Reviews</p>
+  <div class="{% if reviews_layout == 'list' %}reviews-list{% else %}reviews-grid{% endif %}" data-reviews-list></div>
+  <button type="button" class="reviews-show-more-btn" data-reviews-show-more>Show More Reviews</button>
+</section>
+
+<script src="{{ 'reviews.js' | asset_url }}"></script>
+<script>
+  (function () {
+    function bootCustomReviews() {
+      if (typeof window.initCustomReviews !== 'function') return;
+
+      window.initCustomReviews({
+        rootSelector: '#{{ reviews_root_id }}',
+        layout: '{{ reviews_layout }}',
+        dataUrl: {{ 'reviews.json' | asset_url | json }},
+        initialCount: 3,
+        batchSize: 6
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootCustomReviews);
+    } else {
+      bootCustomReviews();
+    }
+  })();
+</script>

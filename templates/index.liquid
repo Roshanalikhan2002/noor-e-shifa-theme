@@ -323,7 +323,7 @@
         padding: 100px 5%;
         text-align: center;
     }
-    .reviews-grid {
+    .custom-reviews-root .reviews-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 30px;
@@ -342,6 +342,46 @@
     .review-author-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
     .review-author-name { font-weight: 700; font-size: 14px; }
     .review-ba-img { width: 100%; border-radius: 12px; margin-bottom: 20px; }
+    .custom-reviews-heading {
+        font-family: var(--font-serif);
+        font-size: clamp(32px, 5vw, 48px);
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    .reviews-count-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin: 0 0 40px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #555;
+    }
+    .reviews-count-badge .review-stars { color: #e6a817; margin-bottom: 0; font-size: 16px; }
+    .reviews-show-more-btn {
+        display: block;
+        margin: 40px auto 0;
+        padding: 14px 32px;
+        min-height: 48px;
+        border: 2px solid var(--primary);
+        border-radius: 40px;
+        background: transparent;
+        color: var(--primary);
+        font-family: var(--font-sans);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .reviews-show-more-btn:hover {
+        background: var(--primary);
+        color: #fff;
+    }
 
     * {
         margin: 0;
@@ -881,6 +921,10 @@
         
         .hollow-heading {
             margin-bottom: 20px !important;
+        }
+        .reviews-show-more-btn {
+            width: 100%;
+            max-width: 360px;
         }
     }
     /* Trust Badges Marquee */
@@ -1703,36 +1747,7 @@
 </section>
 
 <!-- REVIEWS -->
-<section class="reviews-section">
-    <h2 class="hollow-heading">Real Results</h2>
-    <div class="reviews-grid">
-        <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"I've been using this Phaki for about a month now and I absolutely adore it. I've always had problems with bloating after meals, but this has changed everything for me."</div>
-            <div class="review-author">
-                <img src="{{ 'lifestyle_herbal_1.png' | asset_img_url: '100x' }}" class="review-author-img">
-                <div>
-                    <div class="review-author-name">Ayesha K.</div>
-                    <div style="font-size: 12px; opacity: 0.6;">Verified Buyer</div>
-                </div>
-            </div>
-        </div>
-        <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"The best herbal remedy in the business! It's pure, natural, and actually works. I recommend this to everyone looking for a chemical-free digestive solution."</div>
-            <div class="review-author">
-                <div class="review-author-name">Zain M.</div>
-            </div>
-        </div>
-        <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <div class="review-text">"Finally a product that stays true to its traditional roots. It's gentle on the stomach and very effective. Never stopping this!"</div>
-            <div class="review-author">
-                <div class="review-author-name">Fatima R.</div>
-            </div>
-        </div>
-    </div>
-</section>
+{% render 'custom-reviews', layout: 'grid', heading: 'Real Results', show_heading: true %}
 
 <footer>
     <div class="footer-container">

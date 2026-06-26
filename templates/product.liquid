@@ -351,6 +351,48 @@
     .stars { color: #333; font-size: 14px; margin-bottom: 15px; }
     .review-title { font-weight: 700; font-size: 16px; margin-bottom: 10px; }
     .review-text { color: #555; font-size: 15px; font-style: italic; }
+    .custom-reviews-heading {
+        font-family: var(--font-serif);
+        font-size: clamp(28px, 4vw, 40px);
+        color: var(--primary);
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    .reviews-count-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin: 0 0 40px;
+        font-size: 15px;
+        font-weight: 600;
+        color: #555;
+    }
+    .reviews-count-badge .review-stars { color: #e6a817; font-size: 16px; }
+    .reviews-list { max-width: 900px; margin: 0 auto; text-align: left; }
+    .reviews-show-more-btn {
+        display: block;
+        margin: 40px auto 0;
+        padding: 14px 32px;
+        min-height: 48px;
+        border: 2px solid var(--primary);
+        border-radius: 40px;
+        background: transparent;
+        color: var(--primary);
+        font-family: var(--font-sans);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .reviews-show-more-btn:hover {
+        background: var(--primary);
+        color: #fff;
+    }
+    .custom-reviews-root { text-align: center; }
 
     /* Footer */
     footer { background-color: var(--primary); color: var(--white); padding: 80px 5% 40px; }
@@ -405,6 +447,10 @@
         }
         .review-card { flex-direction: column; gap: 15px; }
         .reviewer-info { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .reviews-show-more-btn {
+            width: 100%;
+            max-width: 360px;
+        }
         .footer-container { grid-template-columns: 1fr; gap: 30px; text-align: center; }
         .social-links { justify-content: center; }
         .newsletter-form { flex-direction: column; }
@@ -543,7 +589,7 @@
         </div>
         <div class="product-details">
             <h1>{{ product.title }}</h1>
-            <p class="product-review-count"><span class="review-stars">★★★★★</span> 1000+ Reviews</p>
+            <p class="product-review-count"><span class="review-stars">★★★★★</span> 100+ Reviews</p>
             <p class="subtitle">Complete Digestive Balance</p>
             <div class="description">
                 Struggling with bloating, gas, or acidity? <br>
@@ -770,41 +816,7 @@
         <div class="faq-image"><img src="{{ 'faq_image.jpg' | asset_img_url: '800x' }}" alt="FAQ"></div>
     </section>
 
-    <section class="reviews-section">
-        <div class="review-card">
-            <div class="reviewer-info">
-                <div class="reviewer-name">Fatima</div>
-                <div class="verified-badge">Verified Buyer</div>
-            </div>
-            <div class="review-content">
-                <div class="stars">★★★★★</div>
-                <div class="review-title">Verified Selection</div>
-                <div class="review-text">"I've been using it for 2 weeks, and my digestion feels so much better. No more bloating after dinner! Definitely a 10/10 experience for me."</div>
-            </div>
-        </div>
-        <div class="review-card">
-            <div class="reviewer-info">
-                <div class="reviewer-name">Ayesha</div>
-                <div class="verified-badge">Verified Buyer</div>
-            </div>
-            <div class="review-content">
-                <div class="stars">★★★★★</div>
-                <div class="review-title">Verified Selection</div>
-                <div class="review-text">"I'm honestly in love with the texture — it's fine-milled and absorbs instantly. My stomach feels soft and balanced every morning."</div>
-            </div>
-        </div>
-        <div class="review-card">
-            <div class="reviewer-info">
-                <div class="reviewer-name">Fiza</div>
-                <div class="verified-badge">Verified Buyer</div>
-            </div>
-            <div class="review-content">
-                <div class="stars">★★★★★</div>
-                <div class="review-title">Verified Selection</div>
-                <div class="review-text">"Received my order and I'm super impressed with both the product and packaging. Everything feels premium and natural."</div>
-            </div>
-        </div>
-    </section>
+    {% render 'custom-reviews', layout: 'list', heading: 'Customer Reviews', show_heading: true %}
 
     <footer>
         <div class="footer-container">
