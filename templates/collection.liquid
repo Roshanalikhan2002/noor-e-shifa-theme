@@ -21,18 +21,6 @@
 
     body { font-family: var(--font-sans); background-color: var(--background); color: var(--text); line-height: 1.6; }
 
-    /* Announcement Bar */
-    .announcement-bar {
-        background-color: var(--announcement);
-        color: var(--white);
-        text-align: center;
-        padding: 8px 0;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-    }
-
     /* Header */
     header {
         background-color: var(--background);
@@ -240,7 +228,7 @@
     }
 </style>
 
-<div class="announcement-bar">Buy 2 Get 1 FREE + Free Delivery</div>
+{% render 'announcement-bar' %}
 
 <header>
     <div class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></div>

@@ -427,18 +427,6 @@
         overflow-x: hidden;
     }
 
-    /* Announcement Bar */
-    .announcement-bar {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-    }
-
     /* Navigation */
     header {
         display: flex;
@@ -1348,9 +1336,7 @@
 
 
 
-<div class="announcement-bar">
-    Buy 2 Get 1 FREE + Free Delivery
-</div>
+{% render 'announcement-bar' %}
 
 <header>
     <div class="menu-toggle" onclick="toggleMenu()">

@@ -1,0 +1,18 @@
+{% capture announcement_text %}Buy 2 Get 1 FREE + Free Delivery{% endcapture %}
+{% capture announcement_items %}
+  <span>{{ announcement_text }}</span>
+  <span class="announcement-sep">•</span>
+  <span>{{ announcement_text }}</span>
+  <span class="announcement-sep">•</span>
+  <span>{{ announcement_text }}</span>
+  <span class="announcement-sep">•</span>
+{% endcapture %}
+
+<div class="announcement-bar">
+  <div class="announcement-marquee">
+    <div class="announcement-marquee-track">
+      <div class="announcement-marquee-content">{{ announcement_items }}</div>
+      <div class="announcement-marquee-content" aria-hidden="true">{{ announcement_items }}</div>
+    </div>
+  </div>
+</div>
