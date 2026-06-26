@@ -51,28 +51,32 @@
     );
   }
 
-  function updateButton(button, visibleCount, totalCount) {
-    if (!button) return;
-
-    if (visibleCount >= totalCount) {
-      button.style.display = 'none';
-      return;
+  function updateButtons(moreButton, lessButton, visibleCount, totalCount, initialCount) {
+    if (moreButton) {
+      if (visibleCount >= totalCount) {
+        moreButton.style.display = 'none';
+      } else {
+        const remaining = totalCount - visibleCount;
+        moreButton.style.display = '';
+        moreButton.textContent =
+          remaining > 6
+            ? 'Show More Reviews (' + remaining + ' remaining)'
+            : 'Show More Reviews';
+      }
     }
 
-    const remaining = totalCount - visibleCount;
-    button.style.display = '';
-    button.textContent =
-      remaining > 6
-        ? 'Show More Reviews (' + remaining + ' remaining)'
-        : 'Show More Reviews';
+    if (lessButton) {
+      lessButton.style.display = visibleCount > initialCount ? '' : 'none';
+    }
   }
 
   window.initCustomReviews = function initCustomReviews(options) {
     const root = document.querySelector(options.rootSelector);
     const list = root ? root.querySelector('[data-reviews-list]') : null;
-    const button = root ? root.querySelector('[data-reviews-show-more]') : null;
+    const moreButton = root ? root.querySelector('[data-reviews-show-more]') : null;
+    const lessButton = root ? root.querySelector('[data-reviews-show-less]') : null;
 
-    if (!root || !list || !button || !options.dataUrl) {
+    if (!root || !list || !moreButton || !options.dataUrl) {
       return;
     }
 
@@ -84,17 +88,27 @@
     let reviews = [];
     let visibleCount = 0;
 
-    function renderBatch(count) {
-      const nextCount = Math.min(visibleCount + count, reviews.length);
-      const fragment = reviews.slice(visibleCount, nextCount).map(renderCard).join('');
-      list.insertAdjacentHTML('beforeend', fragment);
-      visibleCount = nextCount;
-      updateButton(button, visibleCount, reviews.length);
+    function renderVisible() {
+      list.innerHTML = reviews.slice(0, visibleCount).map(renderCard).join('');
+      updateButtons(moreButton, lessButton, visibleCount, reviews.length, initialCount);
     }
 
-    button.addEventListener('click', function () {
-      renderBatch(batchSize);
-    });
+    function showMore() {
+      visibleCount = Math.min(visibleCount + batchSize, reviews.length);
+      renderVisible();
+    }
+
+    function showLess() {
+      visibleCount = initialCount;
+      renderVisible();
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    moreButton.addEventListener('click', showMore);
+
+    if (lessButton) {
+      lessButton.addEventListener('click', showLess);
+    }
 
     fetch(options.dataUrl)
       .then(function (response) {
@@ -105,12 +119,14 @@
       })
       .then(function (data) {
         reviews = Array.isArray(data) ? data : [];
-        list.innerHTML = '';
-        visibleCount = 0;
-        renderBatch(initialCount);
+        visibleCount = Math.min(initialCount, reviews.length);
+        renderVisible();
       })
       .catch(function () {
-        button.style.display = 'none';
+        moreButton.style.display = 'none';
+        if (lessButton) {
+          lessButton.style.display = 'none';
+        }
       });
   };
 })();

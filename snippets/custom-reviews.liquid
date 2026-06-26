@@ -8,7 +8,10 @@
   {% endif %}
   <p class="reviews-count-badge"><span class="review-stars">★★★★★</span> 100+ Reviews</p>
   <div class="{% if reviews_layout == 'list' %}reviews-list{% else %}reviews-grid{% endif %}" data-reviews-list></div>
-  <button type="button" class="reviews-show-more-btn" data-reviews-show-more>Show More Reviews</button>
+  <div class="reviews-actions">
+    <button type="button" class="reviews-show-more-btn" data-reviews-show-more>Show More Reviews</button>
+    <button type="button" class="reviews-show-less-btn" data-reviews-show-less style="display: none;">Show Less</button>
+  </div>
 </section>
 
 <script src="{{ 'reviews.js' | asset_url }}"></script>
