@@ -1028,6 +1028,9 @@
         object-fit: cover;
         display: block;
     }
+    .ingredient-icon--black-salt img {
+        object-position: 72% center;
+    }
     .nutrition-item h3 {
         font-family: var(--font-serif);
         font-size: 24px;
@@ -1568,7 +1571,7 @@
         </div>
         <!-- Black Salt -->
         <div class="nutrition-item">
-            <div class="ingredient-icon">
+            <div class="ingredient-icon ingredient-icon--black-salt">
                 <img src="{{ 'black-salt.jpg' | asset_url }}" alt="Black Salt (Kala Namak)">
             </div>
             <h3>Black Salt</h3>
