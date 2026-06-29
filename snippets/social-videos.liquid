@@ -2,24 +2,97 @@
   <h2 class="social-videos-heading">As seen on social</h2>
   <div class="social-videos-track">
     <div class="social-video-card">
-      <video controls playsinline preload="metadata" aria-label="Social video 1">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Social video 1">
         <source src="{{ 'social-video-1.mp4' | asset_url }}" type="video/mp4">
       </video>
+      <button type="button" class="social-mute-btn" aria-label="Unmute video">
+        <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      </button>
     </div>
     <div class="social-video-card">
-      <video controls playsinline preload="metadata" aria-label="Social video 2">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Social video 2">
         <source src="{{ 'social-video-2.mp4' | asset_url }}" type="video/mp4">
       </video>
+      <button type="button" class="social-mute-btn" aria-label="Unmute video">
+        <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      </button>
     </div>
     <div class="social-video-card">
-      <video controls playsinline preload="metadata" aria-label="Social video 3">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Social video 3">
         <source src="{{ 'social-video-3.mp4' | asset_url }}" type="video/mp4">
       </video>
+      <button type="button" class="social-mute-btn" aria-label="Unmute video">
+        <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      </button>
     </div>
     <div class="social-video-card">
-      <video controls playsinline preload="metadata" aria-label="Social video 4">
+      <video autoplay muted loop playsinline preload="auto" aria-label="Social video 4">
         <source src="{{ 'social-video-4.mp4' | asset_url }}" type="video/mp4">
       </video>
+      <button type="button" class="social-mute-btn" aria-label="Unmute video">
+        <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+        <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      </button>
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    function updateMuteButton(button, isMuted) {
+      const muteIcon = button.querySelector('.mute-icon');
+      const unmuteIcon = button.querySelector('.unmute-icon');
+      if (!muteIcon || !unmuteIcon) return;
+      muteIcon.style.display = isMuted ? 'block' : 'none';
+      unmuteIcon.style.display = isMuted ? 'none' : 'block';
+      button.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+    }
+
+    function initSocialVideos() {
+      document.querySelectorAll('.social-videos-section').forEach(function (section) {
+        if (section.dataset.socialVideosReady) return;
+        section.dataset.socialVideosReady = 'true';
+
+        const cards = section.querySelectorAll('.social-video-card');
+
+        cards.forEach(function (card) {
+          const video = card.querySelector('video');
+          const button = card.querySelector('.social-mute-btn');
+          if (!video || !button) return;
+
+          video.muted = true;
+          video.play().catch(function () {});
+
+          button.addEventListener('click', function () {
+            const willUnmute = video.muted;
+
+            if (willUnmute) {
+              cards.forEach(function (otherCard) {
+                const otherVideo = otherCard.querySelector('video');
+                const otherButton = otherCard.querySelector('.social-mute-btn');
+                if (otherVideo) otherVideo.muted = true;
+                if (otherButton) updateMuteButton(otherButton, true);
+              });
+              video.muted = false;
+              updateMuteButton(button, false);
+              video.play().catch(function () {});
+              return;
+            }
+
+            video.muted = true;
+            updateMuteButton(button, true);
+          });
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initSocialVideos);
+    } else {
+      initSocialVideos();
+    }
+  })();
+</script>

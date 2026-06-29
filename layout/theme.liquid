@@ -296,6 +296,7 @@
             margin: 0 auto;
         }
         .social-video-card {
+            position: relative;
             aspect-ratio: 9 / 16;
             background: #000;
             border-radius: 12px;
@@ -308,6 +309,33 @@
             object-fit: cover;
             display: block;
             background: #000;
+        }
+        .social-mute-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.3s;
+            padding: 0;
+        }
+        .social-mute-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.05);
+        }
+        .social-mute-btn svg {
+            width: 20px;
+            height: 20px;
         }
         @media (max-width: 768px) {
             .social-videos-section {
