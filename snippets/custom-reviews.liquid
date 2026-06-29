@@ -1,12 +1,13 @@
 {% assign reviews_layout = layout | default: 'grid' %}
 {% assign reviews_heading = heading | default: 'Customer Reviews' %}
+{% assign reviews_count_label = review_count | default: '100+ Reviews' %}
 {% assign reviews_root_id = 'custom-reviews-' | append: reviews_layout %}
 
 <section class="reviews-section custom-reviews-root" id="{{ reviews_root_id }}" data-reviews-root data-layout="{{ reviews_layout }}">
   {% if show_heading %}
     <h2 class="custom-reviews-heading">{{ reviews_heading }}</h2>
   {% endif %}
-  <p class="reviews-count-badge"><span class="review-stars">★★★★★</span> 100+ Reviews</p>
+  <p class="reviews-count-badge"><span class="review-stars">★★★★★</span> {{ reviews_count_label }}</p>
   <div class="{% if reviews_layout == 'list' %}reviews-list{% else %}reviews-grid{% endif %}" data-reviews-list></div>
   <div class="reviews-actions">
     <button type="button" class="reviews-show-more-btn" data-reviews-show-more>Show More Reviews</button>

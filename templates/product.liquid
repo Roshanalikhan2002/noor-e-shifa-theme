@@ -564,7 +564,7 @@
         </div>
         <div class="product-details">
             <h1>{{ product.title }}</h1>
-            <p class="product-review-count"><span class="review-stars">★★★★★</span> 100+ Reviews</p>
+            <p class="product-review-count"><span class="review-stars">★★★★★</span> 1000+ Reviews</p>
             <p class="subtitle">Complete Digestive Balance</p>
             <div class="description">
                 Struggling with bloating, gas, or acidity? <br>
@@ -768,7 +768,7 @@
         <div class="faq-image"><img src="{{ 'faq_image.jpg' | asset_img_url: '800x' }}" alt="FAQ"></div>
     </section>
 
-    {% render 'custom-reviews', layout: 'list', heading: 'Customer Reviews', show_heading: true %}
+    {% render 'custom-reviews', layout: 'list', heading: 'Customer Reviews', show_heading: true, review_count: '1000+ Reviews' %}
 
     <footer>
         <div class="footer-container">
