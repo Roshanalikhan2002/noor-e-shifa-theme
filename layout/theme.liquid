@@ -394,12 +394,16 @@
 
 <div class="g-atc-toast" id="gAtcToast">&#10003; Added to Cart!</div>
 
+{% assign nes_sticky_product = all_products['natural-stomach-relief-phaki'] %}
+{% assign nes_sticky_price = nes_sticky_product.price | times: 2 %}
+{% assign nes_sticky_variant = nes_sticky_product.selected_or_first_available_variant.id %}
+
 <!-- ===== GLOBAL STICKY ADD TO CART (all pages) ===== -->
 <div class="global-sticky-atc-bar" id="globalStickyAtc" aria-hidden="true">
     <div class="global-sticky-atc-inner">
         <div class="global-sticky-atc-info">
             <span class="global-sticky-atc-title">Buy 2 Get 1 FREE</span>
-            <span class="global-sticky-atc-price">Rs. 1,780</span>
+            <span class="global-sticky-atc-price">{% if nes_sticky_product %}{{ nes_sticky_price | money }}{% else %}Rs. 1,780{% endif %}</span>
         </div>
         <button type="button" class="global-sticky-atc-btn" data-reset-label="ADD TO CART" onclick="gStickyAddToCart(this)">
             ADD TO CART
@@ -427,7 +431,7 @@
 </div>
 
 <script>
-    const G_DEFAULT_VARIANT_ID = 63302317998449;
+    const G_DEFAULT_VARIANT_ID = {{ nes_sticky_variant | default: 63302317998449 }};
 
     // ===== GLOBAL CART FUNCTIONS =====
     function gOpenCart() {

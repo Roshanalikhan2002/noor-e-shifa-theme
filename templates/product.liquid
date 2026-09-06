@@ -551,39 +551,47 @@
                 This natural herbal phakki helps improve digestion and keeps your stomach light and comfortable.
             </div>
             
+            {% assign unit_price = product.price %}
+            {% assign deal2_price = unit_price | times: 2 %}
+            {% assign deal2_compare = unit_price | times: 3 %}
+            {% assign deal2_save = deal2_compare | minus: deal2_price %}
+            {% assign deal3_price = unit_price | times: 4 %}
+            {% assign deal3_compare = unit_price | times: 6 %}
+            {% assign deal3_save = deal3_compare | minus: deal3_price %}
+
             <div class="bundle-selector">
-                <div class="bundle-card" onclick="selectBundle(this, 1, {{ product.price }})">
+                <div class="bundle-card" onclick="selectBundle(this, 1, {{ unit_price }})">
                     <div class="bundle-info">
                         <h4>Starter Pack</h4>
                         <p>1 Jar - Standard Relief</p>
                     </div>
                     <div class="bundle-pricing">
-                        <span class="bundle-price">Rs. 890</span>
+                        <span class="bundle-price">{{ unit_price | money }}</span>
                     </div>
                 </div>
 
-                <div class="bundle-card selected" onclick="selectBundle(this, 3, 178000)">
+                <div class="bundle-card selected" onclick="selectBundle(this, 3, {{ deal2_price }})">
                     <div class="popular-badge">Best Value Deal</div>
                     <div class="bundle-info">
                         <h4>Buy 2 Get 1 FREE</h4>
                         <p>Total 3 Jars + Free COD</p>
-                        <div class="savings-tag">SAVE 33% (Rs. 890 OFF)</div>
+                        <div class="savings-tag">SAVE 33% ({{ deal2_save | money }} OFF)</div>
                     </div>
                     <div class="bundle-pricing">
-                        <span class="bundle-price">Rs. 1,780</span>
-                        <span class="bundle-compare-price">Rs. 2,670</span>
+                        <span class="bundle-price">{{ deal2_price | money }}</span>
+                        <span class="bundle-compare-price">{{ deal2_compare | money }}</span>
                     </div>
                 </div>
 
-                <div class="bundle-card" onclick="selectBundle(this, 6, 356000)">
+                <div class="bundle-card" onclick="selectBundle(this, 6, {{ deal3_price }})">
                     <div class="bundle-info">
                         <h4>Family Value Deal</h4>
                         <p>Total 6 Jars + Free COD</p>
-                        <div class="savings-tag">SAVE 50% (Rs. 1,780 OFF)</div>
+                        <div class="savings-tag">SAVE 50% ({{ deal3_save | money }} OFF)</div>
                     </div>
                     <div class="bundle-pricing">
-                        <span class="bundle-price">Rs. 3,560</span>
-                        <span class="bundle-compare-price">Rs. 5,340</span>
+                        <span class="bundle-price">{{ deal3_price | money }}</span>
+                        <span class="bundle-compare-price">{{ deal3_compare | money }}</span>
                     </div>
                 </div>
             </div>

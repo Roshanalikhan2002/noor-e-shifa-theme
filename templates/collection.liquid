@@ -304,16 +304,17 @@
             </div>
         </div>
         {% else %}
+        {% assign nes_product = all_products['natural-stomach-relief-phaki'] %}
         <div class="product-card">
             <span class="badge">Bestseller</span>
             <div class="product-image">
-                <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '600x' }}" alt="Natural Stomach Relief Phaki">
+                <img src="{{ 'Natural Stomach Relief Phaki.png' | asset_img_url: '600x' }}" alt="{{ nes_product.title | default: 'Natural Stomach Relief Phaki' }}">
             </div>
             <div class="product-info">
-                <h3>Natural Stomach Relief Phaki</h3>
+                <h3>{{ nes_product.title | default: 'Natural Stomach Relief Phaki' }}</h3>
                 <p class="product-meta">250g | 100% Herbal</p>
-                <div class="price">Rs. 890.00</div>
-                <a href="/products/natural-stomach-relief-phaki" class="cta-button">BUY NOW</a>
+                <div class="price">{% if nes_product %}{{ nes_product.price | money }}{% else %}Rs. 890.00{% endif %}</div>
+                <a href="{{ nes_product.url | default: '/products/natural-stomach-relief-phaki' }}" class="cta-button">BUY NOW</a>
             </div>
         </div>
         {% endfor %}
