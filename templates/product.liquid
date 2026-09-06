@@ -552,15 +552,15 @@
             </div>
             
             {% assign unit_price = product.price %}
-            {% assign deal2_price = unit_price | times: 2 %}
-            {% assign deal2_compare = unit_price | times: 3 %}
+            {% assign deal2_compare = unit_price | times: 2 %}
+            {% assign deal2_price = deal2_compare | minus: 10000 %}
             {% assign deal2_save = deal2_compare | minus: deal2_price %}
-            {% assign deal3_price = unit_price | times: 4 %}
-            {% assign deal3_compare = unit_price | times: 6 %}
+            {% assign deal3_compare = unit_price | times: 4 %}
+            {% assign deal3_price = deal3_compare | minus: 30000 %}
             {% assign deal3_save = deal3_compare | minus: deal3_price %}
 
             <div class="bundle-selector">
-                <div class="bundle-card" onclick="selectBundle(this, 1, {{ unit_price }})">
+                <div class="bundle-card" onclick="selectBundle(this, 1, 0, {{ unit_price }})">
                     <div class="bundle-info">
                         <h4>Starter Pack</h4>
                         <p>1 Jar - Standard Relief</p>
@@ -570,12 +570,12 @@
                     </div>
                 </div>
 
-                <div class="bundle-card selected" onclick="selectBundle(this, 3, {{ deal2_price }})">
+                <div class="bundle-card selected" onclick="selectBundle(this, 2, 1, {{ deal2_price }})">
                     <div class="popular-badge">Best Value Deal</div>
                     <div class="bundle-info">
                         <h4>Buy 2 Get 1 FREE</h4>
                         <p>Total 3 Jars + Free COD</p>
-                        <div class="savings-tag">SAVE 33% ({{ deal2_save | money }} OFF)</div>
+                        <div class="savings-tag">SAVE {{ deal2_save | money }} EXTRA</div>
                     </div>
                     <div class="bundle-pricing">
                         <span class="bundle-price">{{ deal2_price | money }}</span>
@@ -583,11 +583,11 @@
                     </div>
                 </div>
 
-                <div class="bundle-card" onclick="selectBundle(this, 6, {{ deal3_price }})">
+                <div class="bundle-card" onclick="selectBundle(this, 4, 2, {{ deal3_price }})">
                     <div class="bundle-info">
                         <h4>Family Value Deal</h4>
                         <p>Total 6 Jars + Free COD</p>
-                        <div class="savings-tag">SAVE 50% ({{ deal3_save | money }} OFF)</div>
+                        <div class="savings-tag">SAVE {{ deal3_save | money }} EXTRA</div>
                     </div>
                     <div class="bundle-pricing">
                         <span class="bundle-price">{{ deal3_price | money }}</span>
@@ -597,10 +597,11 @@
             </div>
 
             <div class="add-to-cart-container">
-                <input type="hidden" id="bundleQty" value="3">
-                <input type="hidden" id="variantId" value="{{ product.variants.first.id }}">
+                <input type="hidden" id="bundlePaidQty" value="2">
+                <input type="hidden" id="bundleFreeQty" value="1">
+                <input type="hidden" id="variantId" value="{{ product.selected_or_first_available_variant.id }}">
                 <button type="button" class="atc-btn" id="atcBtn"
-                    onclick="gAddToCart(document.getElementById('variantId').value, this, document.getElementById('bundleQty').value)">
+                    onclick="gProductAddToCart(this)">
                     ADD TO CART
                 </button>
 

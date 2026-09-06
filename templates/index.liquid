@@ -1467,6 +1467,11 @@
 {% assign nes_product = all_products['natural-stomach-relief-phaki'] %}
 {% assign nes_unit_price = nes_product.price %}
 {% assign nes_variant_id = nes_product.selected_or_first_available_variant.id %}
+{% comment %} Bundle sale prices: 2x/4x list, then Rs.100 / Rs.300 extra off {% endcomment %}
+{% assign nes_deal2_compare = nes_unit_price | times: 2 %}
+{% assign nes_deal2_price = nes_deal2_compare | minus: 10000 %}
+{% assign nes_deal3_compare = nes_unit_price | times: 4 %}
+{% assign nes_deal3_price = nes_deal3_compare | minus: 30000 %}
 
 <section class="featured-product">
     <h2>Our Best Seller</h2>
@@ -1549,8 +1554,8 @@
             <h3>Buy 2 Get 1 FREE</h3>
             <div class="deal-savings">Best Default Offer</div>
             <p class="deal-desc">3 Jars + Free COD</p>
-            <div class="deal-price">{% if nes_product %}{{ nes_unit_price | times: 2 | money }}{% else %}Rs. 1,780{% endif %}</div>
-            <div class="deal-compare">{% if nes_product %}{{ nes_unit_price | times: 3 | money }}{% else %}Rs. 2,670{% endif %}</div>
+            <div class="deal-price">{% if nes_product %}{{ nes_deal2_price | money }}{% else %}Rs. 1,880{% endif %}</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal2_compare | money }}{% else %}Rs. 1,980{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 2, 1)">BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>
@@ -1562,8 +1567,8 @@
             <h3>Family Value Deal</h3>
             <div class="deal-savings">Best for families</div>
             <p class="deal-desc">6 Jars + Free COD</p>
-            <div class="deal-price">{% if nes_product %}{{ nes_unit_price | times: 4 | money }}{% else %}Rs. 3,560{% endif %}</div>
-            <div class="deal-compare">{% if nes_product %}{{ nes_unit_price | times: 6 | money }}{% else %}Rs. 5,340{% endif %}</div>
+            <div class="deal-price">{% if nes_product %}{{ nes_deal3_price | money }}{% else %}Rs. 3,660{% endif %}</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal3_compare | money }}{% else %}Rs. 3,960{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 4, 2)">BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>

@@ -395,7 +395,8 @@
 <div class="g-atc-toast" id="gAtcToast">&#10003; Added to Cart!</div>
 
 {% assign nes_sticky_product = all_products['natural-stomach-relief-phaki'] %}
-{% assign nes_sticky_price = nes_sticky_product.price | times: 2 %}
+{% assign nes_sticky_compare = nes_sticky_product.price | times: 2 %}
+{% assign nes_sticky_price = nes_sticky_compare | minus: 10000 %}
 {% assign nes_sticky_variant = nes_sticky_product.selected_or_first_available_variant.id %}
 
 <!-- ===== GLOBAL STICKY ADD TO CART (all pages) ===== -->
@@ -403,7 +404,7 @@
     <div class="global-sticky-atc-inner">
         <div class="global-sticky-atc-info">
             <span class="global-sticky-atc-title">Buy 2 Get 1 FREE</span>
-            <span class="global-sticky-atc-price">{% if nes_sticky_product %}{{ nes_sticky_price | money }}{% else %}Rs. 1,780{% endif %}</span>
+            <span class="global-sticky-atc-price">{% if nes_sticky_product %}{{ nes_sticky_price | money }}{% else %}Rs. 1,880{% endif %}</span>
         </div>
         <button type="button" class="global-sticky-atc-btn" data-reset-label="ADD TO CART" onclick="gStickyAddToCart(this)">
             ADD TO CART
@@ -642,16 +643,27 @@
 
     // Init: load cart count on every page
     fetch('/cart.js').then(r => r.json()).then(c => gUpdateCount(c.item_count));
-    function selectBundle(card, qty, price) {
-        // Remove selection from all cards
+    function selectBundle(card, paidQty, freeQty, price) {
         document.querySelectorAll('.bundle-card').forEach(c => c.classList.remove('selected'));
-        // Select clicked card
         card.classList.add('selected');
-        // Update hidden quantity input
-        document.getElementById('bundleQty').value = qty;
+        const paidInput = document.getElementById('bundlePaidQty');
+        const freeInput = document.getElementById('bundleFreeQty');
+        if (paidInput) paidInput.value = paidQty;
+        if (freeInput) freeInput.value = freeQty;
         const displayPrice = document.getElementById('displayPrice');
         if (displayPrice) {
             displayPrice.textContent = gFormatMoney(price);
+        }
+    }
+
+    function gProductAddToCart(btn) {
+        const variantId = document.getElementById('variantId').value;
+        const paidQty = parseInt(document.getElementById('bundlePaidQty').value || '1', 10);
+        const freeQty = parseInt(document.getElementById('bundleFreeQty').value || '0', 10);
+        if (freeQty > 0) {
+            gAddToCartBundle(variantId, btn, paidQty, freeQty);
+        } else {
+            gAddToCart(variantId, btn, paidQty);
         }
     }
 
