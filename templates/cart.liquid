@@ -77,20 +77,7 @@
                 {% for item in cart.items %}
                 {% assign is_gift = false %}
                 {% if item.properties.Gift %}{% assign is_gift = true %}{% endif %}
-                {% assign extra_off = 0 %}
-                {% if is_gift == false %}
-                    {% if item.properties._deal == 'b4g2' %}
-                        {% assign extra_off = 30000 %}
-                    {% elsif item.properties._deal == 'b2g1' %}
-                        {% assign extra_off = 10000 %}
-                    {% elsif item.quantity == 4 %}
-                        {% assign extra_off = 30000 %}
-                    {% elsif item.quantity == 2 %}
-                        {% assign extra_off = 10000 %}
-                    {% endif %}
-                {% endif %}
-                {% assign line_display = item.final_line_price | minus: extra_off %}
-                {% if line_display < 0 %}{% assign line_display = 0 %}{% endif %}
+                {% assign line_display = item.final_line_price %}
                 {% unless is_gift %}
                     {% assign display_subtotal = display_subtotal | plus: line_display %}
                 {% endunless %}
