@@ -606,6 +606,18 @@
         width: 100%;
         height: auto;
         overflow: hidden;
+        position: relative;
+    }
+
+    .hero-image .slider-wrapper {
+        display: flex;
+        width: 100%;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-image .slide {
+        min-width: 100%;
+        height: auto;
     }
 
     .hero-image img {
@@ -677,6 +689,13 @@
         font-size: 20px;
         color: var(--secondary);
         font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .price-compare {
+        font-size: 14px;
+        color: #999;
+        text-decoration: line-through;
         margin-bottom: 20px;
     }
 
@@ -1401,12 +1420,16 @@
 
 <section class="hero">
     <div class="hero-image">
-        <img src="{{ 'web_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner">
+        <div class="slider-wrapper" id="homeDesktopSlider">
+            <div class="slide"><img src="{{ 'web_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner"></div>
+            <div class="slide"><img src="{{ 'web_banner_old.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner"></div>
+        </div>
     </div>
     <!-- Mobile Hero Banner -->
     <div class="mobile-slider">
         <div class="slider-wrapper" id="homeMobileSlider">
             <div class="slide"><img src="{{ 'mobile_banner.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner"></div>
+            <div class="slide"><img src="{{ 'mobile_banner_old.jpg' | asset_img_url: 'master' }}" alt="Noor e Shifa Banner"></div>
         </div>
     </div>
     <div class="hero-content">
@@ -1469,6 +1492,9 @@
 {% assign nes_variant_id = nes_product.selected_or_first_available_variant.id %}
 {% assign nes_deal2_price = nes_unit_price | times: 2 %}
 {% assign nes_deal3_price = nes_unit_price | times: 3 %}
+{% assign nes_unit_compare = nes_unit_price | times: 130 | divided_by: 100 %}
+{% assign nes_deal2_compare = nes_deal2_price | times: 130 | divided_by: 100 %}
+{% assign nes_deal3_compare = nes_deal3_price | times: 130 | divided_by: 100 %}
 
 <section class="featured-product">
     <h2>Our Best Seller</h2>
@@ -1478,6 +1504,7 @@
         </div>
         <h3 class="product-title">{{ nes_product.title | default: 'Natural Stomach Relief Phaki' }}</h3>
         <p class="price">{% if nes_product %}{{ nes_unit_price | money }}{% else %}Rs. 990.00{% endif %}</p>
+        <p class="price-compare">{% if nes_product %}{{ nes_unit_compare | money }}{% else %}Rs. 1,287.00{% endif %}</p>
         <span class="cta-button">BUY NOW</span>
         <div class="cod-text">Cash on Delivery Available</div>
     </a>
@@ -1539,7 +1566,7 @@
             <p class="deal-desc">1 Jar - Standard Relief</p>
             <div style="font-size: 12px; color: #888; margin-bottom: 15px;">For first-time trial buyers</div>
             <div class="deal-price">{% if nes_product %}{{ nes_unit_price | money }}{% else %}Rs. 990{% endif %}</div>
-            <div class="deal-compare">&nbsp;</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_unit_compare | money }}{% else %}Rs. 1,287{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCart({{ nes_variant_id | default: 63302317998449 }}, this, 1)">BUY NOW</button>
             <div class="cod-text">Cash on Delivery Available</div>
         </div>
@@ -1552,7 +1579,7 @@
             <div class="deal-savings">Best Default Offer</div>
             <p class="deal-desc">3 Jars + Free COD</p>
             <div class="deal-price">{% if nes_product %}{{ nes_deal2_price | money }}{% else %}Rs. 1,980{% endif %}</div>
-            <div class="deal-compare">&nbsp;</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal2_compare | money }}{% else %}Rs. 2,574{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 2, 1)">BUY NOW</button>
             <div class="cod-text">Cash on Delivery Available</div>
         </div>
@@ -1565,7 +1592,7 @@
             <div class="deal-savings">Buy 3 Get 2 FREE</div>
             <p class="deal-desc">5 Jars + Free Shipping</p>
             <div class="deal-price">{% if nes_product %}{{ nes_deal3_price | money }}{% else %}Rs. 2,970{% endif %}</div>
-            <div class="deal-compare">&nbsp;</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal3_compare | money }}{% else %}Rs. 3,861{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 3, 2)">BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>
@@ -1842,18 +1869,20 @@
         overlay.classList.toggle('active');
     }
 
-    // === HOME MOBILE SLIDER ===
-    let currentHomeSlide = 0;
-    const homeSlides = document.querySelectorAll('#homeMobileSlider .slide');
-    if (homeSlides.length > 0) {
+    // === HOME HERO SLIDERS (desktop + mobile, every 2s) ===
+    function initHeroSlider(wrapperId) {
+        const wrapper = document.getElementById(wrapperId);
+        if (!wrapper) return;
+        const slides = wrapper.querySelectorAll('.slide');
+        if (slides.length < 2) return;
+        let current = 0;
         setInterval(() => {
-            currentHomeSlide = (currentHomeSlide + 1) % homeSlides.length;
-            const wrapper = document.getElementById('homeMobileSlider');
-            if (wrapper) {
-                wrapper.style.transform = `translateX(-${currentHomeSlide * 100}%)`;
-            }
-        }, 3000);
+            current = (current + 1) % slides.length;
+            wrapper.style.transform = `translateX(-${current * 100}%)`;
+        }, 2000);
     }
+    initHeroSlider('homeDesktopSlider');
+    initHeroSlider('homeMobileSlider');
 
     // === FAQ ACCORDION ===
     document.querySelectorAll('.faq-question').forEach(question => {

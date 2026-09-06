@@ -554,6 +554,9 @@
             {% assign unit_price = product.price %}
             {% assign deal2_price = unit_price | times: 2 %}
             {% assign deal3_price = unit_price | times: 3 %}
+            {% assign unit_compare = unit_price | times: 130 | divided_by: 100 %}
+            {% assign deal2_compare = deal2_price | times: 130 | divided_by: 100 %}
+            {% assign deal3_compare = deal3_price | times: 130 | divided_by: 100 %}
 
             <div class="bundle-selector">
                 <div class="bundle-card" onclick="selectBundle(this, 1, 0, {{ unit_price }})">
@@ -563,6 +566,7 @@
                     </div>
                     <div class="bundle-pricing">
                         <span class="bundle-price">{{ unit_price | money }}</span>
+                        <span class="bundle-compare-price">{{ unit_compare | money }}</span>
                     </div>
                 </div>
 
@@ -574,6 +578,7 @@
                     </div>
                     <div class="bundle-pricing">
                         <span class="bundle-price">{{ deal2_price | money }}</span>
+                        <span class="bundle-compare-price">{{ deal2_compare | money }}</span>
                     </div>
                 </div>
 
@@ -584,6 +589,7 @@
                     </div>
                     <div class="bundle-pricing">
                         <span class="bundle-price">{{ deal3_price | money }}</span>
+                        <span class="bundle-compare-price">{{ deal3_compare | money }}</span>
                     </div>
                 </div>
             </div>
