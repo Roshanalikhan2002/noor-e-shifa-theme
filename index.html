@@ -222,6 +222,10 @@
             display: block;
         }
 
+        .hero-image .banner-mobile {
+            display: none;
+        }
+
         /* Featured Product */
         .featured-product {
             padding: 100px 5%;
@@ -441,6 +445,12 @@
                 height: 100%;
                 object-fit: cover;
             }
+            .hero-image .banner-desktop {
+                display: none;
+            }
+            .hero-image .banner-mobile {
+                display: block;
+            }
             .hero-content {
                 padding: 40px 5%;
                 text-align: center;
@@ -597,7 +607,8 @@
 
     <section class="hero">
         <div class="hero-image">
-            <img src="main_banner.jpg" alt="Noor e Shifa Banner">
+            <img class="banner-desktop" src="assets/web_banner.jpg" alt="Noor e Shifa Banner">
+            <img class="banner-mobile" src="assets/mobile_banner.jpg" alt="Noor e Shifa Banner">
         </div>
         <div class="hero-content">
             <h1>Say Goodbye to Bloating, Acidity & Heavy Stomach — Naturally</h1>
