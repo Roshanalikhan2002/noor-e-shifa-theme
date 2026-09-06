@@ -73,24 +73,44 @@
                 </tr>
             </thead>
             <tbody>
+                {% assign display_subtotal = 0 %}
                 {% for item in cart.items %}
+                {% assign is_gift = false %}
+                {% if item.properties.Gift %}{% assign is_gift = true %}{% endif %}
+                {% assign extra_off = 0 %}
+                {% if is_gift == false %}
+                    {% if item.properties._deal == 'b4g2' %}
+                        {% assign extra_off = 30000 %}
+                    {% elsif item.properties._deal == 'b2g1' %}
+                        {% assign extra_off = 10000 %}
+                    {% elsif item.quantity == 4 %}
+                        {% assign extra_off = 30000 %}
+                    {% elsif item.quantity == 2 %}
+                        {% assign extra_off = 10000 %}
+                    {% endif %}
+                {% endif %}
+                {% assign line_display = item.final_line_price | minus: extra_off %}
+                {% if line_display < 0 %}{% assign line_display = 0 %}{% endif %}
+                {% unless is_gift %}
+                    {% assign display_subtotal = display_subtotal | plus: line_display %}
+                {% endunless %}
                 <tr>
                     <td>
                         <div style="display:flex;gap:16px;align-items:center;">
                             <img class="cart-product-img" src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
                             <div>
                                 <span class="cart-product-title">{{ item.product_title }}</span>
-                                {% if item.properties.Gift %}
+                                {% if is_gift %}
                                     <div style="color: #2e7d32; font-weight: 700; font-size: 13px; text-transform: uppercase; margin-top: 4px;">{{ item.properties.Gift }}</div>
                                 {% endif %}
                             </div>
                         </div>
                     </td>
                     <td>
-                        {% if item.properties.Gift %}
+                        {% if is_gift %}
                             <span style="color:#2e7d32;font-weight:700;text-transform:uppercase;">FREE</span>
                         {% else %}
-                            {{ item.final_line_price | money }}
+                            {{ line_display | money }}
                         {% endif %}
                     </td>
                     <td>
@@ -98,10 +118,10 @@
                     </td>
                     <td>
                         <strong>
-                            {% if item.properties.Gift %}
+                            {% if is_gift %}
                                 <span style="color:#2e7d32;text-transform:uppercase;">FREE</span>
                             {% else %}
-                                {{ item.final_line_price | money }}
+                                {{ line_display | money }}
                             {% endif %}
                         </strong>
                     </td>
@@ -112,7 +132,7 @@
         </table>
 
         <div class="cart-summary">
-            <div class="cart-summary-total">Subtotal: {{ cart.total_price | money }}</div>
+            <div class="cart-summary-total">Subtotal: {{ display_subtotal | money }}</div>
             <button class="continue-btn" type="button" onclick="history.back()">Continue Shopping</button>
             <button type="submit" name="checkout" class="checkout-btn">Proceed to Checkout</button>
         </div>

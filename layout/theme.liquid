@@ -468,6 +468,38 @@
         return 'Rs. ' + (cents / 100).toFixed(2);
     }
 
+    // Extra deal offs vs 2x/4x list (Rs.100 / Rs.300)
+    const G_DEAL_EXTRA_OFF = { b2g1: 10000, b4g2: 30000 };
+
+    function gIsGiftItem(item) {
+        return !!(item.properties && (item.properties.Gift || item.properties._gift || item.properties['Free Gift']));
+    }
+
+    function gGetDealKey(item, cart) {
+        if (item.properties && item.properties._deal) return item.properties._deal;
+        if (gIsGiftItem(item)) return null;
+
+        const giftQty = cart.items
+            .filter(i => i.variant_id === item.variant_id && gIsGiftItem(i))
+            .reduce((sum, i) => sum + i.quantity, 0);
+
+        if (item.quantity === 4 && giftQty >= 2) return 'b4g2';
+        if (item.quantity === 2 && giftQty >= 1) return 'b2g1';
+        return null;
+    }
+
+    function gGetDisplayLinePrice(item, cart) {
+        const base = (item.final_line_price != null) ? item.final_line_price : item.line_price;
+        if (gIsGiftItem(item)) return 0;
+        const deal = gGetDealKey(item, cart);
+        const extraOff = deal ? (G_DEAL_EXTRA_OFF[deal] || 0) : 0;
+        return Math.max(0, base - extraOff);
+    }
+
+    function gGetDisplayCartTotal(cart) {
+        return cart.items.reduce((sum, item) => sum + gGetDisplayLinePrice(item, cart), 0);
+    }
+
     async function gFetchCart() {
         const r = await fetch('/cart.js');
         const cart = await r.json();
@@ -489,11 +521,10 @@
         }
 
         footer.style.display = 'block';
-        total.textContent = gFormatMoney(cart.total_price);
-        console.log('Updated Total:', total.textContent);
+        total.textContent = gFormatMoney(gGetDisplayCartTotal(cart));
 
-        items.innerHTML = cart.items.map((item, idx) => {
-            const isGift = !!(item.properties && (item.properties.Gift || item.properties._gift || item.properties['Free Gift']));
+        items.innerHTML = cart.items.map((item) => {
+            const isGift = gIsGiftItem(item);
             let propertiesHtml = '';
             if (isGift) {
                 const giftLabel = (item.properties && item.properties.Gift) ? item.properties.Gift : 'Free Gift';
@@ -502,7 +533,7 @@
 
             const priceHtml = isGift
                 ? `<div class="gcd-item-price is-free">FREE</div>`
-                : `<div class="gcd-item-price">${gFormatMoney(item.final_line_price != null ? item.final_line_price : item.line_price)}</div>`;
+                : `<div class="gcd-item-price">${gFormatMoney(gGetDisplayLinePrice(item, cart))}</div>`;
 
             return `
             <div class="gcd-item" data-key="${item.key}">
@@ -602,6 +633,9 @@
 
     async function gAddToCartBundle(variantId, btn, paidQty, freeQty) {
         const resetLabel = btn && (btn.dataset.resetLabel || btn.dataset.resetText) ? (btn.dataset.resetLabel || btn.dataset.resetText) : 'BUY NOW';
+        const dealKey = (parseInt(paidQty, 10) === 4 && parseInt(freeQty, 10) === 2)
+            ? 'b4g2'
+            : (parseInt(paidQty, 10) === 2 && parseInt(freeQty, 10) === 1 ? 'b2g1' : 'bundle');
         if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
         try {
             await fetch('/cart/add.js', {
@@ -609,8 +643,16 @@
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
                     items: [
-                        { id: parseInt(variantId), quantity: parseInt(paidQty) },
-                        { id: parseInt(variantId), quantity: parseInt(freeQty), properties: { 'Gift': 'Free Gift' } }
+                        {
+                            id: parseInt(variantId),
+                            quantity: parseInt(paidQty),
+                            properties: { '_deal': dealKey }
+                        },
+                        {
+                            id: parseInt(variantId),
+                            quantity: parseInt(freeQty),
+                            properties: { 'Gift': 'Free Gift', '_deal': dealKey }
+                        }
                     ]
                 })
             });
@@ -626,6 +668,18 @@
     }
 
     function gStickyAddToCart(btn) {
+        const paidEl = document.getElementById('bundlePaidQty');
+        const freeEl = document.getElementById('bundleFreeQty');
+        if (paidEl && freeEl) {
+            const paidQty = parseInt(paidEl.value || '1', 10);
+            const freeQty = parseInt(freeEl.value || '0', 10);
+            if (freeQty > 0) {
+                gAddToCartBundle(G_DEFAULT_VARIANT_ID, btn, paidQty, freeQty);
+            } else {
+                gAddToCart(G_DEFAULT_VARIANT_ID, btn, paidQty);
+            }
+            return;
+        }
         gAddToCartBundle(G_DEFAULT_VARIANT_ID, btn, 2, 1);
     }
 
@@ -665,6 +719,19 @@
         const displayPrice = document.getElementById('displayPrice');
         if (displayPrice) {
             displayPrice.textContent = gFormatMoney(price);
+        }
+
+        const stickyTitle = document.querySelector('.global-sticky-atc-title');
+        const stickyPrice = document.querySelector('.global-sticky-atc-price');
+        if (stickyTitle && stickyPrice) {
+            if (paidQty === 4 && freeQty === 2) {
+                stickyTitle.textContent = 'Family Value Deal';
+            } else if (paidQty === 2 && freeQty === 1) {
+                stickyTitle.textContent = 'Buy 2 Get 1 FREE';
+            } else {
+                stickyTitle.textContent = 'Starter Pack';
+            }
+            stickyPrice.textContent = gFormatMoney(price);
         }
     }
 
