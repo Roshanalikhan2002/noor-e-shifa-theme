@@ -61,6 +61,12 @@
         .gcd-item-info { flex: 1; }
         .gcd-item-title { font-weight: 600; font-size: 15px; color: var(--cart-primary); margin-bottom: 4px; }
         .gcd-item-price { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .gcd-item-price.is-free {
+            color: #2e7d32;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
         .gcd-item-qty { display: flex; align-items: center; gap: 10px; }
         .gcd-qty-btn {
             width: 30px; height: 30px; border: 1px solid var(--cart-border);
@@ -487,10 +493,16 @@
         console.log('Updated Total:', total.textContent);
 
         items.innerHTML = cart.items.map((item, idx) => {
+            const isGift = !!(item.properties && (item.properties.Gift || item.properties._gift || item.properties['Free Gift']));
             let propertiesHtml = '';
-            if (item.properties && item.properties.Gift) {
-                propertiesHtml = `<div style="color:#2e7d32; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:4px;">${item.properties.Gift}</div>`;
+            if (isGift) {
+                const giftLabel = (item.properties && item.properties.Gift) ? item.properties.Gift : 'Free Gift';
+                propertiesHtml = `<div style="color:#2e7d32; font-size:11px; font-weight:700; text-transform:uppercase; margin-bottom:4px;">${giftLabel}</div>`;
             }
+
+            const priceHtml = isGift
+                ? `<div class="gcd-item-price is-free">FREE</div>`
+                : `<div class="gcd-item-price">${gFormatMoney(item.final_line_price != null ? item.final_line_price : item.line_price)}</div>`;
 
             return `
             <div class="gcd-item" data-key="${item.key}">
@@ -498,7 +510,7 @@
                 <div class="gcd-item-info">
                     <div class="gcd-item-title">${item.product_title}</div>
                     ${propertiesHtml}
-                    <div class="gcd-item-price">${gFormatMoney(item.price)}</div>
+                    ${priceHtml}
                     <div class="gcd-item-qty">
                         <button class="gcd-qty-btn" onclick="gQtyClick('${item.key}', -1)">−</button>
                         <span class="gcd-qty-num" id="qty-${item.key}">${item.quantity}</span>

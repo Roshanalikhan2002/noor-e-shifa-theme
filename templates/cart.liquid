@@ -86,11 +86,25 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ item.price | money }}</td>
+                    <td>
+                        {% if item.properties.Gift %}
+                            <span style="color:#2e7d32;font-weight:700;text-transform:uppercase;">FREE</span>
+                        {% else %}
+                            {{ item.final_line_price | money }}
+                        {% endif %}
+                    </td>
                     <td>
                         <input class="cart-qty-input" type="number" name="updates[{{ item.variant_id }}]" value="{{ item.quantity }}" min="1">
                     </td>
-                    <td><strong>{{ item.line_price | money }}</strong></td>
+                    <td>
+                        <strong>
+                            {% if item.properties.Gift %}
+                                <span style="color:#2e7d32;text-transform:uppercase;">FREE</span>
+                            {% else %}
+                                {{ item.final_line_price | money }}
+                            {% endif %}
+                        </strong>
+                    </td>
                     <td><a class="cart-remove" href="/cart/change?line={{ forloop.index }}&quantity=0">×</a></td>
                 </tr>
                 {% endfor %}
