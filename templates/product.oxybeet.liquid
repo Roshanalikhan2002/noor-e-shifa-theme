@@ -288,12 +288,45 @@
     }
     .acc-panel {
       display: none;
-      padding: 0 2px 16px 28px;
+      padding: 0 2px 18px 28px;
       font-size: 13px;
       color: #333;
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .acc-item.open .acc-panel { display: block; }
+    .acc-panel p { margin: 0 0 12px; }
+    .acc-panel h4 {
+      margin: 16px 0 8px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: 0.02em;
+    }
+    .acc-panel h4:first-child { margin-top: 0; }
+    .acc-panel ul {
+      margin: 0 0 12px;
+      padding-left: 18px;
+    }
+    .acc-panel li { margin-bottom: 6px; }
+    .acc-panel .acc-lead {
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 14px;
+    }
+    .acc-panel .acc-block { margin-bottom: 14px; }
+    .acc-panel .acc-block strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #111;
+    }
+    .acc-panel .acc-tip {
+      margin-top: 12px;
+      font-style: italic;
+      color: #444;
+    }
+    .acc-panel .acc-qa { margin-bottom: 12px; }
+    .acc-panel .acc-qa .prob { font-weight: 700; color: #111; margin-bottom: 2px; }
+    .acc-panel .acc-qa .sol { color: #444; }
 
     .trust-section {
       max-width: 980px;
@@ -936,19 +969,102 @@
       <div class="accordion" id="oxyAccordion">
         <div class="acc-item">
           <button class="acc-btn" type="button"><span class="acc-left"><span class="acc-ico">🌱</span> Ingredients</span><span class="acc-chevron" aria-hidden="true"></span></button>
-          <div class="acc-panel">Beet Root, Pomegranate, and Cinnamon — a clean organic superfood blend crafted to support heart health and daily vitality.</div>
+          <div class="acc-panel">
+            <p class="acc-lead">Superfood Trio: Beetroot + Pomegranate + Cinnamon</p>
+
+            <div class="acc-block">
+              <strong>1️⃣ Beetroot – The Heart &amp; Energy Booster</strong>
+              <p>Beetroot is a nutrient-dense root vegetable rich in nitrates, which help improve blood circulation, lower blood pressure, and boost endurance. It’s packed with iron, folate, and antioxidants, supporting heart health, brain function, and detoxification. Beetroot is also known to increase stamina and athletic performance naturally.</p>
+            </div>
+
+            <div class="acc-block">
+              <strong>2️⃣ Pomegranate – The Antioxidant Powerhouse</strong>
+              <p>Pomegranate is loaded with polyphenols, Vitamin C, and flavonoids, making it one of the best superfruits for immunity and skin health. It supports heart function, fights inflammation, improves digestion, and enhances cognitive function. Pomegranate’s natural compounds help protect cells from oxidative damage and slow down aging.</p>
+            </div>
+
+            <div class="acc-block">
+              <strong>3️⃣ Cinnamon – The Metabolism &amp; Blood Sugar Regulator</strong>
+              <p>Cinnamon is a powerful spice with anti-inflammatory and antibacterial properties. It helps regulate blood sugar levels, boosts metabolism, and supports digestion. It’s also known for its heart-protective effects, brain-boosting properties, and ability to reduce stress and anxiety.</p>
+            </div>
+
+            <h4>Why This Combination?</h4>
+            <ul>
+              <li>✅ Supports heart health – Beetroot and pomegranate improve circulation, while cinnamon helps regulate cholesterol.</li>
+              <li>✅ Boosts energy and endurance – Natural nitrates and antioxidants provide sustained energy.</li>
+              <li>✅ Enhances brain function – Improves focus, memory, and cognitive performance.</li>
+              <li>✅ Regulates blood sugar and metabolism – Cinnamon stabilizes glucose levels, preventing energy crashes.</li>
+              <li>✅ Strengthens immunity – High in vitamins and antioxidants for overall wellness.</li>
+            </ul>
+            <p>A perfect blend for vitality, heart health, and performance.</p>
+          </div>
         </div>
+
         <div class="acc-item">
           <button class="acc-btn" type="button"><span class="acc-left"><span class="acc-ico">🥄</span> How to Use</span><span class="acc-chevron" aria-hidden="true"></span></button>
-          <div class="acc-panel">Mix 1 scoop with water or a smoothie once daily. Best taken in the morning for consistent energy and circulation support.</div>
+          <div class="acc-panel">
+            <p class="acc-lead">How to Use {{ product.title }} Superfood Blend</p>
+            <ul>
+              <li>💧 Mix &amp; Sip – Stir into water, juice, or milk.</li>
+              <li>🥤 Blend &amp; Boost – Add to smoothies or shakes.</li>
+              <li>🥣 Sprinkle &amp; Enjoy – Mix into yogurt, oatmeal, or salads.</li>
+              <li>⚡ Energize &amp; Recover – Perfect pre/post-workout.</li>
+              <li>🍪 Bake &amp; Snack – Add to pancakes, bars, or cookies.</li>
+            </ul>
+            <p class="acc-tip">Tip: Store in a cool, dry place &amp; stick to the recommended dose! 🌱💚</p>
+          </div>
         </div>
+
         <div class="acc-item">
           <button class="acc-btn" type="button"><span class="acc-left"><span class="acc-ico">🌟</span> Benefits</span><span class="acc-chevron" aria-hidden="true"></span></button>
-          <div class="acc-panel">Helps maintain healthy blood pressure, supports heart health, and delivers organic antioxidants from beet, pomegranate, and cinnamon.</div>
+          <div class="acc-panel">
+            <h4>1. Cardiovascular Health &amp; Blood Circulation</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: High blood pressure (Hypertension)</div><div class="sol">🔹 Solution: Beetroot is rich in nitrates, which naturally lower blood pressure by relaxing blood vessels and improving circulation.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Poor blood flow &amp; weak heart health</div><div class="sol">🔹 Solution: Pomegranate reduces plaque buildup in arteries, improving overall blood circulation and heart health.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: High cholesterol levels</div><div class="sol">🔹 Solution: Pomegranate and cinnamon reduce LDL (bad cholesterol) and increase HDL (good cholesterol), lowering the risk of heart disease.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Anemia &amp; low hemoglobin levels</div><div class="sol">🔹 Solution: Beetroot is rich in iron, which helps in the production of red blood cells and prevents anemia.</div></div>
+
+            <h4>2. Blood Sugar Control &amp; Insulin Resistance</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: High blood sugar &amp; risk of diabetes</div><div class="sol">🔹 Solution: Cinnamon is known for its anti-diabetic properties—it lowers blood sugar by improving insulin sensitivity.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Sudden blood sugar spikes</div><div class="sol">🔹 Solution: Pomegranate contains polyphenols that slow down sugar absorption, preventing sugar spikes after meals.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Cravings &amp; overeating</div><div class="sol">🔹 Solution: Cinnamon helps regulate appetite and reduce cravings, supporting better weight control.</div></div>
+
+            <h4>3. Digestion &amp; Gut Health</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Slow digestion &amp; bloating</div><div class="sol">🔹 Solution: Beetroot and pomegranate contain fiber that promotes digestion and relieves bloating.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Constipation</div><div class="sol">🔹 Solution: High fiber content in beetroot and pomegranate regulates bowel movements, preventing constipation.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Irritable Bowel Syndrome (IBS) &amp; inflammation</div><div class="sol">🔹 Solution: Cinnamon has anti-inflammatory properties, which can soothe the gut and reduce IBS symptoms.</div></div>
+
+            <h4>4. Skin Health &amp; Anti-Aging</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Dull &amp; acne-prone skin</div><div class="sol">🔹 Solution: Pomegranate is rich in antioxidants, helping fight acne and giving a natural glow to the skin.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Wrinkles &amp; premature aging</div><div class="sol">🔹 Solution: Vitamin C in pomegranate and beetroot boosts collagen production, keeping skin youthful and firm.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Dry &amp; irritated skin</div><div class="sol">🔹 Solution: Beetroot and pomegranate help in hydrating the skin and reducing inflammation.</div></div>
+
+            <h4>5. Energy, Endurance &amp; Performance</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Low stamina &amp; fatigue</div><div class="sol">🔹 Solution: Beetroot boosts nitric oxide production, improving energy levels and oxygen delivery to muscles.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Muscle soreness after exercise</div><div class="sol">🔹 Solution: Pomegranate and cinnamon have anti-inflammatory properties, reducing muscle soreness and improving recovery.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Low athletic performance</div><div class="sol">🔹 Solution: Beetroot enhances oxygen uptake, boosting stamina and endurance for workouts.</div></div>
+
+            <h4>6. Brain Health &amp; Memory Boost</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Brain fog &amp; lack of focus</div><div class="sol">🔹 Solution: Beetroot improves blood flow to the brain, enhancing focus and cognitive performance.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Memory loss &amp; cognitive decline</div><div class="sol">🔹 Solution: Pomegranate contains neuroprotective compounds that help prevent memory loss and improve brain function.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Risk of Alzheimer’s &amp; dementia</div><div class="sol">🔹 Solution: The nitrates in beetroot enhance oxygen supply to the brain, lowering the risk of neurodegenerative diseases.</div></div>
+
+            <h4>7. Weight Management &amp; Fat Loss</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Slow metabolism &amp; difficulty losing weight</div><div class="sol">🔹 Solution: Cinnamon boosts metabolism and helps the body burn fat more efficiently.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Water retention &amp; bloating</div><div class="sol">🔹 Solution: Beetroot and cinnamon have diuretic properties, helping the body flush out excess water and reduce bloating.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Unhealthy snacking &amp; sugar cravings</div><div class="sol">🔹 Solution: Cinnamon reduces sugar cravings and stabilizes blood sugar levels.</div></div>
+
+            <h4>8. Immune System Support &amp; Inflammation Control</h4>
+            <div class="acc-qa"><div class="prob">✅ Problem: Weak immunity &amp; frequent colds</div><div class="sol">🔹 Solution: Pomegranate is rich in vitamin C, which strengthens the immune system.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Chronic inflammation &amp; joint pain</div><div class="sol">🔹 Solution: Cinnamon has anti-inflammatory properties that help reduce inflammation and pain.</div></div>
+            <div class="acc-qa"><div class="prob">✅ Problem: Oxidative stress &amp; toxin buildup</div><div class="sol">🔹 Solution: The antioxidants in beetroot and pomegranate detoxify the body, removing free radicals.</div></div>
+          </div>
         </div>
+
         <div class="acc-item">
           <button class="acc-btn" type="button"><span class="acc-left"><span class="acc-ico">🙋‍♀️</span> Ask a Question</span><span class="acc-chevron" aria-hidden="true"></span></button>
-          <div class="acc-panel">Have a question about {{ product.title }}? Message us on WhatsApp and our team will help you with usage, shipping, and order details.</div>
+          <div class="acc-panel">
+            <p>Have a question about {{ product.title }}? Message us on WhatsApp and our team will help you with usage, shipping, and order details.</p>
+          </div>
         </div>
       </div>
     </section>
