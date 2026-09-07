@@ -226,27 +226,6 @@
       max-width: 520px;
     }
 
-    .packs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .pack {
-      border: 1px solid #cfcfcf;
-      background: #fff;
-      padding: 14px 8px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .pack.selected {
-      border: 2px solid #111;
-      padding: 13px 7px;
-    }
-
     .btn-row { display: grid; gap: 10px; margin-bottom: 22px; }
     .btn {
       width: 100%;
@@ -256,108 +235,12 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       border-radius: 2px;
+      cursor: pointer;
     }
     .btn-atc {
-      background: #fff;
-      color: #111;
-      border: 1px solid #111;
-    }
-    .btn-buy {
       background: #111;
       color: #fff;
       border: 1px solid #111;
-    }
-
-    .scarcity {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-    .warn {
-      color: #c9a000;
-      font-size: 18px;
-      line-height: 1;
-      margin-top: 2px;
-    }
-    .scarcity strong { display: block; font-size: 14px; margin-bottom: 4px; }
-    .scarcity p { font-size: 12px; color: #444; }
-
-    .timer {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin: 16px 0 22px;
-      max-width: 360px;
-    }
-    .timer-box {
-      background: #3b241c;
-      color: #fff;
-      text-align: center;
-      padding: 12px 6px 8px;
-      border-radius: 4px;
-    }
-    .timer-num {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-    .timer-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      opacity: 0.85;
-      margin-top: 4px;
-    }
-
-    .ship {
-      margin-bottom: 18px;
-    }
-    .ship-text {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .ship-bar {
-      height: 8px;
-      background: #e8e8e8;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .ship-fill {
-      width: 60%;
-      height: 100%;
-      background: #111;
-      border-radius: 99px;
-    }
-
-    .upsell {
-      border: 1px solid #ddd;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: 64px 1fr auto;
-      gap: 12px;
-      align-items: center;
-    }
-    .upsell-img {
-      width: 64px;
-      height: 64px;
-      background: #f3f3f3;
-      border: 1px solid #e5e5e5;
-    }
-    .upsell-name {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .upsell-btn {
-      border: 1px solid #111;
-      background: #fff;
-      padding: 8px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      white-space: nowrap;
     }
 
     .accordion {
@@ -746,16 +629,12 @@
       .price-row { justify-content: center; }
       .compare { font-size: 20px; }
       .sale { font-size: 22px; }
-      .packs { max-width: 420px; margin-left: auto; margin-right: auto; }
-      .btn-row, .ship, .upsell, .scarcity, .timer, .accordion {
+      .btn-row, .accordion {
         max-width: 420px;
         margin-left: auto;
         margin-right: auto;
       }
-      .scarcity { text-align: left; }
-      .upsell { text-align: left; }
       .accordion { text-align: left; }
-      .timer { max-width: 360px; }
       .gallery { position: static; }
 
       .trust-section { padding: 28px 18px 36px; }
@@ -1050,41 +929,8 @@
       <input type="hidden" id="oxyVariantId" value="{{ current_variant.id }}">
       <input type="hidden" id="oxyQty" value="1">
 
-      <div class="packs" role="listbox" aria-label="Pack size">
-        <button class="pack selected" type="button" data-qty="1">Pack of 1</button>
-        <button class="pack" type="button" data-qty="2">Pack of 2</button>
-        <button class="pack" type="button" data-qty="3">Pack of 3</button>
-      </div>
-
       <div class="btn-row">
         <button class="btn btn-atc" id="oxyAtcBtn" type="button">Add to Cart</button>
-        <button class="btn btn-buy" id="oxyBuyBtn" type="button">Buy It Now</button>
-      </div>
-
-      <div class="scarcity">
-        <span class="warn">⚠</span>
-        <div>
-          <strong>Only 17 Packs Left At Sale Price</strong>
-          <p>When the timer hits zero, this batch is gone and the next restock ships at full price.</p>
-        </div>
-      </div>
-
-      <div class="timer" aria-label="Sale countdown">
-        <div class="timer-box"><div class="timer-num" id="oxy-d">00</div><div class="timer-label">Days</div></div>
-        <div class="timer-box"><div class="timer-num" id="oxy-h">03</div><div class="timer-label">Hrs</div></div>
-        <div class="timer-box"><div class="timer-num" id="oxy-m">09</div><div class="timer-label">Mins</div></div>
-        <div class="timer-box"><div class="timer-num" id="oxy-s">40</div><div class="timer-label">Secs</div></div>
-      </div>
-
-      <div class="ship">
-        <div class="ship-text">Free shipping for orders over Rs.3,000.00!</div>
-        <div class="ship-bar"><div class="ship-fill"></div></div>
-      </div>
-
-      <div class="upsell">
-        <div class="upsell-img" aria-hidden="true"></div>
-        <div class="upsell-name">Adaptogen Power House Blend<br><span style="font-weight:800">Rs. 2,050.00</span> <span style="text-decoration:line-through;color:#888;font-weight:600">Rs. 2,850.00</span></div>
-        <button class="upsell-btn" type="button">Add to cart</button>
       </div>
 
       <div class="accordion" id="oxyAccordion">
@@ -1176,14 +1022,6 @@
 <script>
 
     (function () {
-      var packs = document.querySelectorAll('.pack');
-      packs.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          packs.forEach(function (p) { p.classList.remove('selected'); });
-          btn.classList.add('selected');
-        });
-      });
-
       document.querySelectorAll('#oxyAccordion .acc-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var item = btn.parentElement;
@@ -1205,22 +1043,6 @@
           if (!open) item.classList.add('open');
         });
       });
-
-      var end = Date.now() + (3 * 60 * 60 + 9 * 60 + 40) * 1000;
-      function pad(n) { return String(n).padStart(2, '0'); }
-      function tick() {
-        var left = Math.max(0, end - Date.now());
-        var sec = Math.floor(left / 1000);
-        var d = Math.floor(sec / 86400); sec -= d * 86400;
-        var h = Math.floor(sec / 3600); sec -= h * 3600;
-        var m = Math.floor(sec / 60); sec -= m * 60;
-        document.getElementById('oxy-d').textContent = pad(d);
-        document.getElementById('oxy-h').textContent = pad(h);
-        document.getElementById('oxy-m').textContent = pad(m);
-        document.getElementById('oxy-s').textContent = pad(sec);
-      }
-      tick();
-      setInterval(tick, 1000);
 
       var track = document.getElementById('reviewsTrack');
       var cards = track ? track.querySelectorAll('.review-card') : [];
@@ -1286,16 +1108,6 @@
     document.body.style.overflow = drawer && drawer.classList.contains('active') ? 'hidden' : '';
   };
 
-  document.querySelectorAll('.oxy-page .pack').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      document.querySelectorAll('.oxy-page .pack').forEach(function (p) { p.classList.remove('selected'); });
-      btn.classList.add('selected');
-      var qty = btn.getAttribute('data-qty') || '1';
-      var qtyInput = document.getElementById('oxyQty');
-      if (qtyInput) qtyInput.value = qty;
-    });
-  });
-
   document.querySelectorAll('[data-oxy-thumb]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('[data-oxy-thumb]').forEach(function (b) { b.classList.remove('active'); });
@@ -1306,11 +1118,6 @@
   });
 
   var atc = document.getElementById('oxyAtcBtn');
-  var buy = document.getElementById('oxyBuyBtn');
-  function getOxyQty() {
-    var el = document.getElementById('oxyQty');
-    return parseInt((el && el.value) || '1', 10);
-  }
   function getOxyVariant() {
     var el = document.getElementById('oxyVariantId');
     return el ? el.value : '';
@@ -1319,21 +1126,8 @@
   if (atc) {
     atc.addEventListener('click', function () {
       if (typeof gAddToCart === 'function') {
-        gAddToCart(getOxyVariant(), atc, getOxyQty());
+        gAddToCart(getOxyVariant(), atc, 1);
       }
-    });
-  }
-  if (buy) {
-    buy.addEventListener('click', function () {
-      var id = getOxyVariant();
-      var qty = getOxyQty();
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ id: parseInt(id, 10), quantity: qty })
-      }).then(function () {
-        window.location.href = '/checkout';
-      });
     });
   }
 })();
