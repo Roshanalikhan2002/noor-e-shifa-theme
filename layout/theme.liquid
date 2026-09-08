@@ -611,6 +611,30 @@
         }
     }
 
+    async function gAddToCartCombo(variantIdA, variantIdB, btn) {
+        if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
+        try {
+            await fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    items: [
+                        { id: parseInt(variantIdA, 10), quantity: 1 },
+                        { id: parseInt(variantIdB, 10), quantity: 1 }
+                    ]
+                })
+            });
+            if (btn) {
+                btn.textContent = '✓ ADDED!';
+                setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.disabled = false; }, 2000);
+            }
+            gShowToast();
+            gOpenCart();
+        } catch(e) {
+            if (btn) { btn.textContent = 'ADD TO CART'; btn.disabled = false; }
+        }
+    }
+
     async function gAddToCartBundle(variantId, btn, paidQty, freeQty) {
         const resetLabel = btn && (btn.dataset.resetLabel || btn.dataset.resetText) ? (btn.dataset.resetLabel || btn.dataset.resetText) : 'BUY NOW';
         const dealKey = (parseInt(paidQty, 10) === 3 && parseInt(freeQty, 10) === 2)
