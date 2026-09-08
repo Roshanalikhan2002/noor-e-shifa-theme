@@ -133,9 +133,9 @@
     }
     .deals-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 30px;
-        max-width: 1200px;
+        max-width: 900px;
         margin: 0 auto;
     }
     .deal-card {
@@ -1640,6 +1640,222 @@
         </div>
     </div>
 </section>
+<!-- EXCLUSIVE VALUE DEALS -->
+<section class="value-deals-section">
+    <h2>Exclusive Value Deals</h2>
+    <div class="deals-grid">
+        <div class="deal-card popular">
+            <div class="deal-badge" style="background: #e67e22;">MOST POPULAR</div>
+            <img src="{{ '3_bundles_deal.jpg' | asset_img_url: '400x' }}" alt="3 Jars" class="product-img">
+            <h3>Buy 2 Get 1 FREE</h3>
+            <div class="deal-savings">Best Default Offer</div>
+            <p class="deal-desc">3 Jars + Free COD</p>
+            <div class="deal-price">{% if nes_product %}{{ nes_deal2_price | money }}{% else %}Rs. 1,980{% endif %}</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal2_compare | money }}{% else %}Rs. 2,574{% endif %}</div>
+            <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 2, 1)">BUY NOW</button>
+            <div class="cod-text">Cash on Delivery Available</div>
+        </div>
+
+        <div class="deal-card">
+            <div class="deal-badge" style="background: #27ae60;">BUY 3 GET 2</div>
+            <img src="{{ '6_bundles_deal_v2.jpg' | asset_img_url: '400x' }}" alt="5 Jars" class="product-img">
+            <h3>Family Value Deal</h3>
+            <div class="deal-savings">Buy 3 Get 2 FREE</div>
+            <p class="deal-desc">5 Jars + Free Shipping</p>
+            <div class="deal-price">{% if nes_product %}{{ nes_deal3_price | money }}{% else %}Rs. 2,970{% endif %}</div>
+            <div class="deal-compare">{% if nes_product %}{{ nes_deal3_compare | money }}{% else %}Rs. 3,861{% endif %}</div>
+            <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 3, 2)">BUY NOW</button>
+            <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
+        </div>
+    </div>
+</section>
+
+<!-- REVIEWS -->
+{% render 'custom-reviews', layout: 'grid', heading: 'Real Results', show_heading: true %}
+
+{% render 'social-videos' %}
+
+<!-- VIDEO SHOWCASE -->
+<section class="video-showcase-section">
+    <div class="video-showcase-video">
+        <video id="showcaseVideo" autoplay muted loop playsinline poster="{{ 'product-showcase-poster.png' | asset_img_url: 'master' }}">
+            <source src="{{ 'product-showcase.mp4' | asset_url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="videoMuteToggle" class="video-mute-btn" aria-label="Toggle Mute">
+            <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+            <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        </button>
+    </div>
+    <div class="video-showcase-content">
+        <span class="label" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700; font-size: 12px; color: var(--secondary); margin-bottom: 20px; display: block;">See the Magic</span>
+        <h2>Why Thousands Trust Noor e Shifa</h2>
+        <p>Watch how our 100% Organic Phakki works to restore your digestive balance. No chemicals, just pure herbal wisdom passed down through generations.</p>
+        <ul class="video-feature-list">
+            <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Instant Relief from Bloating
+            </li>
+            <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Improves Gut Health Daily
+            </li>
+            <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                100% Natural & Organic
+            </li>
+        </ul>
+        <a href="/collections/all" class="cta-button">Shop the Remedy</a>
+        <div class="cod-text">Cash on Delivery Available</div>
+    </div>
+</section>
+
+<!-- NUTRITION CHART SECTION -->
+<section class="nutrition-chart-section">
+    <div class="nutrition-chart-header">
+        <h2>Nutritional Profile</h2>
+        <p>A scientific blend of nature's finest digestive aids, carefully balanced for your gut health.</p>
+    </div>
+    <div class="nutrition-grid">
+        <div class="nutrition-item">
+            <div class="ingredient-icon">
+                <img src="{{ 'ajwain.jpg' | asset_url }}" alt="Ajwain (Carom seeds)">
+            </div>
+            <h3>Ajwain</h3>
+            <ul class="benefits-list">
+                <li>Rich in Fiber & Minerals</li>
+                <li>Relieves Instant Acidity</li>
+                <li>Reduces Bloating & Gas</li>
+                <li>Improves Gut Motility</li>
+            </ul>
+        </div>
+        <div class="nutrition-item">
+            <div class="ingredient-icon">
+                <img src="{{ 'saunf.jpg' | asset_url }}" alt="Saunf (Fennel seeds)">
+            </div>
+            <h3>Saunf</h3>
+            <ul class="benefits-list">
+                <li>High in Vitamin C & Manganese</li>
+                <li>Cools Digestive System</li>
+                <li>Reduces Inflammation</li>
+                <li>Natural Mouth Freshener</li>
+            </ul>
+        </div>
+        <div class="nutrition-item">
+            <div class="ingredient-icon">
+                <img src="{{ 'zeera.jpg' | asset_url }}" alt="Zeera (Cumin seeds)">
+            </div>
+            <h3>Zeera</h3>
+            <ul class="benefits-list">
+                <li>Packed with Iron & Vitamin A</li>
+                <li>Boosts Digestive Enzymes</li>
+                <li>Speeds Up Metabolism</li>
+                <li>Antioxidant Properties</li>
+            </ul>
+        </div>
+        <div class="nutrition-item">
+            <div class="ingredient-icon">
+                <img src="{{ 'black-salt.jpg' | asset_url }}" alt="Black Salt (Kala Namak)">
+            </div>
+            <h3>Black Salt</h3>
+            <ul class="benefits-list">
+                <li>Essential Minerals & Iron</li>
+                <li>Eliminates Trapped Gas</li>
+                <li>Balances Stomach pH</li>
+                <li>Supports Electrolytes</li>
+            </ul>
+        </div>
+    </div>
+    <div class="nutrition-footer">
+        * Based on standard herbal nutritional profiles.
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+    <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">
+                How do I use it?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                For best results, take 1 small teaspoon right after your meals or whenever you feel bloated. It is best taken with a glass of water.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Is it natural?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Yes, Noor e Shifa is a 100% natural herbal digestive blend. It contains pure ingredients like Ajwain (Carom Seeds), Saunf (Fennel Seeds), Zeera (Cumin Seeds), and Black Salt (Kala Namak) with no artificial fillers.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Does it cure acidity or stomach problems?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Noor e Shifa supports healthy digestion and is designed to provide relief from everyday bloating, gas, and stomach heaviness. It helps your system process food naturally and comfortably.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Is Cash on Delivery (COD) available?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                Yes! We offer Cash on Delivery (COD) across Pakistan. You can pay conveniently when the product arrives at your doorstep.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                How long does delivery take?
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                We deliver all across Pakistan within 3 to 5 working days. Once your order is placed, you will receive a confirmation message and tracking details.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SHOP BY CONCERN -->
+<section class="section-container">
+    <h2 class="hollow-heading">Shop by Concern</h2>
+    <div class="concern-slider">
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_4.png' | asset_img_url: '600x' }}" alt="Gas Relief">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Gas Relief</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_2.png' | asset_img_url: '600x' }}" alt="Acidity">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Acidity</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_3.png' | asset_img_url: '600x' }}" alt="Bloating">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Bloating</div>
+            </div>
+        </div>
+        <div class="concern-card">
+            <img src="{{ 'lifestyle_herbal_1.png' | asset_img_url: '600x' }}" alt="Indigestion">
+            <div class="concern-card-overlay">
+                <div class="concern-card-title">Indigestion</div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- PROBLEM & SOLUTION SECTION -->
 <section class="problem-solution-section">
     <div class="problem-content">
@@ -1692,177 +1908,7 @@
     </div>
 </section>
 
-<!-- EXCLUSIVE VALUE DEALS -->
-<section class="value-deals-section">
-    <h2>Exclusive Value Deals</h2>
-    <div class="deals-grid">
-        <!-- Deal 1 -->
-        <div class="deal-card starter">
-            <img src="{{ 'starter_pack_v2.jpg' | asset_img_url: '400x' }}" alt="1 Jar" class="product-img">
-            <h3>Starter Pack</h3>
-            <p class="deal-desc">1 Jar - Standard Relief</p>
-            <div style="font-size: 12px; color: #888; margin-bottom: 15px;">For first-time trial buyers</div>
-            <div class="deal-price">{% if nes_product %}{{ nes_unit_price | money }}{% else %}Rs. 990{% endif %}</div>
-            <div class="deal-compare">{% if nes_product %}{{ nes_unit_compare | money }}{% else %}Rs. 1,287{% endif %}</div>
-            <button class="deal-atc" onclick="gAddToCart({{ nes_variant_id | default: 63302317998449 }}, this, 1)">BUY NOW</button>
-            <div class="cod-text">Cash on Delivery Available</div>
-        </div>
-
-        <!-- Deal 2 -->
-        <div class="deal-card popular">
-            <div class="deal-badge" style="background: #e67e22;">MOST POPULAR</div>
-            <img src="{{ '3_bundles_deal.jpg' | asset_img_url: '400x' }}" alt="3 Jars" class="product-img">
-            <h3>Buy 2 Get 1 FREE</h3>
-            <div class="deal-savings">Best Default Offer</div>
-            <p class="deal-desc">3 Jars + Free COD</p>
-            <div class="deal-price">{% if nes_product %}{{ nes_deal2_price | money }}{% else %}Rs. 1,980{% endif %}</div>
-            <div class="deal-compare">{% if nes_product %}{{ nes_deal2_compare | money }}{% else %}Rs. 2,574{% endif %}</div>
-            <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 2, 1)">BUY NOW</button>
-            <div class="cod-text">Cash on Delivery Available</div>
-        </div>
-
-        <!-- Deal 3 -->
-        <div class="deal-card">
-            <div class="deal-badge" style="background: #27ae60;">BUY 3 GET 2</div>
-            <img src="{{ '6_bundles_deal_v2.jpg' | asset_img_url: '400x' }}" alt="5 Jars" class="product-img">
-            <h3>Family Value Deal</h3>
-            <div class="deal-savings">Buy 3 Get 2 FREE</div>
-            <p class="deal-desc">5 Jars + Free Shipping</p>
-            <div class="deal-price">{% if nes_product %}{{ nes_deal3_price | money }}{% else %}Rs. 2,970{% endif %}</div>
-            <div class="deal-compare">{% if nes_product %}{{ nes_deal3_compare | money }}{% else %}Rs. 3,861{% endif %}</div>
-            <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 3, 2)">BUY NOW</button>
-            <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
-        </div>
-    </div>
-</section>
-
-
-<!-- NUTRITION CHART SECTION -->
-<section class="nutrition-chart-section">
-    <div class="nutrition-chart-header">
-        <h2>Nutritional Profile</h2>
-        <p>A scientific blend of nature's finest digestive aids, carefully balanced for your gut health.</p>
-    </div>
-    <div class="nutrition-grid">
-        <!-- Ajwain -->
-        <div class="nutrition-item">
-            <div class="ingredient-icon">
-                <img src="{{ 'ajwain.jpg' | asset_url }}" alt="Ajwain (Carom seeds)">
-            </div>
-            <h3>Ajwain</h3>
-            <ul class="benefits-list">
-                <li>Rich in Fiber & Minerals</li>
-                <li>Relieves Instant Acidity</li>
-                <li>Reduces Bloating & Gas</li>
-                <li>Improves Gut Motility</li>
-            </ul>
-        </div>
-        <!-- Saunf -->
-        <div class="nutrition-item">
-            <div class="ingredient-icon">
-                <img src="{{ 'saunf.jpg' | asset_url }}" alt="Saunf (Fennel seeds)">
-            </div>
-            <h3>Saunf</h3>
-            <ul class="benefits-list">
-                <li>High in Vitamin C & Manganese</li>
-                <li>Cools Digestive System</li>
-                <li>Reduces Inflammation</li>
-                <li>Natural Mouth Freshener</li>
-            </ul>
-        </div>
-        <!-- Zeera -->
-        <div class="nutrition-item">
-            <div class="ingredient-icon">
-                <img src="{{ 'zeera.jpg' | asset_url }}" alt="Zeera (Cumin seeds)">
-            </div>
-            <h3>Zeera</h3>
-            <ul class="benefits-list">
-                <li>Packed with Iron & Vitamin A</li>
-                <li>Boosts Digestive Enzymes</li>
-                <li>Speeds Up Metabolism</li>
-                <li>Antioxidant Properties</li>
-            </ul>
-        </div>
-        <!-- Black Salt -->
-        <div class="nutrition-item">
-            <div class="ingredient-icon">
-                <img src="{{ 'black-salt.jpg' | asset_url }}" alt="Black Salt (Kala Namak)">
-            </div>
-            <h3>Black Salt</h3>
-            <ul class="benefits-list">
-                <li>Essential Minerals & Iron</li>
-                <li>Eliminates Trapped Gas</li>
-                <li>Balances Stomach pH</li>
-                <li>Supports Electrolytes</li>
-            </ul>
-        </div>
-    </div>
-    <div class="nutrition-footer">
-        * Based on standard herbal nutritional profiles.
-    </div>
-</section>
-
-<!-- FAQ SECTION -->
-<section class="faq-section">
-    <div class="faq-header">
-        <h2>Frequently Asked Questions</h2>
-    </div>
-    <div class="faq-container">
-        <!-- Q1 -->
-        <div class="faq-item">
-            <div class="faq-question">
-                How do I use it?
-                <div class="faq-icon"></div>
-            </div>
-            <div class="faq-answer">
-                For best results, take 1 small teaspoon right after your meals or whenever you feel bloated. It is best taken with a glass of water.
-            </div>
-        </div>
-        <!-- Q2 -->
-        <div class="faq-item">
-            <div class="faq-question">
-                Is it natural?
-                <div class="faq-icon"></div>
-            </div>
-            <div class="faq-answer">
-                Yes, Noor e Shifa is a 100% natural herbal digestive blend. It contains pure ingredients like Ajwain (Carom Seeds), Saunf (Fennel Seeds), Zeera (Cumin Seeds), and Black Salt (Kala Namak) with no artificial fillers.
-            </div>
-        </div>
-        <!-- Q3 -->
-        <div class="faq-item">
-            <div class="faq-question">
-                Does it cure acidity or stomach problems?
-                <div class="faq-icon"></div>
-            </div>
-            <div class="faq-answer">
-                Noor e Shifa supports healthy digestion and is designed to provide relief from everyday bloating, gas, and stomach heaviness. It helps your system process food naturally and comfortably.
-            </div>
-        </div>
-        <!-- Q4 -->
-        <div class="faq-item">
-            <div class="faq-question">
-                Is Cash on Delivery (COD) available?
-                <div class="faq-icon"></div>
-            </div>
-            <div class="faq-answer">
-                Yes! We offer Cash on Delivery (COD) across Pakistan. You can pay conveniently when the product arrives at your doorstep.
-            </div>
-        </div>
-        <!-- Q5 -->
-        <div class="faq-item">
-            <div class="faq-question">
-                How long does delivery take?
-                <div class="faq-icon"></div>
-            </div>
-            <div class="faq-answer">
-                We deliver all across Pakistan within 3 to 5 working days. Once your order is placed, you will receive a confirmation message and tracking details.
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- MEET THE FOUNDER HOME -->
-
 <section class="founder-home-section">
     <div class="founder-home-image">
         <img src="{{ 'ceo_home.jpg' | asset_img_url: '800x' }}" alt="Noor Bukhari">
@@ -1877,77 +1923,6 @@
         <a href="/pages/about#my-story" class="cta-button">Read My Full Story</a>
     </div>
 </section>
-
-<!-- SHOP BY CONCERN -->
-<section class="section-container">
-    <h2 class="hollow-heading">Shop by Concern</h2>
-    <div class="concern-slider">
-        <div class="concern-card">
-            <img src="{{ 'lifestyle_herbal_4.png' | asset_img_url: '600x' }}" alt="Gas Relief">
-            <div class="concern-card-overlay">
-                <div class="concern-card-title">Gas Relief</div>
-            </div>
-        </div>
-        <div class="concern-card">
-            <img src="{{ 'lifestyle_herbal_2.png' | asset_img_url: '600x' }}" alt="Acidity">
-            <div class="concern-card-overlay">
-                <div class="concern-card-title">Acidity</div>
-            </div>
-        </div>
-        <div class="concern-card">
-            <img src="{{ 'lifestyle_herbal_3.png' | asset_img_url: '600x' }}" alt="Bloating">
-            <div class="concern-card-overlay">
-                <div class="concern-card-title">Bloating</div>
-            </div>
-        </div>
-        <div class="concern-card">
-            <img src="{{ 'lifestyle_herbal_1.png' | asset_img_url: '600x' }}" alt="Indigestion">
-            <div class="concern-card-overlay">
-                <div class="concern-card-title">Indigestion</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- VIDEO SHOWCASE -->
-<section class="video-showcase-section">
-    <div class="video-showcase-video">
-        <video id="showcaseVideo" autoplay muted loop playsinline poster="{{ 'product-showcase-poster.png' | asset_img_url: 'master' }}">
-            <source src="{{ 'product-showcase.mp4' | asset_url }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <button id="videoMuteToggle" class="video-mute-btn" aria-label="Toggle Mute">
-            <svg class="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-            <svg class="unmute-icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-        </button>
-    </div>
-    <div class="video-showcase-content">
-        <span class="label" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700; font-size: 12px; color: var(--secondary); margin-bottom: 20px; display: block;">See the Magic</span>
-        <h2>Why Thousands Trust Noor e Shifa</h2>
-        <p>Watch how our 100% Organic Phakki works to restore your digestive balance. No chemicals, just pure herbal wisdom passed down through generations.</p>
-        <ul class="video-feature-list">
-            <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Instant Relief from Bloating
-            </li>
-            <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Improves Gut Health Daily
-            </li>
-            <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                100% Natural & Organic
-            </li>
-        </ul>
-        <a href="/collections/all" class="cta-button">Shop the Remedy</a>
-        <div class="cod-text">Cash on Delivery Available</div>
-    </div>
-</section>
-
-{% render 'social-videos' %}
-
-<!-- REVIEWS -->
-{% render 'custom-reviews', layout: 'grid', heading: 'Real Results', show_heading: true %}
 
 <footer>
     <div class="footer-container">
