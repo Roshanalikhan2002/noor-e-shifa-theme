@@ -593,21 +593,25 @@
 
 
     async function gAddToCart(variantId, btn, qty = 1) {
+        const resetLabel = btn && (btn.dataset.resetLabel || btn.dataset.resetText)
+            ? (btn.dataset.resetLabel || btn.dataset.resetText)
+            : 'ADD TO CART';
         if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
         try {
-            await fetch('/cart/add.js', {
+            const res = await fetch('/cart/add.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({ id: parseInt(variantId), quantity: parseInt(qty) })
             });
+            if (!res.ok) throw new Error('Add failed');
             if (btn) {
                 btn.textContent = '✓ ADDED!';
-                setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.disabled = false; }, 2000);
+                setTimeout(() => { btn.textContent = resetLabel; btn.disabled = false; }, 2000);
             }
             gShowToast();
             gOpenCart();
         } catch(e) {
-            if (btn) { btn.textContent = 'ADD TO CART'; btn.disabled = false; }
+            if (btn) { btn.textContent = resetLabel; btn.disabled = false; }
         }
     }
 

@@ -133,9 +133,9 @@
     }
     .deals-grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 30px;
-        max-width: 1200px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+        max-width: 1280px;
         margin: 0 auto;
     }
     .deal-card {
@@ -241,6 +241,12 @@
         background: #244d38;
     }
 
+    @media (max-width: 1100px) {
+        .deals-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+        }
+    }
     @media (max-width: 992px) {
         .deals-grid {
             grid-template-columns: 1fr;
@@ -1626,6 +1632,12 @@
 {% assign oxy_variant_id = oxy_product.selected_or_first_available_variant.id %}
 {% assign combo_price = nes_unit_price | plus: oxy_price %}
 {% assign combo_compare = nes_unit_compare | plus: oxy_compare %}
+{% assign oxy_b2_compare = oxy_price | times: 2 %}
+{% assign oxy_b2_price = oxy_b2_compare | times: 90 | divided_by: 100 %}
+{% if oxy_b2_compare == 0 or oxy_b2_compare == blank %}
+  {% assign oxy_b2_compare = 356000 %}
+  {% assign oxy_b2_price = 320400 %}
+{% endif %}
 
 <section class="featured-product">
     <h2>Our Best Seller</h2>
@@ -1747,6 +1759,27 @@
                 onclick="gAddToCartCombo(this.getAttribute('data-variant-a'), this.getAttribute('data-variant-b'), this)"
             >BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
+        </div>
+
+        <div class="deal-card">
+            <div class="deal-badge" style="background: #8e44ad;">10% OFF</div>
+            {% if oxy_product and oxy_product.featured_image %}
+                <img src="{{ oxy_product.featured_image | img_url: '500x' }}" alt="{{ oxy_product.title | escape }}" class="product-img">
+            {% else %}
+                <div class="product-img is-empty" aria-hidden="true"></div>
+            {% endif %}
+            <h3>Buy 2 Get 10% Off</h3>
+            <div class="deal-savings">OXYBEET Offer</div>
+            <p class="deal-desc">2 Packs + Automatic 10% Discount</p>
+            <div class="deal-price">{% if oxy_product %}{{ oxy_b2_price | money }}{% else %}Rs. 3,204{% endif %}</div>
+            <div class="deal-compare">{% if oxy_product %}{{ oxy_b2_compare | money }}{% else %}Rs. 3,560{% endif %}</div>
+            <button
+                type="button"
+                class="deal-atc"
+                data-reset-label="BUY NOW"
+                onclick="gAddToCart({{ oxy_variant_id }}, this, 2)"
+            >BUY NOW</button>
+            <div class="cod-text">Cash on Delivery Available</div>
         </div>
     </div>
 </section>
