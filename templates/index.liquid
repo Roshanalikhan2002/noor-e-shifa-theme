@@ -1770,7 +1770,7 @@
             {% endif %}
             <h3>Buy 2 Get 10% Off</h3>
             <div class="deal-savings">OXYBEET Offer</div>
-            <p class="deal-desc">2 Packs + Automatic 10% Discount</p>
+            <p class="deal-desc">2 Packs + 10% Off + Free Shipping</p>
             <div class="deal-price">{% if oxy_product %}{{ oxy_b2_price | money }}{% else %}Rs. 3,204{% endif %}</div>
             <div class="deal-compare">{% if oxy_product %}{{ oxy_b2_compare | money }}{% else %}Rs. 3,560{% endif %}</div>
             <button
@@ -1779,7 +1779,7 @@
                 data-reset-label="BUY NOW"
                 onclick="gAddToCart({{ oxy_variant_id }}, this, 2)"
             >BUY NOW</button>
-            <div class="cod-text">Cash on Delivery Available</div>
+            <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>
     </div>
 </section>
