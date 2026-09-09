@@ -133,9 +133,9 @@
     }
     .deals-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 30px;
-        max-width: 900px;
+        max-width: 1200px;
         margin: 0 auto;
     }
     .deal-card {
@@ -172,6 +172,13 @@
         height: 220px;
         margin-bottom: 25px;
         object-fit: contain;
+    }
+    .deal-card .product-img.is-empty {
+        background: #f0f0f0;
+        border: 1px dashed #d0d0d0;
+        border-radius: 12px;
+        display: block;
+        flex-shrink: 0;
     }
     .deal-card.starter {
         transform: scale(1.0);
@@ -648,11 +655,11 @@
     }
 
     .bestsellers-grid {
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px;
         align-items: stretch;
     }
 
@@ -739,12 +746,6 @@
         color: #777;
         text-decoration: line-through;
         margin-bottom: 20px;
-    }
-
-    @media (max-width: 992px) {
-        .bestsellers-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
     }
 
     @media (max-width: 768px) {
@@ -1658,16 +1659,6 @@
             <button type="button" class="cta-button" onclick="gAddToCart({{ oxy_variant_id | default: nes_variant_id | default: 63302317998449 }}, this, 1)">ADD TO CART</button>
             <div class="cod-text">Cash on Delivery Available</div>
         </div>
-
-        <div class="product-card">
-            <div class="product-image is-empty" aria-hidden="true"></div>
-            <h3 class="product-title">Phaki + OXYBEET Combo</h3>
-            <p class="combo-note">Natural Stomach Relief Phaki + OXYBEET</p>
-            <p class="price">{% if nes_product and oxy_product %}{{ combo_price | money }}{% else %}Rs. 2,770.00{% endif %}</p>
-            <p class="price-compare">{% if nes_product and oxy_product %}{{ combo_compare | money }}{% else %}Rs. 3,601.00{% endif %}</p>
-            <button type="button" class="cta-button" onclick="gAddToCartCombo({{ nes_variant_id | default: 63302317998449 }}, {{ oxy_variant_id | default: nes_variant_id | default: 63302317998449 }}, this)">ADD TO CART</button>
-            <div class="cod-text">Cash on Delivery Available</div>
-        </div>
     </div>
 </section>
 
@@ -1737,6 +1728,18 @@
             <div class="deal-compare">{% if nes_product %}{{ nes_deal3_compare | money }}{% else %}Rs. 3,861{% endif %}</div>
             <button class="deal-atc" onclick="gAddToCartBundle({{ nes_variant_id | default: 63302317998449 }}, this, 3, 2)">BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
+        </div>
+
+        <div class="deal-card popular">
+            <div class="deal-badge" style="background: #c0392b;">NEW</div>
+            <div class="product-img is-empty" aria-hidden="true"></div>
+            <h3>Phaki + OXYBEET Combo</h3>
+            <div class="deal-savings">Best of Both</div>
+            <p class="deal-desc">Natural Stomach Relief Phaki + OXYBEET</p>
+            <div class="deal-price">{% if nes_product and oxy_product %}{{ combo_price | money }}{% else %}Rs. 2,770{% endif %}</div>
+            <div class="deal-compare">{% if nes_product and oxy_product %}{{ combo_compare | money }}{% else %}Rs. 3,601{% endif %}</div>
+            <button class="deal-atc" data-reset-label="BUY NOW" onclick="gAddToCartCombo({{ nes_variant_id | default: 63302317998449 }}, {{ oxy_variant_id | default: nes_variant_id | default: 63302317998449 }}, this)">BUY NOW</button>
+            <div class="cod-text">Cash on Delivery Available</div>
         </div>
     </div>
 </section>

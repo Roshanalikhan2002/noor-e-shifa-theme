@@ -612,6 +612,9 @@
     }
 
     async function gAddToCartCombo(variantIdA, variantIdB, btn) {
+        const resetLabel = btn && (btn.dataset.resetLabel || btn.dataset.resetText)
+            ? (btn.dataset.resetLabel || btn.dataset.resetText)
+            : 'ADD TO CART';
         if (btn) { btn.textContent = 'ADDING...'; btn.disabled = true; }
         try {
             await fetch('/cart/add.js', {
@@ -626,12 +629,12 @@
             });
             if (btn) {
                 btn.textContent = '✓ ADDED!';
-                setTimeout(() => { btn.textContent = 'ADD TO CART'; btn.disabled = false; }, 2000);
+                setTimeout(() => { btn.textContent = resetLabel; btn.disabled = false; }, 2000);
             }
             gShowToast();
             gOpenCart();
         } catch(e) {
-            if (btn) { btn.textContent = 'ADD TO CART'; btn.disabled = false; }
+            if (btn) { btn.textContent = resetLabel; btn.disabled = false; }
         }
     }
 
