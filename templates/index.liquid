@@ -1735,11 +1735,11 @@
             <div class="product-img is-empty" aria-hidden="true"></div>
             <h3>Phaki + OXYBEET Combo</h3>
             <div class="deal-savings">Best of Both</div>
-            <p class="deal-desc">Natural Stomach Relief Phaki + OXYBEET</p>
+            <p class="deal-desc">Phaki + OXYBEET + Free Shipping</p>
             <div class="deal-price">{% if nes_product and oxy_product %}{{ combo_price | money }}{% else %}Rs. 2,770{% endif %}</div>
             <div class="deal-compare">{% if nes_product and oxy_product %}{{ combo_compare | money }}{% else %}Rs. 3,601{% endif %}</div>
             <button class="deal-atc" data-reset-label="BUY NOW" onclick="gAddToCartCombo({{ nes_variant_id | default: 63302317998449 }}, {{ oxy_variant_id | default: nes_variant_id | default: 63302317998449 }}, this)">BUY NOW</button>
-            <div class="cod-text">Cash on Delivery Available</div>
+            <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>
     </div>
 </section>
