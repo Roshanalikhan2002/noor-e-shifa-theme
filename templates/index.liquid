@@ -1738,7 +1738,14 @@
             <p class="deal-desc">Phaki + OXYBEET + Free Shipping</p>
             <div class="deal-price">{% if nes_product and oxy_product %}{{ combo_price | money }}{% else %}Rs. 2,770{% endif %}</div>
             <div class="deal-compare">{% if nes_product and oxy_product %}{{ combo_compare | money }}{% else %}Rs. 3,601{% endif %}</div>
-            <button class="deal-atc" data-reset-label="BUY NOW" onclick="gAddToCartCombo({{ nes_variant_id | default: 63302317998449 }}, {{ oxy_variant_id | default: nes_variant_id | default: 63302317998449 }}, this)">BUY NOW</button>
+            <button
+                type="button"
+                class="deal-atc"
+                data-reset-label="BUY NOW"
+                data-variant-a="{{ nes_variant_id }}"
+                data-variant-b="{{ oxy_variant_id }}"
+                onclick="gAddToCartCombo(this.getAttribute('data-variant-a'), this.getAttribute('data-variant-b'), this)"
+            >BUY NOW</button>
             <div class="cod-text" style="color: #2e7d32;">Free Shipping Available</div>
         </div>
     </div>
