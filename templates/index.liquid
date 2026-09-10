@@ -1763,11 +1763,7 @@
 
         <div class="deal-card">
             <div class="deal-badge" style="background: #8e44ad;">10% OFF</div>
-            {% if oxy_product and oxy_product.featured_image %}
-                <img src="{{ oxy_product.featured_image | img_url: '500x' }}" alt="{{ oxy_product.title | escape }}" class="product-img">
-            {% else %}
-                <div class="product-img is-empty" aria-hidden="true"></div>
-            {% endif %}
+            <img src="{{ 'oxybeet_buy2_10off.jpg' | asset_img_url: '600x' }}" alt="Buy 2 OXYBEET Get 10% Off" class="product-img">
             <h3>Buy 2 Get 10% Off</h3>
             <div class="deal-savings">OXYBEET Offer</div>
             <p class="deal-desc">2 Packs + 10% Off + Free Shipping</p>
